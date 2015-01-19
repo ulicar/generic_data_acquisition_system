@@ -38,6 +38,7 @@ def open_mq_channel(mq_url, channel_name):
     return mq, mq_channel
 
 def process_message(ch, method, properties, body):
+    pass
 
 
 if __name__ == '__main__':
