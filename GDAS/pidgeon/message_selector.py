@@ -14,24 +14,31 @@ def main():
     ini_file = args.ini
 
     try:
-        config = ConfigParser.ConfigParser()
-        config.read(ini_file)
-
         cfg = Configuration().load_from_file(ini_file)
 
-        mq = pika.BlockingConnection(pika.ConnectionParameters(host=cfg.msg_queue_url))
-        mq_channel = mq.channel()
-        mq_channel.queue_declare(queue='hello')
-        mq_channel.basic_publish(exchange='', routing_key='hello', body='Hello World!')
-
-        print " [x] Sent 'Hello World!'"
-        mq.close()
+        input_mq, input_mq_channel = open_mq_channel(cfg.msg_queue_url, 'requests')
+        mq_exchange, mq_routing_key = '', ''
+        sent_to_mq(input_mq_channel, mq_exchange, mq_routing_key, 'Hello World!')
+        input_mq.close()
 
     except Exception, e:
         print >>sys.stderr, str(e)
         sys.exit(1)
 
     sys.exit(0)
+
+
+def open_mq_channel(mq_url, channel_name):
+    mq = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
+    mq_channel = mq.channel()
+    mq_channel.queue_declare(queue=channel_name)
+    return mq, mq_channel
+
+
+def sent_to_mq(channel, exchange, routing_key, msg):
+    channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)
+    print " [x] Sent 'Hello World!'"
+
 
 if __name__ == '__main__':
     main()

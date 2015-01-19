@@ -12,28 +12,33 @@ def main():
     ini_file = args.ini
 
     try:
-        connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
-        channel = connection.channel()
+        cfg = Configuration.load_from_file(ini_file)
 
-        channel.queue_declare(queue='hello')
-
+        mq, mq_channel = open_mq_channel(cfg.msg_queue_url, 'weather_data')
         print ' [*] Waiting for messages. To exit press CTRL+C'
 
-        def callback(ch, method, properties, body):
-            print " [x] Received %r" % (body,)
 
-        channel.basic_consume(callback,
+        mq_channel.basic_consume(process_message,
                               queue='hello',
                               no_ack=True)
 
-        channel.start_consuming()
+        mq_channel.start_consuming()
 
     except Exception, e:
         print >>sys.stderr, str(e)
         sys.exit(1)
 
     sys.exit(0)
+
+
+def open_mq_channel(mq_url, channel_name):
+    mq = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
+    mq_channel = mq.channel()
+    mq_channel.queue_declare(queue=channel_name)
+    return mq, mq_channel
+
+def process_message(ch, method, properties, body):
+
 
 if __name__ == '__main__':
     main()
