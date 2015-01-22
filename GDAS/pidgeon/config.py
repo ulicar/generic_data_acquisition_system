@@ -7,14 +7,18 @@ from logging.handlers import TimedRotatingFileHandler
 
 class Configuration():
     database = None
-    msg_queue_url = None
+    mq_url = None
     log_file = None
+    output_exchange = None
+    input_exchange = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
 
-        self.msg_queue_url = config.get('core', 'message_queue')
+        self.mq_url = config.get('core', 'mq_url')
+        self.input_exchange = config.get('core', 'input_mq')
+        self.output_exchange = config.get('core', 'output_mq')
         self.database = config.get('core', 'database').split(':')
         self.log_file = config.get('log', 'log_file')
 

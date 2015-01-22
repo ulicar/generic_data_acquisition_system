@@ -1,6 +1,8 @@
 [core]
 database = localhost:27017
-message_queue = localhost
+mq_url = localhost
+input_mq = master
+output_mq = weather_collection
 
 [log]
 log_file = utils/logging/logger
