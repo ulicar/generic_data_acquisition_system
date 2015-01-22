@@ -3,6 +3,7 @@ __author__ = 'jdomsic'
 import sys
 import ConfigParser
 import pika
+import json
 
 from config import Configuration
 
@@ -37,7 +38,7 @@ def open_mq_channel(mq_url):
     return mq, mq_channel
 
 def on_msg_received(ch, method, properties, body):
-    send_to_mq(body, ch, 'weather_collection', '')
+    send_to_mq(json.dumps(json.loads(body)), ch, 'weather_collection', '')
 
 def send_to_mq(msg, channel, exchange, routing_key):
     channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)

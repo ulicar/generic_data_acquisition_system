@@ -24,7 +24,7 @@ class AggregatorMessage():
 class CoreMessage():
     def __init__(self, unique_id, module_type, value, timestamp, dbID=''):
         self.id = unique_id
-        self._id = dbID
+        #self._id = dbID
         self.module = module_type
         self.value = value
         self.timestamp = timestamp

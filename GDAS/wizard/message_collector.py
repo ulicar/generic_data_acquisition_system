@@ -33,7 +33,7 @@ def collect_sensor_info():
         mq, mq_channel = open_mq_channel(app.cfg.msg_queue_url)
         data = get_received_data(request.data)
         for msg in data:
-            send_to_mq(str(msg), mq_channel, app.cfg.exchange, '')
+            send_to_mq(json.dumps(msg), mq_channel, app.cfg.exchange, '')
         mq.close()
 
         return Response(response='RESPONSE', status=httplib.OK)
@@ -50,11 +50,6 @@ def check_format(raw_data):
         return json.loads(raw_data)
     except Exception:
         return None
-
-
-def save_to_database(message, db, db_collection):
-    collection = db[db_collection]
-    collection.insert(str(message))
 
 
 def open_mq_channel(mq_url):
