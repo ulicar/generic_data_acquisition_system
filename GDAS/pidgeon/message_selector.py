@@ -37,7 +37,6 @@ def open_mq_channel(mq_url, channel_name):
 
 def sent_to_mq(channel, exchange, routing_key, msg):
     channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)
-    print " [x] Sent 'Hello World!'"
 
 
 if __name__ == '__main__':
