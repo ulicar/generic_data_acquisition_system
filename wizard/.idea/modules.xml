@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$USER_HOME$/Diplomski/ictgen/GDAS/.idea/GDAS.iml" filepath="$USER_HOME$/Diplomski/ictgen/GDAS/.idea/GDAS.iml" />
+      <module fileurl="file://$USER_HOME$/Diplomski/ictgen/GDAS/pidgeon/.idea/pidgeon.iml" filepath="$USER_HOME$/Diplomski/ictgen/GDAS/pidgeon/.idea/pidgeon.iml" />
+      <module fileurl="file://$USER_HOME$/Diplomski/ictgen/GDAS/wizard/.idea/wizard.iml" filepath="$USER_HOME$/Diplomski/ictgen/GDAS/wizard/.idea/wizard.iml" />
+      <module fileurl="file://$USER_HOME$/Diplomski/ictgen/GDAS/worker/.idea/worker.iml" filepath="$USER_HOME$/Diplomski/ictgen/GDAS/worker/.idea/worker.iml" />
+    </modules>
+  </component>
+</project>

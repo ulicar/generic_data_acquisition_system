@@ -1,0 +1,10 @@
+[core]
+database = localhost:27017
+message_queue = localhost
+exchange = master
+
+[log]
+log_file = utils/logging/logger
+
+[collector_feed]
+field = value
