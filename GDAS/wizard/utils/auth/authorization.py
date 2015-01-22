@@ -9,4 +9,4 @@ def authorize(username, required_roles, db):
     return True
 
 def get_roles_for_user(username, db):
-    return ['CORE']
+    return ['upload']

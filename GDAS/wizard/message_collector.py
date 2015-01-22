@@ -16,8 +16,7 @@ from utils.database.connection import get_db_connection
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
     with open(app.cfg.log_file, 'r') as l:
-
-        db = get_db_connection()
+        db = app.cfg.database
         auth = Auth(request)
         if not authentificate(auth.username, auth.password, db):
             return Response(response='', status=httplib.UNAUTHORIZED)
@@ -30,11 +29,11 @@ def collect_sensor_info():
         if not is_required_format:
             Response(response='Not in JSON', status=httplib.BAD_REQUEST)
 
-        mq, mq_channel = open_mq_channel(app.cfg.msg_queue_url)
 
+        mq, mq_channel = open_mq_channel(app.cfg.msg_queue_url)
         data = get_received_data(request.data)
         for msg in data:
-            send_to_mq(msg, mq_channel, app.cfg.exchange, '')
+            send_to_mq(str(msg), mq_channel, app.cfg.exchange, '')
         mq.close()
 
         return Response(response='RESPONSE', status=httplib.OK)
@@ -43,13 +42,7 @@ def collect_sensor_info():
 
 
 def get_received_data(raw_data):
-    data = []
-
-    # rework
-    for entry in raw_data:
-        data.append(entry)
-
-    return data
+    return json.loads(raw_data)
 
 
 def check_format(raw_data):
@@ -66,7 +59,7 @@ def save_to_database(message, db, db_collection):
 
 def open_mq_channel(mq_url):
     conn = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
-    channel = conn.connect()
+    channel = conn.channel()
     return conn, channel
 
 

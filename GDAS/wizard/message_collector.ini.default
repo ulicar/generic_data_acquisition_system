@@ -1,7 +1,8 @@
 [core]
 database = localhost:27017
 message_queue = localhost
-exchange = master
+exchange = simple
+roles = upload
 
 [log]
 log_file = utils/logging/file_log.txt

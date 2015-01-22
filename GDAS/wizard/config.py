@@ -20,6 +20,7 @@ class Configuration():
         self.exchange = config.get('core', 'exchange')
         self.database = config.get('core', 'database').split(':')
         self.log_file = config.get('log', 'log_file')
+        self.required_roles = config.get('core', 'roles').split(':')
 
         return self
 
