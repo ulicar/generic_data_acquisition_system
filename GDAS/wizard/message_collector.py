@@ -12,8 +12,6 @@ from utils.auth.auth import Auth
 from utils.auth.authentication import authentificate
 from utils.auth.authorization import authorize
 from utils.database.connection import get_db_connection
-from utils.communication.formats import message_data_t
-
 
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
@@ -47,7 +45,7 @@ def collect_sensor_info():
 def get_received_data(raw_data):
     data = []
 
-    # Todo: do some magic here
+    # rework
     for entry in raw_data:
         data.append(entry)
 
