@@ -1,9 +1,9 @@
 __author__ = 'jdomsic'
 
-import json
 import random
 import string
 import datetime
+import json
 
 class AggregatorMessage():
     def __init__(self, dbID, name, ip, port, ports_path, ports_status, res_path, res_status, unique_id, time, err):
@@ -19,6 +19,7 @@ class AggregatorMessage():
 
     def validate(self):
         assert type(self.id) is str and self.id != ''
+
 
 class CoreMessage():
     def __init__(self, unique_id, module_type, value, timestamp, dbID=''):
@@ -45,7 +46,6 @@ def create_random_value(min, max):
 def create_timestamp():
     return str(datetime.datetime.utcnow())
 
-
 def create_random_core_message():
     rand_id = create_random_string(10)
     sensor_value = create_random_value(-10, 50)
@@ -55,6 +55,8 @@ def create_random_core_message():
     return CoreMessage(rand_id, module_type, sensor_value, ts).get()
 
 
-if __name__ == '__main__':
-    for _ in range(1,11):
-        print create_random_core_message()
+msgs = []
+for _ in range(1, 10):
+    msgs.append(create_random_core_message())
+
+print json.dumps(msgs)
