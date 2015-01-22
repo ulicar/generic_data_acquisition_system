@@ -4,7 +4,7 @@ message_queue = localhost
 exchange = master
 
 [log]
-log_file = utils/logging/logger
+log_file = utils/logging/file_log.txt
 
 [collector_feed]
 field = value

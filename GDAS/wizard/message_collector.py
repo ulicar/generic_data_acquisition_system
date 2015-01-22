@@ -15,7 +15,7 @@ from utils.database.connection import get_db_connection
 
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
-    with open(app.cfg.log, 'r') as l:
+    with open(app.cfg.log_file, 'r') as l:
 
         db = get_db_connection()
         auth = Auth(request)
