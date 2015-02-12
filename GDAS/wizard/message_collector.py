@@ -1,8 +1,8 @@
 __author__ = 'jdomsic'
 
 import httplib
-import json
 import pika
+import json
 
 from flask import Response
 from flask import request
@@ -11,7 +11,6 @@ from initialize import app
 from utils.auth.auth import Auth
 from utils.auth.authentication import authentificate
 from utils.auth.authorization import authorize
-from utils.database.connection import get_db_connection
 
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
