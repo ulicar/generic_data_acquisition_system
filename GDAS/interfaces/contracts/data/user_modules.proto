@@ -1,0 +1,13 @@
+package data.user_modules;
+
+message user_modules_t
+{
+    required string         type    = 1;
+
+    repeated module_id_t    ids     = 2;
+}
+
+message module_id_t
+{
+    required string         id      = 1;
+}
