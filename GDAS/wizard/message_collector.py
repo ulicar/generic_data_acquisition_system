@@ -1,26 +1,51 @@
 __author__ = 'jdomsic'
 
 import httplib
-import pika
 import json
 
+import pika
+from flask import Flask
 from flask import Response
 from flask import request
 
-from initialize import app
-from utils.auth.auth import Auth
+from util.auth.auth import Auth
 from utils.auth.authentication import authentificate
 from utils.auth.authorization import authorize
 
+
+app = Flask(__name__)
+app.config.from_object('config.ProductionConfig')
+
+
+def get_received_data(raw_data):
+    return json.loads(raw_data)
+
+
+def check_format(raw_data):
+    try:
+        return json.loads(raw_data)
+    except ValueError:
+        return None
+
+
+def open_mq_channel(mq_url):
+    conn = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
+    channel = conn.channel()
+    return conn, channel
+
+
+def send_to_mq(msg, channel, exchange, routing_key=''):
+    channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)
+
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
-    with open(app.cfg.log_file, 'r') as l:
-        db = app.cfg.database
+    with open(app.config['LOG'], 'r') as l:
+        db = app.config['DATABASE']
         auth = Auth(request)
         if not authentificate(auth.username, auth.password, db):
             return Response(response='', status=httplib.UNAUTHORIZED)
 
-        required_roles = app.cfg.required_roles
+        required_roles = app.config['ROLES']
         if not authorize(auth.username, required_roles, db):
             return Response(response='', status=httplib.FORBIDDEN)
 
@@ -38,27 +63,6 @@ def collect_sensor_info():
         return Response(response='RESPONSE', status=httplib.OK)
 
     return Response(response='error', status=httplib.INTERNAL_SERVER_ERROR)
-
-
-def get_received_data(raw_data):
-    return json.loads(raw_data)
-
-
-def check_format(raw_data):
-    try:
-        return json.loads(raw_data)
-    except Exception:
-        return None
-
-
-def open_mq_channel(mq_url):
-    conn = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
-    channel = conn.channel()
-    return conn, channel
-
-
-def send_to_mq(msg, channel, exchange, routing_key=''):
-    channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)
 
 
 if __name__ == '__main__':
