@@ -7,7 +7,7 @@ import json
 from config import Configuration
 from pymongo import Connection
 
-from utils.input.argument_parser import get_arguments
+from util.input.argument_parser import get_arguments
 
 
 def main():
@@ -33,8 +33,10 @@ def open_mq_channel(mq_url):
     mq_channel = mq.channel()
     return mq, mq_channel
 
+
 def process_message(ch, method, properties, body):
     save_to_database(body, Connection('localhost', 27017), 'sensor_data', 'weather_data')
+
 
 def save_to_database(message, client, db_name, db_collection):
     database = client[db_name]

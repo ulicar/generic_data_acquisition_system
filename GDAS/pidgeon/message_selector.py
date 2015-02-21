@@ -1,12 +1,12 @@
 __author__ = 'jdomsic'
 
 import sys
-import pika
 import json
 
-from config import Configuration
+import pika
 
-from utils.input.argument_parser import get_arguments
+from config import Configuration
+from util.input.argument_parser import get_arguments
 
 
 def main():
