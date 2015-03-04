@@ -5,10 +5,10 @@ import json
 
 class Envelope(object):
     def __init__(self, data, data_type):
-        self.MAPPER = dict(
-            ('DATA', data),
-            ('TYPE', data_type)
-        )
+        self.MAPPER = {
+            'DATA': data,
+            'TYPE': data_type
+        }
 
     def __str__(self):
         return json.dumps(self.MAPPER)
