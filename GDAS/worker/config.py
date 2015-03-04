@@ -7,6 +7,7 @@ from logging.handlers import TimedRotatingFileHandler
 
 class Configuration():
     database = None
+    collection_name = None
     mq_url = None
     log_file = None
     queue_name = None
@@ -18,6 +19,7 @@ class Configuration():
         self.mq_url = config.get('core', 'mq_url')
         self.queue_name = config.get('core', 'queue')
         self.database = config.get('core', 'database').split(':')
+        self.collection_name = config.get('core', 'collection').split(':')
         self.log_file = config.get('log', 'log_file')
 
         return self
