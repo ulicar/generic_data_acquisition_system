@@ -3,7 +3,7 @@ __author__ = 'jdomsic'
 import argparse
 
 
-def configuration_parser(description):
+def argument_parser(description):
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i', help='Configuration file', metavar='INI')
 

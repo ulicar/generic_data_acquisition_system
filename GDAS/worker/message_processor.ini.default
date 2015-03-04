@@ -1,7 +1,7 @@
 [core]
 database = localhost:27017
 mq_url = localhost
-msg_queue = weather
+queue = weather
 
 [log]
 log_file = utils/logging/logger

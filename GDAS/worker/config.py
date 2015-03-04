@@ -9,14 +9,14 @@ class Configuration():
     database = None
     mq_url = None
     log_file = None
-    msg_queue = None
+    queue_name = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
 
         self.mq_url = config.get('core', 'mq_url')
-        self.msg_queue = config.get('core', 'msg_queue')
+        self.queue_name = config.get('core', 'queue')
         self.database = config.get('core', 'database').split(':')
         self.log_file = config.get('log', 'log_file')
 
