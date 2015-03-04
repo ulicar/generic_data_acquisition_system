@@ -45,7 +45,7 @@ def get_message_type(user_data, app):
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
     with open(app.config['LOG'], 'r') as l:
-        db_connection = Fatty(app.config['DATABASE']).open()
+        db_connection = Fatty(app.config['DATABASE'])
         if not auth.authentificate(request, db_connection):
             return Response(response='Wrong username/password',
                             status=httplib.UNAUTHORIZED)
