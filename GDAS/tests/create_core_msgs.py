@@ -2,7 +2,7 @@ __author__ = 'jdomsic'
 
 import random
 import string
-import datetime
+import time
 import json
 
 class AggregatorMessage():
@@ -44,7 +44,7 @@ def create_random_value(min, max):
     return random.randint(min, max)
 
 def create_timestamp():
-    return str(datetime.datetime.utcnow())
+    return str(int(time.time()))
 
 def create_random_core_message():
     rand_id = create_random_string(10)
