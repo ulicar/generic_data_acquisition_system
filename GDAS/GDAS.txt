@@ -12,3 +12,7 @@ alias MongoStart='sudo service mongod start'
 alias MongoStop='sudo service mongod stop'
 
 -- localhost:27017
+
+requires: validictory
+
+source bin/activate
