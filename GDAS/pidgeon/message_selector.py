@@ -6,14 +6,13 @@ import json
 import pika
 
 from config import Configuration
-from util.input.argument_parser import get_arguments
+from util.input.argument_parser import configuration_parser
 
 
 def main():
-    args = get_arguments()
-    ini_file = args.ini
+    args = configuration_parser('Data Collector parser')
+    cfg = Configuration().load_from_file(args.ini)
 
-    cfg = Configuration().load_from_file(ini_file)
     input_mq, input_mq_channel = open_mq_channel(cfg.mq_url)
     output_mq, output_mq_channel = open_mq_channel(cfg.mq_url)
 
