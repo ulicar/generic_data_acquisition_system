@@ -1,6 +1,6 @@
 [core]
 database = localhost:27017
-mq_url = localhost
+mq_url = amqp://guest:guest@localhost:5672/%2F
 queue = weather
 
 [log]
