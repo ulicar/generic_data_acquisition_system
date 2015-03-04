@@ -2,63 +2,63 @@ __author__ = 'jdomsic'
 
 import httplib
 import json
+import validictory
 
-import pika
-from flask import Flask
+from configuration import app
 from flask import Response
 from flask import request
 
-from util.auth.auth import Auth
-from utils.auth.authentication import authentificate
-from utils.auth.authorization import authorize
+from util.database.connection import connect_to_db
+from util.security import auth
+
+from util.communication import publisher
 
 
-app = Flask(__name__)
-app.config.from_object('config.ProductionConfig')
+def validate_data(user_data, app):
+    scheme = app.config['DATA_SCHEME']
+    for data in user_data:
+        if not validictory.validate(data, scheme):
+            return False
+
+    return True
 
 
-def get_received_data(raw_data):
-    return json.loads(raw_data)
+def publish_to_mq(messages, app):
+    assert isinstance(messages, list), "messages must be a list"
+
+    routing_key = get_message_type(messages[0], app)
+
+    settings = publisher.Settings(app.config['APP_ID'],
+                                  app.config['MQ_URL'],
+                                  app.config['EXCHANGE'],
+                                  routing_key)
+
+    queue = publisher.Publisher(settings)
+    queue.publish(messages)
 
 
-def check_format(raw_data):
-    try:
-        return json.loads(raw_data)
-    except ValueError:
-        return None
+def get_message_type(user_data, app):
+    return json.loads(user_data)[0][app.config['DATA_SCHEME_KEY']]
 
 
-def open_mq_channel(mq_url):
-    conn = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
-    channel = conn.channel()
-    return conn, channel
-
-
-def send_to_mq(msg, channel, exchange, routing_key=''):
-    channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)
-
+@auth.requires_auth
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
     with open(app.config['LOG'], 'r') as l:
-        db = app.config['DATABASE']
-        auth = Auth(request)
-        if not authentificate(auth.username, auth.password, db):
-            return Response(response='', status=httplib.UNAUTHORIZED)
+        db_connection = connect_to_db(app)
+        if not auth.authentificate(request, db_connection):
+            return Response(response='Wrong username/password',
+                            status=httplib.UNAUTHORIZED)
 
-        required_roles = app.config['ROLES']
-        if not authorize(auth.username, required_roles, db):
-            return Response(response='', status=httplib.FORBIDDEN)
+        if not auth.authorize(app, request, db_connection):
+            return Response(response='Not allowed for this user',
+                            status=httplib.FORBIDDEN)
 
-        is_required_format = check_format(request.data)
-        if not is_required_format:
-            Response(response='Not in JSON', status=httplib.BAD_REQUEST)
+        if not validate_data(request.data, app):
+            Response(response='Data not in json', status=httplib.BAD_REQUEST)
 
-
-        mq, mq_channel = open_mq_channel(app.cfg.msg_queue_url)
-        data = get_received_data(request.data)
-        for msg in data:
-            send_to_mq(json.dumps(msg), mq_channel, app.cfg.exchange, '')
-        mq.close()
+        messages = [request.data]
+        publish_to_mq(messages, app)
 
         return Response(response='RESPONSE', status=httplib.OK)
 
