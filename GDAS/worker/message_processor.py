@@ -18,17 +18,17 @@ class MessageProcessor(object):
         self.mq = cfg.mq_url
         self.queue_name = cfg.queue
         self.loq = cfg.log_file
+        self.consumer = None
 
     def main(self):
         settings = Settings(self.mq, self.queue_name)
-        consumer = Consumer(settings)
-        consumer.consume(self.process_message)
-
+        self.consumer = Consumer(settings)
+        self.consumer.consume(self.process_message)
 
     def process_message(self, message, message_type, properties):
             print str(message)
-            # OPTIONAL 1: consumer.acknowledge_msg()
-            # OPTIONAL 2: consumer.reject_msg()
+
+            self.consumer.acknowledge_msg()
             self.save_to_database()
 
     """
