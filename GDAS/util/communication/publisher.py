@@ -1,4 +1,4 @@
--__author__ = 'jdomsic'
+__author__ = 'jdomsic'
 
 """
     Helper classes from handling Rabbit MQ publishing.
@@ -7,7 +7,8 @@
     Example usage:
         settings = Settings('example-app-id',
                 'amqp://guest:guest@localhost:5672/%2F',
-                'example-exchange.example-routing_key'
+                'example-exchange',
+                'example-routing_key'
         )
 
         publisher = Publisher(settings)
@@ -27,7 +28,12 @@ import time
 
 from envelope import Envelope
 
+
 class Settings(object):
+    """
+    :arg app_id Application name
+    :arg mq_url Message queue URL, 'ampq://user:pass@host:port/%2F'
+    """
     def __init__(self, app_id, mq_url, exchange, routing_key, timeout=2):
         self.app_id = app_id
         self.mq_url = mq_url
@@ -43,7 +49,6 @@ class Publisher(object):
         self.mq_url = settings.mq_url
         self.exchange = settings.exchange
         self.routing_key = settings.routing_key
-        self.message_type = settings.type
         self.reconnect_time = settings.timeout
 
         self.connection = None
@@ -85,7 +90,8 @@ class Publisher(object):
         envelope = str(Envelope(self.message, self.routing_key))
 
         properties = pika.BasicProperties(app_id=self.app_id,
-                                          content_type='text/plain')
+                                          content_type='text/plain',
+                                          delivery_mode=2)
 
         self.channel.basic_publish(exchange=self.exchange,
                                    routing_key=self.routing_key,
@@ -108,7 +114,7 @@ class Publisher(object):
         self.run_connection = False
         self.channel.close()
         self.connection.close()
-        self.connection.ioloop.start()  # graceful stop by pika
+        self.connection.ioloop.stop()
 
     def _on_channel_close(self, _channel, _reply_code, _reply_text):
         if self.run_connection:

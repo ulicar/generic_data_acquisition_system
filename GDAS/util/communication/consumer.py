@@ -12,7 +12,7 @@ __author__ = 'jdomsic'
 
         consumer = Consumer(settings)
 
-        def callback(message):
+        def callback(message, message_type, properties):
             print str(message)
             # OPTIONAL 1: consumer.acknowledge_msg()
             # OPTIONAL 2: consumer.reject_msg()
@@ -35,27 +35,25 @@ from envelope import Envelope
 
 
 class Settings(object):
-    def __init__(self, mq_url, queue, max_messages=1, timeout=2):
+    def __init__(self, mq_url, queue, reconnect_time=2):
         self.mq_url = mq_url
         self.queue = queue
-        self.reconnect_time = timeout
-        self.max_msgs = max_messages
+        self.reconnect_time = reconnect_time
 
 
 class Consumer(object):
     def __init__(self, settings):
         self.mq_url = settings.mq_url
         self.queue_name = settings.queue
+        self.reconnect_time = settings.reconnect_time
+        self.master_close = False
+
         self.callback = None
 
+        self.run_connection = True
         self.connection = None
         self.channel = None
-        self.closing = False
-        self.consumer_tag = None
         self.message_tag = None
-
-        self.run_connection = True
-        self.reconnect_time = settings.timeout
 
     def connect(self):
         while self.run_connection:
@@ -87,11 +85,11 @@ class Consumer(object):
         self.consumer_tag = \
             self.channel.basic_consume(self._on_message_received, self.queue_name)
 
-    def _on_message_received(self, _unused_channel, basic_deliver, properties, body):
+    def _on_message_received(self, channel, basic_deliver, properties, body):
         self.message_tag = basic_deliver.delivery_tag
 
         message, m_type = Envelope.unpack(body)
-        self.callback(message, m_type, properties)
+        self.callback(message, m_type, properties, self.stop)
 
     def _on_consumer_cancelled(self):
         # When consumer is canceled remotely
@@ -107,14 +105,14 @@ class Consumer(object):
         if self.run_connection:
             self.connection.add_timeout(self.reconnect_time, self.reconnect)
 
+    def stop(self):
+        self.run_connection = False
+        self.channel.close()
+        self.connection.close()
+        self.connection.ioloop.stop()
+
     def reconnect(self):
         self.connection.ioloop.stop()
-        self.connect()
-
-    def consume(self, on_message_received):
-        assert isinstance(on_message_received, callable), "%s is not callable" % str(on_message_received)
-
-        self.callback = on_message_received
         self.connect()
 
     def acknowledge_msg(self):
@@ -131,4 +129,10 @@ class Consumer(object):
         :return: None
         """
         self.channel.basic_reject(self.message_tag, requeue=True)
+
+    def consume(self, on_message_received):
+        assert callable(on_message_received), "%s is not callable" % str(on_message_received)
+
+        self.callback = on_message_received
+        self.connect()
 
