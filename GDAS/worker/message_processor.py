@@ -1,12 +1,9 @@
 __author__ = 'jdomsic'
 
 import sys
-import pika
-import json
 
 from config import Configuration
-from pymongo import Connection
-
+from util.database.connection import Fatty
 from util.input.argument_parser import argument_parser
 from util.communication.consumer import Consumer
 from util.communication.consumer import Settings
@@ -15,6 +12,7 @@ from util.communication.consumer import Settings
 class MessageProcessor(object):
     def __init__(self, cfg):
         self.db = cfg.database
+        self.collection = cfg.collection_name
         self.mq = cfg.mq_url
         self.queue_name = cfg.queue
         self.loq = cfg.log_file
@@ -26,21 +24,15 @@ class MessageProcessor(object):
         self.consumer.consume(self.process_message)
 
     def process_message(self, message, message_type, properties):
-            print str(message)
+        print str(message)
 
-            self.consumer.acknowledge_msg()
-            self.save_to_database()
+        self.consumer.acknowledge_msg()
+        self.save_to_database(message)
 
-    """
-    def process_message(self, ch, method, properties, body):
-        save_to_database(body, Connection('localhost', 27017), 'sensor_data', 'weather_data')
-    """
-
-    def save_to_database(self, message, client, db_name, db_collection):
-        database = client[db_name]
-        collection = database[db_collection]
-        msg = json.loads(message)
-        collection.insert(msg)
+    def save_to_database(self, message):
+        db = Fatty(self.db)
+        db.open(self.collection)
+        db.write(message)
 
 
 def main():
