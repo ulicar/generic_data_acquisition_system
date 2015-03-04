@@ -8,7 +8,7 @@ from configuration import app
 from flask import Response
 from flask import request
 
-from util.database.connection import connect_to_db
+from util.database.connection import Fatty
 from util.security import auth
 
 from util.communication import publisher
@@ -45,7 +45,7 @@ def get_message_type(user_data, app):
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
     with open(app.config['LOG'], 'r') as l:
-        db_connection = connect_to_db(app)
+        db_connection = Fatty(app.config['DATABASE']).open()
         if not auth.authentificate(request, db_connection):
             return Response(response='Wrong username/password',
                             status=httplib.UNAUTHORIZED)
