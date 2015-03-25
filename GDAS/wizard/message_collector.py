@@ -14,8 +14,8 @@ from util.security import auth
 from util.communication import publisher
 
 
-def validate_data(user_data, app):
-    scheme = app.config['DATA_SCHEME']
+def validate_data(user_data, config):
+    scheme = config['DATA_SCHEME']
     for data in user_data:
         if not validictory.validate(data, scheme):
             return False
@@ -23,22 +23,22 @@ def validate_data(user_data, app):
     return True
 
 
-def publish_to_mq(messages, app):
+def publish_to_mq(messages, config):
     assert isinstance(messages, list), "messages must be a list"
 
-    routing_key = get_message_type(messages[0], app)
+    routing_key = get_message_type(messages[0], config)
 
-    settings = publisher.Settings(app.config['APP_ID'],
-                                  app.config['MQ_URL'],
-                                  app.config['EXCHANGE'],
+    settings = publisher.Settings(config['APP_ID'],
+                                  config['MQ_URL'],
+                                  config['EXCHANGE'],
                                   routing_key)
 
     queue = publisher.Publisher(settings)
     queue.publish(messages)
 
 
-def get_message_type(user_data, app):
-    return json.loads(user_data)[0][app.config['DATA_SCHEME_KEY']]
+def get_message_type(user_data, config):
+    return json.loads(user_data)[0][config['DATA_SCHEME_KEY']]
 
 
 @auth.requires_auth
@@ -57,8 +57,7 @@ def collect_sensor_info():
         if not validate_data(request.data, app):
             Response(response='Data not in json', status=httplib.BAD_REQUEST)
 
-        messages = [request.data]
-        publish_to_mq(messages, app)
+        publish_to_mq([request.data], app.config)
 
         return Response(response='RESPONSE', status=httplib.OK)
 
