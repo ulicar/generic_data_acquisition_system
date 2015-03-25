@@ -5,12 +5,10 @@ import logging
 
 from logging.handlers import TimedRotatingFileHandler
 
+
 class Configuration():
-    database = None
-    collection_name = None
-    mq_url = None
-    log_file = None
-    queue_name = None
+    def __init__(self):
+        pass
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
@@ -23,6 +21,7 @@ class Configuration():
         self.log_file = config.get('log', 'log_file')
 
         return self
+
 
 class Logger():
     logger = None
