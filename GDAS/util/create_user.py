@@ -5,8 +5,6 @@ import hashlib
 import sys
 import pymongo
 
-from GDAS.interfaces.contracts import users_pb2
-
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='Create users for GDAS')
