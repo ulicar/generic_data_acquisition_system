@@ -8,7 +8,11 @@ from logging.handlers import TimedRotatingFileHandler
 
 class Configuration():
     def __init__(self):
-        pass
+        self.mq_url = None
+        self.queue_name = None
+        self.database = None
+        self.collection_name = None
+        self.log_file = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
