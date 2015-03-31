@@ -1,41 +1,54 @@
 __author__ = 'jdomsic'
 
 import sys
-import json
 
-import pika
-
-from config import Configuration
+from util.communication import consumer
+from util.communication import publisher
 from util.input.argument_parser import argument_parser
+from config import Configuration
+
+
+class MessageSelector(object):
+    def __init__(self, cfg):
+        self.app_id = cfg.app_id
+        self.mq_url = cfg.mq_url
+        self.input = cfg.input
+        self.output = cfg.output
+        self.loq = cfg.log_file
+        self.routing_key = cfg.routing_key
+        self.consumer = None
+        self.publisher = None
+
+    def process(self, message):
+        # TODO: list -> to str maybe
+        return message
+
+    def on_message_received(self, message, message_type, properties):
+        print str(message)
+
+        self.publisher.publish(self.process(message))
+        self.consumer.acknowledge_msg()
+
+    def main(self):
+        publisher_settings = publisher.Settings(
+            self.app_id,
+            self.mq_url,
+            self.output,
+            self.routing_key
+        )
+        self.publisher = publisher.Publisher(publisher_settings)
+
+        consumer_settings = consumer.Settings(self.mq_url, self.input)
+        self.consumer = consumer.Consumer(consumer_settings)
+        self.consumer.consume(self.on_message_received)
 
 
 def main():
     args = argument_parser('Data Collector parser')
     cfg = Configuration().load_from_file(args.ini)
 
-    input_mq, input_mq_channel = open_mq_channel(cfg.mq_url)
-    output_mq, output_mq_channel = open_mq_channel(cfg.mq_url)
-
-    input_mq_channel.basic_consume(on_msg_received, queue='master', no_ack=True)
-    input_mq_channel.start_consuming()
-
-    output_mq.close()
-    input_mq.close()
-
-
-def open_mq_channel(mq_url):
-    mq = pika.BlockingConnection(pika.ConnectionParameters(host=mq_url))
-    mq_channel = mq.channel()
-    return mq, mq_channel
-
-
-def on_msg_received(ch, method, properties, body):
-    send_to_mq(json.dumps(json.loads(body)), ch, 'weather_collection', '')
-
-
-def send_to_mq(msg, channel, exchange, routing_key):
-    channel.basic_publish(exchange=exchange, routing_key=routing_key, body=msg)
-
+    message_selector = MessageSelector(cfg)
+    message_selector.main()
 
 if __name__ == '__main__':
     try:
