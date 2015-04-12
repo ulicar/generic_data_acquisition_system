@@ -2,27 +2,24 @@ __author__ = 'jdomsic'
 
 from setuptools import setup
 
-setup(name='GDAS Utility package',
+setup(name='GDAS.utils',
       version='1.0',
-      description='Utilitiy package for GDAS system',
+      description='Utility package for GDAS system',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/', [
-              'create_user',
-              'create_exchange'
+              'create_user.py',
+              'create_exchange.py'
           ])
       ],
       packages=[
-          'util.communication',
-          'util.database',
-          'util.input',
-          'util.security',
+          'GDAS'
       ],
       install_requires=[
-          'flask',
-          'pika',
-          'pymongo'
+          'flask==0.10.1',
+          'pika==0.9.14',
+          'pymongo==3.0'
       ]
 )
