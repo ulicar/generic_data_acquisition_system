@@ -1,0 +1,9 @@
+[gdas]
+mq_url = amqp://guest:guest@localhost:5672/%2F
+queue = ePrimary
+name = wizard_001
+
+[log]
+log_level = INFO
+log_file = /var/log/gdas/wizard001.log
+

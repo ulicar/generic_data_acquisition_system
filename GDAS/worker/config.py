@@ -24,17 +24,17 @@ class Configuration():
             'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
 
-        self.mq_url = config.get('GDAS', 'mq_url')
-        self.queue_name = config.get('GDAS', 'queue')
-        self.database = config.get('GDAS', 'database').split(':')
-        self.collection_name = config.get('GDAS', 'collection')
+        self.mq_url = config.get('gdas', 'mq_url')
+        self.queue_name = config.get('gdas', 'queue')
+        self.database = config.get('gdas', 'database').split(':')
+        self.collection_name = config.get('gdas', 'collection')
         self.logger = logging.basicConfig(
             filename=config.get('log', 'log_file'),
             filemode='a',
             format='%(asctime)s - %(levelname)s - %(message)s',
             level=log_level
         )
-        self.name = config.get('GDAS', 'name')
+        self.name = config.get('gdas', 'name')
 
         return self
 
