@@ -3,9 +3,9 @@ database = localhost:27017
 collection = sensor_data:weather_data
 mq_url = amqp://guest:guest@localhost:5672/%2F
 queue = weather
-name = weather_data_01
+name = weather_data_001
 
 [log]
 log_level = INFO
-log_file = /var/log/gdas/worker-weather_data.log 
+log_file = /var/log/gdas/worker-weather_data001.log
 
