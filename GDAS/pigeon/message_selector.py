@@ -2,9 +2,9 @@ __author__ = 'jdomsic'
 
 import sys
 
-from util.communication import consumer
-from util.communication import publisher
-from util.input.argument_parser import argument_parser
+from GDAS.utils.communication import consumer
+from GDAS.utils.communication import publisher
+from GDAS.utils.input.argument_parser import argument_parser
 from config import Configuration
 
 
