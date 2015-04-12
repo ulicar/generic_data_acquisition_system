@@ -29,10 +29,10 @@ class Configuration():
         self.database = config.get('gdas', 'database').split(':')
         self.collection_name = config.get('gdas', 'collection')
         self.logger = logging.basicConfig(
-                filename=config.get('log', 'log_file'),
-                filemode='a',
-                format='%(asctime)s - %(levelname)s - %(message)s',
-                level=log_level
+            filename=config.get('log', 'log_file'),
+            filemode='a',
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            level=log_level
         )
         self.name = config.get('gdas', 'name')
 
