@@ -3,38 +3,34 @@ __author__ = 'jdomsic'
 import ConfigParser
 import logging
 
-from logging.handlers import TimedRotatingFileHandler
 
 class Configuration():
-    database = None
-    mq_url = None
-    log_file = None
-    output_exchange = None
-    input_exchange = None
+    def __init__(self):
+        self.mq_url = None
+        self.output_exchange = None
+        self.core_url = None
+        self.logger = None
+        self.name = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
+        log_level = {
+            'DEBUG': logging.DEBUG,
+            'INFO': logging.INFO,
+            'WARNING': logging.WARNING,
+            'ERROR': logging.ERROR,
+            'CRITICAL': logging.CRITICAL
+        }[config.get('log', 'log_level')]
 
-        self.mq_url = config.get('core', 'mq_url')
-        self.input_exchange = config.get('core', 'input_mq')
+        self.mq_url = config.get('gdas', 'mq_url')
         self.output_exchange = config.get('core', 'output_mq')
-        self.database = config.get('core', 'database').split(':')
-        self.log_file = config.get('log', 'log_file')
+        self.logger = logging.basicConfig(
+            filename=config.get('log', 'log_file'),
+            filemode='a',
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            level=log_level
+        )
+        self.name = config.get('gdas', 'name')
 
         return self
-
-class Logger():
-    logger = None
-    log_filename = None
-
-    def create_logger(self, filename):
-        config = ConfigParser.ConfigParser()
-        config.read(filename)
-
-        self.log_filename = config.get('log', 'log_file')
-
-        log_handler = TimedRotatingFileHandler(self.log_filename)
-        log_handler.setLevel(logging.WARNING)
-
-        return log_handler
