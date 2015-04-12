@@ -1,8 +1,8 @@
-[core]
-mq_url = localhost:5672
+[gdas]
+mq_url = amqp://wizard:wizard@localhost:5672/%2F
+output_mq = primary
 core_url = http://localhost/api/ports
 
 [log]
 log_level = INFO
-log_file = /var/log/gdas/data_requster.log
-
+log_file = /var/log/gdas/data_requester.log
