@@ -80,7 +80,7 @@ def create_new_user(args, connection):
     description = args['user-descr']
     user_roles = set(args['--user-roles'])
 
-    user = users_pb2.user_t()
+    raise Exception('Not implemented')
     user.username = username
     user.password = password
     user.description = description

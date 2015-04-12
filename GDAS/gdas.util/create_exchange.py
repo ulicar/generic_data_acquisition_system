@@ -1,7 +1,6 @@
 __author__ = 'jdomsic'
 
 import pika
-import argparse
 
 MASTER_EXCHANGE = 'master'
 TYPE = 'fanout'  # == broadcast
