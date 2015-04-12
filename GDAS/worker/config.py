@@ -22,7 +22,7 @@ class Configuration():
                 'WARNING': logging.WARNING,
                 'ERROR': logging.ERROR,
                 'CRITICAL': logging.CRITICAL
-        }[config.get('log','log_level']
+        }[config.get('log', 'log_level')]
 
         self.mq_url = config.get('gdas', 'mq_url')
         self.queue_name = config.get('gdas', 'queue')
@@ -31,7 +31,7 @@ class Configuration():
         self.logger = logging.basicConfig(
                 filename=config.get('log', 'log_file'),
                 filemode='a',
-                format='%(asctime)s - %(levelname)s - %(message)s'
+                format='%(asctime)s - %(levelname)s - %(message)s',
                 level=log_level
         )
         self.name = config.get('gdas', 'name')
