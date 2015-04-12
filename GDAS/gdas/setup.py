@@ -1,6 +1,6 @@
 __author__ = 'jdomsic'
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='GDAS Utility package',
       version='1.0',
@@ -15,15 +15,14 @@ setup(name='GDAS Utility package',
           ])
       ],
       packages=[
-          'gdas.util.communication',
-          'gdas.util.database',
-          'gdas.util.input',
-          'gdas.util.security',
+          'util.communication',
+          'util.database',
+          'util.input',
+          'util.security',
       ],
       install_requires=[
           'flask',
           'pika',
           'pymongo'
       ]
-
 )
