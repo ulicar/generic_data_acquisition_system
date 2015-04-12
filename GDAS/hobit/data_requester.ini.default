@@ -1,8 +1,8 @@
 [core]
-mq_url = localhost
+mq_url = localhost:5672
 core_url = http://localhost/api/ports
 
 [log]
-log_file = utils/logging/logger
-
+log_level = INFO
+log_file = /var/log/gdas/data_requster.log
 
