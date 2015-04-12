@@ -1,1 +1,1 @@
-include message_process.ini.default
+include message_collector.ini.default

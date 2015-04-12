@@ -8,5 +8,14 @@ setup(name='GDAS Wizard',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
       url='https://github.com/ulicar/generic_data_acquisition_system',
-      packages=['distutils', 'distutils.command'],
-     )
+
+      data_files=[
+          ('/opt/gdas/wizard', [
+              'message_collector.py',
+              'config.py'
+          ]),
+          ('/etc/gdas/wizard', [
+              'message_collector.ini.default'
+          ])
+      ]
+)
