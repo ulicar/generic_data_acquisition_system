@@ -23,14 +23,15 @@ class Configuration():
             'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
 
-        self.mq_url = config.get('gdas', 'mq_url')
-        self.output_exchange = config.get('core', 'output_mq')
         self.logger = logging.basicConfig(
             filename=config.get('log', 'log_file'),
             filemode='a',
             format='%(asctime)s - %(levelname)s - %(message)s',
             level=log_level
         )
+
+        self.mq_url = config.get('gdas', 'mq_url')
+        self.output_exchange = config.get('gdas', 'output_mq')
         self.name = config.get('gdas', 'name')
 
         return self
