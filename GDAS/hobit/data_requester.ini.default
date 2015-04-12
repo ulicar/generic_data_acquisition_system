@@ -1,0 +1,8 @@
+[core]
+mq_url = localhost
+core_url = http://localhost/api/ports
+
+[log]
+log_file = utils/logging/logger
+
+
