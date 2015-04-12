@@ -14,7 +14,7 @@ setup(name='GDAS Worker',
               'config.py'
           ]),
           ('/etc/gdas/worker', [
-              'message_process.ini.default'
+              'message_processor.ini.default'
           ])
       ]
 )
