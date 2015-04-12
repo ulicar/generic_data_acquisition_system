@@ -3,5 +3,4 @@ README.txt
 config.py
 message_processor.ini.default
 message_processor.py
-setup.cfg
 setup.py

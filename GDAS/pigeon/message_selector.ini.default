@@ -1,11 +1,9 @@
 [core]
 database = localhost:27017
-mq_url = localhost
+mq_url = amqp://guest:guest@localhost:5672/%2F
 input_mq = master
 output_mq = weather_collection
 
 [log]
-log_file = utils/logging/logger
-
-[collector_feed]
-field = value
+log_file = /var/log/gdas/pigeon/pigeon_01.log
+log_level = INFO
