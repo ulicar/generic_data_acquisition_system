@@ -17,11 +17,11 @@ class Configuration():
         config = ConfigParser.ConfigParser()
         config.read(filename)
         log_level = {
-                'DEBUG': logging.DEBUG,
-                'INFO': logging.INFO,
-                'WARNING': logging.WARNING,
-                'ERROR': logging.ERROR,
-                'CRITICAL': logging.CRITICAL
+            'DEBUG': logging.DEBUG,
+            'INFO': logging.INFO,
+            'WARNING': logging.WARNING,
+            'ERROR': logging.ERROR,
+            'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
 
         self.mq_url = config.get('gdas', 'mq_url')
