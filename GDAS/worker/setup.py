@@ -8,5 +8,13 @@ setup(name='GDAS Worker',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
       url='https://github.com/ulicar/generic_data_acquisition_system',
-      packages=['distutils', 'distutils.command'],
-     )
+      data_files=[
+          ('/opt/gdas/worker', [
+              'message_processor.py',
+              'config.py'
+          ]),
+          ('/etc/gdas/worker', [
+              'message_process.ini.default'
+          ])
+      ]
+)
