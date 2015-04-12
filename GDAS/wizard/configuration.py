@@ -21,26 +21,13 @@ class Config(object):
 
 class ProductionConfig(Config):
     DATABASE = 'localhost', 27017
-    MQ_URL = 'amqp://guest:guest@localhost:5672/%2F'
+    MQ_URL = 'amqp://wizard:wizard@localhost:5672/%2F'
     ROLES = ['upload']
-    LOG = 'util/logging/file_log.txt'
-    EXCHANGE = 'master'
+    LOG = '/var/log/gdas/wizard/wizard_01.log'
+    EXCHANGE = 'primary'
     APP_ID = 'master_publisher'
-
-
-class DevelopmentConfig(Config):
-    DATABASE = 'localhost', 27017
-    ROLES = ['upload']
-    LOG = 'util/logging/file_log.txt'
-    EXCHANGE = 'master'
-
-
-class TestingConfig(Config):
-    DATABASE = 'localhost', 27017
-    ROLES = ['upload']
-    LOG = 'utils/logging/file_log.txt'
-    EXCHANGE = 'simple'
 
 
 app = Flask(__name__)
 app.config.from_object(ProductionConfig)
+
