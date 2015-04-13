@@ -11,6 +11,8 @@ TESTS=tests
 WIZARD=wizard
 WORKER=worker
 
+PACKAGES={$UTIL $HOBBIT $WORKER $WIZARD $PIGEON}
+
 [ -d $HOBBIT ] || echo "$HOBBIT directory missing. Are you in GDAS directory? " || exit -1
 [ -d $PIGEON ] || echo "$PIGEON directory missing" || exit -1
 [ -d $UTIL   ] || echo "$UTIL   directory missing" || exit -1
@@ -29,7 +31,14 @@ python -c 'import setuptools' 2>/dev/null
 # Install subsystems
 echo -e 'Starting installation...\n'
 
-PACKAGES={$UTIL $HOBBIT $WORKER $WIZARD $PIGEON}
+# Creating Users
+for package in ${array[*]}
+do
+    adduser gdas_${package} -g gdas
+    echo -e "Created gdas_${package} user.\n"
+done
+
+# Install packages
 for package in ${array[*]}
 do
     cd ${GDAS}${package}
