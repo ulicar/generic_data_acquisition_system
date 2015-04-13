@@ -8,5 +8,13 @@ setup(name='GDAS Pigdeon',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
       url='https://github.com/ulicar/generic_data_acquisition_system',
-      packages=['distutils', 'distutils.command'],
-     )
+      data_files=[
+          ('/opt/gdas/pigeon', [
+              'message_selector.py',
+              'config.py'
+          ]),
+          ('/etc/gdas/pigeon', [
+              'message_selector.ini.default'
+          ])
+      ]
+)
