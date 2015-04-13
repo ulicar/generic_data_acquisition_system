@@ -1,6 +1,6 @@
 __author__ = 'jdomsic'
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='GDAS Worker',
       version='1.0',
