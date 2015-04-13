@@ -30,12 +30,11 @@ python -c 'import setuptools' 2>/dev/null
 
 # Install subsystems
 echo -e 'Starting installation...\n'
-
-# Creating Users
+#Creating Users
 for package in ${array[*]}
 do
-    adduser gdas_${package} -g gdas
-    echo -e "Created gdas_${package} user.\n"
+    adduser ${package} -g gdas
+    echo -e "Created ${package} user.\n"
 done
 
 # Install packages
