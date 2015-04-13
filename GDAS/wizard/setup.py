@@ -16,5 +16,9 @@ setup(name='GDAS Wizard',
           ('/etc/gdas/wizard', [
               'message_collector.ini.default'
           ])
+      ],
+      install_requires=[
+          'GDAS.utils',
+          'flask=0.10.1'
       ]
 )

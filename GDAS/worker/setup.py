@@ -16,5 +16,10 @@ setup(name='GDAS Worker',
           ('/etc/gdas/worker', [
               'message_processor.ini.default'
           ])
+      ],
+      install_requires=[
+         'GDAS.utils',
+         'validictory',
+         'flask=0.10'
       ]
 )

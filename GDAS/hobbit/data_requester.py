@@ -4,8 +4,8 @@ import sys
 import requests
 import validictory
 
-from util.input.argument_parser import argument_parser
-from util.communication import publisher
+from GDAS.utils.input.argument_parser import argument_parser
+from GDAS.utils.communication import publisher
 from config import Configuration
 
 

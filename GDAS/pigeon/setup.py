@@ -16,5 +16,8 @@ setup(name='GDAS Pigdeon',
           ('/etc/gdas/pigeon', [
               'message_selector.ini.default'
           ])
+      ],
+      install_requires=[
+          'GDAS.utils'
       ]
 )

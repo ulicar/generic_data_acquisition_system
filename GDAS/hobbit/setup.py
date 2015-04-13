@@ -16,5 +16,10 @@ setup(name='GDAS Hobbit',
           ('/etc/gdas/hobbit', [
               'message_requester.ini.default'
           ])
+      ],
+      install_requires=[
+          'requests',
+          'validictory',
+          'GDAS.utils'
       ]
 )
