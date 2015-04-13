@@ -1,7 +1,8 @@
 [gdas]
-mq_url = amqp://wizard:wizard@localhost:5672/%2F
+mq_url = amqp://hobbit:hobbit@localhost:5672/%2F
 output_mq = primary
-core_url = http://localhost/api/ports
+core_url = http://localhost:8000/api/ports
+name = Localhost-CPU-collector
 
 [log]
 log_level = INFO

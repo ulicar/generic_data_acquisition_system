@@ -30,8 +30,9 @@ class Configuration():
             level=log_level
         )
 
-        self.mq_url = config.get('GDAS', 'mq_url')
-        self.output_exchange = config.get('GDAS', 'output_mq')
-        self.name = config.get('GDAS', 'name')
+        self.mq_url = config.get('gdas', 'mq_url')
+        self.output_exchange = config.get('gdas', 'output_mq')
+        self.core_url = config.get('gdas', 'core_url')
+        self.name = config.get('gdas', 'name')
 
         return self
