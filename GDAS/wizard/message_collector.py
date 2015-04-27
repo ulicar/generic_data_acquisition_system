@@ -12,6 +12,7 @@ from flask import request
 from GDAS.utils.security import UserAuth
 from GDAS.utils.communication import publisher
 
+
 app = Flask(__name__)
 
 config = ConfigParser.ConfigParser()
