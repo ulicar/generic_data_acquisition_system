@@ -1,5 +1,7 @@
 __author__ = 'jdomsic'
 
+import hashlib
+
 from flask import request
 from flask import Response
 
@@ -16,33 +18,36 @@ class UserAuth(object):
 
         self.user_roles = None
 
-    def authentificate(self, auth):
-        if not auth and not auth.username and not auth.password:
+    def authentificate(self, username, password):
+        if not username or not password:
             return False
 
-        self.db.open('accounts')
-        user_info = self.db.read(auth.username)
+        self.db.open('gdas/accounts')
+        user_info = self.db.read(username)
         if not user_info:
             return False
 
-        self.user = auth.username
+        self.user = username
         self.user_roles = user_info['roles']
         self.password = user_info['password']
 
-        if self.password != auth.password:
+        if self.password != hashlib.sha1(password):
             return False
 
         return True
 
     def authorize(self, required_roles):
-        if self.user == 'gdas':
-            return True
-
         for role in required_roles:
             if role not in self.user_roles:
                 return False
 
         return True
+
+    def is_admin(self, username, password):
+        if username == 'gdas' and self.authentificate(username, password):
+            return True
+
+        return False
 
 
 def requires_auth(f):
