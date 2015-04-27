@@ -2,7 +2,6 @@ __author__ = 'jdomsic'
 
 import ConfigParser
 import httplib
-import json
 import logging
 import sys
 
@@ -39,30 +38,15 @@ logging.basicConfig(
 )
 
 
-def validate_data(user_data, config):
-    scheme = config['DATA_SCHEME']
-    for data in user_data:
-        if not validictory.validate(data, scheme):
-            return False
-
-    return True
-
-
-def publish_to_mq(messages, config):
+def publish_to_mq(messages):
     assert isinstance(messages, list), "messages must be a list"
 
     exchange_name, queue_name = QUEUE.split(':')
-    routing_key = get_message_type(messages[0], config)
-
+    routing_key = queue_name.split('.')[-1]
     settings = publisher.Settings(NAME, queue_name, exchange_name, routing_key)
 
     queue = publisher.Publisher(settings)
-
     queue.publish(messages)
-
-
-def get_message_type(user_data, config):
-    return json.loads(user_data)[0][config['DATA_SCHEME_KEY']]
 
 
 @app.route('/wizard/upload', methods=['POST'])
@@ -79,7 +63,7 @@ def collect_sensor_info():
 
     logging.info('Received upload from: %s' % request.authorization.username)
 
-    publish_to_mq([request.data], app.config)
+    publish_to_mq(list(request.data))
 
     return Response(response='uploaded', status=httplib.OK)
 
