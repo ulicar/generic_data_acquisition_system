@@ -18,7 +18,7 @@ setup(name='GDAS Wizard',
           ])
       ],
       install_requires=[
-          'GDAS.utils',
+          'GDAS',
           'flask=0.10.1'
       ]
 )
