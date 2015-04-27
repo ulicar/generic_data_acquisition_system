@@ -10,8 +10,7 @@ setup(name='GDAS Wizard',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/wizard', [
-              'message_collector.py',
-              'config.py'
+              'message_collector.py'
           ]),
           ('/etc/gdas/wizard', [
               'message_collector.ini.default'
