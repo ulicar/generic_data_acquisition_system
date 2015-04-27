@@ -3,10 +3,10 @@ __author__ = 'jdomsic'
 import sys
 
 from config import Configuration
-from util.database.connection import Fatty
-from util.input.argument_parser import argument_parser
-from util.communication.consumer import Consumer
-from util.communication.consumer import Settings
+from GDAS.utils.database.connection import Fatty
+from GDAS.utils.input.argument_parser import argument_parser
+from GDAS.utils.communication.consumer import Consumer
+from GDAS.utils.communication.consumer import Settings
 
 
 class MessageProcessor(object):

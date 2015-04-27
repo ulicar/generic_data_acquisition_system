@@ -2,24 +2,24 @@ __author__ = 'jdomsic'
 
 from setuptools import setup
 
-setup(name='GDAS Worker',
+setup(name='GDAS Hobbit',
       version='1.0',
-      description='GDAS message processor',
+      description='GDAS message requester',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
-          ('/opt/gdas/worker', [
-              'message_processor.py',
+          ('/opt/gdas/hobbit', [
+              'message_requester.py',
               'config.py'
           ]),
-          ('/etc/gdas/worker', [
-              'message_processor.ini.default'
+          ('/etc/gdas/hobbit', [
+              'message_requester.ini.default'
           ])
       ],
       install_requires=[
-         'GDAS.utils',
-         'validictory',
-         'flask=0.10'
+          'requests',
+          'validictory',
+          'GDAS.utils'
       ]
 )

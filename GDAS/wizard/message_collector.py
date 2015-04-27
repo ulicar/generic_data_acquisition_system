@@ -4,14 +4,14 @@ import httplib
 import json
 import validictory
 
-from configuration import app
+from config import app
 from flask import Response
 from flask import request
 
-from util.database.connection import Fatty
-from util.security import auth
+from GDAS.utils.database.connection import Fatty
+from GDAS.utils.security import auth
 
-from util.communication import publisher
+from GDAS.utils.communication import publisher
 
 
 def validate_data(user_data, config):

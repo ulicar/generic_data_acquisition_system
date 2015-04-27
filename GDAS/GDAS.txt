@@ -13,6 +13,6 @@ alias MongoStop='sudo service mongod stop'
 
 -- localhost:27017
 
-requires: validictory
+requires: validictory, flask, mongodb, pymongo, pika
 
 source bin/activate

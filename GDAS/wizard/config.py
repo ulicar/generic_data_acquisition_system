@@ -3,15 +3,23 @@ __author__ = 'jdomsic'
 import ConfigParser
 import logging
 
+from flask import Flask
 
-class Configuration():
+
+class Config(object):
     def __init__(self):
-        self.mq_url = None
-        self.queue_name = None
-        self.database = None
-        self.collection_name = None
-        self.logger = None
-        self.name = None
+        self.DEBUG = False
+        self.TESTING = False
+
+        self.MQ_URL = None
+        self.QUEUE = None
+        self.LOGGER = None
+        self.NAME = None
+
+        self.DATA_SCHEME_KEY = 'module'
+        self.DATA_SCHEME = {
+        'TYPE': ''
+    }
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
@@ -24,17 +32,20 @@ class Configuration():
             'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
 
-        self.mq_url = config.get('gdas', 'mq_url')
-        self.queue_name = config.get('gdas', 'queue')
-        self.database = config.get('gdas', 'database').split(':')
-        self.collection_name = config.get('gdas', 'collection')
-        self.logger = logging.basicConfig(
+        self.MQ_URL = config.get('gdas', 'mq_url')
+        self.QUEUE = config.get('gdas', 'queue')
+
+        self.LOGGER = logging.basicConfig(
             filename=config.get('log', 'log_file'),
             filemode='a',
             format='%(asctime)s - %(levelname)s - %(message)s',
             level=log_level
         )
-        self.name = config.get('gdas', 'name')
+        self.NAME = config.get('gdas', 'name')
 
-        return self
+
+app = Flask(__name__)
+config = Config()
+config.load_from_file()
+app.config.from_object(config)
 
