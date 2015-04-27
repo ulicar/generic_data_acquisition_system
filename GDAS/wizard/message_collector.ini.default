@@ -1,7 +1,7 @@
 [gdas]
 mq_url = amqp://guest:guest@localhost:5672/%2F
 database = localhost:29027
-queue = ePrimary:qPrimary.all
+queue = ePrimary:qDefault.all
 name = wizard_001
 
 [log]
