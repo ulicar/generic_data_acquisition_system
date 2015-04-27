@@ -3,9 +3,16 @@ __author__ = 'jdomsic'
 import pika
 
 EXCHANGES = ['ePrimary', 'eSecondary', 'eDead']
-QUEUES = ['qPrimary.cpu', 'qPrimary.temp', 'qSecondary.cpu']
-# Second part of Queue name is also a routing key for a exchange
+
+QUEUES = [
+    'qDefault.all',
+    'qPrimary.cpu',
+    'qPrimary.temp',
+    'qSecondary.cpu'
+]
+
 BINDINGS = {
+    'qDefault.all': 'ePrimary',
     'qPrimary.cpu': 'ePrimary',
     'qPrimary.temp': 'ePrimary',
     'qSecondary.cpu': 'eSecondary',
