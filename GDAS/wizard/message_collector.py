@@ -1,17 +1,42 @@
 __author__ = 'jdomsic'
 
+import ConfigParser
 import httplib
 import json
-import validictory
+import logging
+import sys
 
-from config import app
+from flask import Flask
 from flask import Response
 from flask import request
 
-from GDAS.utils.database.connection import Fatty
-from GDAS.utils.security import auth
-
+from GDAS.utils.security import UserAuth
 from GDAS.utils.communication import publisher
+
+app = Flask(__name__)
+
+config = ConfigParser.ConfigParser()
+config.read(sys.argv[1])
+
+QUEUE = config.get('gdas', 'queue')
+NAME = config.get('gdas', 'name')
+MQ_URL = config.get('gdas', 'mq_url')
+DATABASE = config.get('gdas', 'database').split(':')
+
+log_level = {
+    'DEBUG': logging.DEBUG,
+    'INFO': logging.INFO,
+    'WARNING': logging.WARNING,
+    'ERROR': logging.ERROR,
+    'CRITICAL': logging.CRITICAL
+}[config.get('log', 'log_level')]
+
+logging.basicConfig(
+    filename=config.get('log', 'log_file'),
+    filemode='a',
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=log_level
+)
 
 
 def validate_data(user_data, config):
@@ -26,14 +51,13 @@ def validate_data(user_data, config):
 def publish_to_mq(messages, config):
     assert isinstance(messages, list), "messages must be a list"
 
+    exchange_name, queue_name = QUEUE.split(':')
     routing_key = get_message_type(messages[0], config)
 
-    settings = publisher.Settings(config['APP_ID'],
-                                  config['MQ_URL'],
-                                  config['EXCHANGE'],
-                                  routing_key)
+    settings = publisher.Settings(NAME, queue_name, exchange_name, routing_key)
 
     queue = publisher.Publisher(settings)
+
     queue.publish(messages)
 
 
@@ -41,27 +65,23 @@ def get_message_type(user_data, config):
     return json.loads(user_data)[0][config['DATA_SCHEME_KEY']]
 
 
-@auth.requires_auth
 @app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
-    with open(app.config['LOG'], 'r') as l:
-        db_connection = Fatty(app.config['DATABASE'])
-        if not auth.authentificate(request, db_connection):
-            return Response(response='Wrong username/password',
-                            status=httplib.UNAUTHORIZED)
+    auth = UserAuth()
 
-        if not auth.authorize(app, request, db_connection):
-            return Response(response='Not allowed for this user',
-                            status=httplib.FORBIDDEN)
+    if not auth.authentificate(request.authorization):
+        return Response(response='Wrong username/password',
+                        status=httplib.UNAUTHORIZED)
 
-        if not validate_data(request.data, app):
-            Response(response='Data not in json', status=httplib.BAD_REQUEST)
+    if not auth.authorize(app, request.authorization):
+        return Response(response='Not allowed for this user',
+                        status=httplib.FORBIDDEN)
 
-        publish_to_mq([request.data], app.config)
+    logging.info('Received upload from: %s' % request.authorization.username)
 
-        return Response(response='RESPONSE', status=httplib.OK)
+    publish_to_mq([request.data], app.config)
 
-    return Response(response='error', status=httplib.INTERNAL_SERVER_ERROR)
+    return Response(response='uploaded', status=httplib.OK)
 
 
 if __name__ == '__main__':

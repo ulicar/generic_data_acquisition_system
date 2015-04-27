@@ -1,9 +1,12 @@
 [gdas]
 mq_url = amqp://guest:guest@localhost:5672/%2F
-queue = ePrimary
+database = localhost:29027
+queue = ePrimary:qPrimary.all
 name = wizard_001
 
 [log]
 log_level = INFO
 log_file = /var/log/gdas/wizard001.log
 
+[wizard]
+required_roles = upload
