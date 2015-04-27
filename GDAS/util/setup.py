@@ -7,19 +7,25 @@ setup(name='GDAS.utils',
       description='Utility package for GDAS system',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
+      license='MIT',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/', [
               'create_user.py',
-              'create_exchange.py'
+              'setup_rabbit.py'
           ])
       ],
       packages=[
-          'GDAS'
+          'GDAS.utils',
+          'GDAS.utils.communication',
+          'GDAS.utils.database',
+          'GDAS.utils.input',
+          'GDAS.utils.security'
       ],
       install_requires=[
           'flask==0.10.1',
           'pika==0.9.14',
-          'pymongo==3.0'
+          'pymongo==3.0',
+          'validictory'
       ]
 )
