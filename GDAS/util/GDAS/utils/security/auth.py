@@ -5,11 +5,44 @@ from flask import Response
 
 from functools import wraps
 
+from GDAS.utils.database.connection import Fatty
 
-def authentificate(app, db_client):
-    return True
-    # TODO:
-    master_db = db_client['master']
+
+class UserAuth(object):
+    def __init__(self):
+        self.db = Fatty()
+        self.user = None
+        self.password = None
+
+        self.user_roles = None
+
+    def authentificate(self, auth):
+        if not auth and not auth.username and not auth.password:
+            return False
+
+        self.db.open('accounts')
+        user_info = self.db.read(auth.username)
+        if not user_info:
+            return False
+
+        self.user = auth.username
+        self.user_roles = user_info['roles']
+        self.password = user_info['password']
+
+        if self.password != auth.password:
+            return False
+
+        return True
+
+    def authorize(self, required_roles):
+        if self.user == 'gdas':
+            return True
+
+        for role in required_roles:
+            if role not in self.user_roles:
+                return False
+
+        return True
 
 
 def requires_auth(f):
@@ -30,18 +63,3 @@ def requires_json(f):
             return Response('Accepts only Content-Type: application/json', 400)
         return f(*args, **kwargs)
     return decorated
-
-
-def authorize(username, required_roles, db):
-    return True # TODO: debug
-
-    user_roles = get_roles_for_user(username, db)
-    for role in required_roles:
-        if role not in user_roles:
-            return False
-
-    return True
-
-
-def get_roles_for_user(username, db):
-    return ['upload']
