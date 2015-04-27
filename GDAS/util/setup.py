@@ -2,7 +2,7 @@ __author__ = 'jdomsic'
 
 from setuptools import setup
 
-setup(name='GDAS.utils',
+setup(name='GDAS',
       version='1.0',
       description='Utility package for GDAS system',
       author='Josip Domsic',
@@ -16,6 +16,7 @@ setup(name='GDAS.utils',
           ])
       ],
       packages=[
+          'GDAS',
           'GDAS.utils',
           'GDAS.utils.communication',
           'GDAS.utils.database',
