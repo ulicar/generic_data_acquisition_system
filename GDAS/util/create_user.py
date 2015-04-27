@@ -3,7 +3,9 @@ __author__ = 'jdomsic'
 import argparse
 import hashlib
 import sys
-import pymongo
+
+from GDAS.utils.database.connection import Fatty
+from GDAS.utils.security.auth import UserAuth
 
 
 def get_arguments():
@@ -12,18 +14,21 @@ def get_arguments():
     parser.add_argument(
         'user_name',
         metavar='USERNAME',
+        required=True,
         help='Username for new user'
     )
 
     parser.add_argument(
         'password',
         metavar='PASSWORD',
+        required=True,
         help='Password for new user'
     )
 
     parser.add_argument(
         'user-descr',
         metavar='USERDECSRIPTION',
+        required=True,
         help='Description for new user'
     )
 
@@ -37,12 +42,14 @@ def get_arguments():
     parser.add_argument(
         'admin-username',
         metavar='ADMINUSERNAME',
+        required=True,
         help='Username for admin user)'
     )
 
     parser.add_argument(
-        'admin-password',
+        'admin-pass',
         metavar='ADMINPASS',
+        required=True,
         help='Password for admin user'
     )
 
@@ -57,44 +64,36 @@ def get_arguments():
         '--collection',
         metavar='COLLECTION',
         help='DB Collection in form db.collection',
-        default='master.users'
+        default='gdas/accounts'
     )
 
     return parser.parse_args()
 
 
-def open_db_connection(args):
-    db_url = args['--database']
-    db_name, conn_name = args['--collection'].split('.')
-
-    db_client = pymongo.MongoClient(db_url)
-    db = db_client[db_name]
-    collection = db[conn_name]
-
-    return collection
-
-
-def create_new_user(args, connection):
-    username = args['user_name']
-    password = hashlib.sha1(args['password'])
-    description = args['user-descr']
-    user_roles = set(args['--user-roles'])
-
-    raise Exception('Not implemented')
-    user.username = username
-    user.password = password
-    user.description = description
-    user.user_roles.update(user_roles)
-
-    connection.insert(user)
-
-
 def main():
     args = get_arguments()
 
-    conn = open_db_connection(args)
-    create_new_user(args, conn)
+    username = args['user_name']
+    password = hashlib.sha1(args['password'])
+    description = args['user_descr']
+    user_roles = set(args['user_roles'])
 
+    user = {
+        'username': username,
+        'password': password,
+        'descr': description,
+        'roles': user_roles
+    }
+
+    auth = UserAuth()
+    if not auth.is_admin(args['admin_username'], args['admin_pass']):
+        raise Exception('Only admin can add users')
+
+    url = args['database'].split(':')
+    db = Fatty(url)
+    db.open(args['collection'])
+
+    db.write(user)
 
 if __name__ == '__main__':
     try:
