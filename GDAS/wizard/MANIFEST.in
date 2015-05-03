@@ -1,1 +1,5 @@
 include message_collector.ini.default
+include message_collector.py
+include config.py
+include setup.py
+include README.txt
