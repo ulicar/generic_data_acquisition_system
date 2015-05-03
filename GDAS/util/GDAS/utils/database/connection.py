@@ -4,12 +4,12 @@ from pymongo import MongoClient
 
 
 class Fatty(object):
-    def __init__(self, db=('localhost', '29027')):
+    def __init__(self, db=('localhost', 29027)):
         self.host, self.port = db
         self.collection = None
 
-    def open(self, collection):
-        self.collection = MongoClient(self.host, self.port)[collection]
+    def open(self, database, collection):
+        self.collection = MongoClient(self.host, int(self.port))[database][collection]
 
     def close(self):
         self.collection = None
