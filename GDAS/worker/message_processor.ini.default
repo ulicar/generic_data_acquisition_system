@@ -8,4 +8,3 @@ name = weather_data_001
 [log]
 log_level = INFO
 log_file = /var/log/gdas/worker-weather_data001.log
-
