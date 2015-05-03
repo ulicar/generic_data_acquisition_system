@@ -53,23 +53,32 @@ def publish_to_mq(messages):
 
 @app.route('/wizard/upload', methods=['GET'])
 def collect_sensor_info():
-    auth = UserAuth()
-    username = request.authorization['username']
-    password = request.authorization['password']
+    try:
+        auth = UserAuth()
+        username = request.authorization['username']
+        password = request.authorization['password']
 
-    if not auth.authentificate(username, password):
-        return Response(response='Wrong username/password',
-                        status=httplib.UNAUTHORIZED)
+        if not auth.authentificate(username, password):
+            return Response(response='Wrong username/password',
+                            status=httplib.UNAUTHORIZED)
 
-    if not auth.authorize(app, ):
-        return Response(response='Not allowed for this user',
-                        status=httplib.FORBIDDEN)
+        if not auth.authorize(ROLES):
+            return Response(response='Not allowed for this user',
+                            status=httplib.FORBIDDEN)
 
-    logging.info('Received upload from: %s' % username)
+        logging.info('Received upload from: %s' % username)
 
-    publish_to_mq(list(request.data))
+        try:
+            publish_to_mq(list(request.data))
+        except StopIteration:
+            return Response('Empty payload', status=httplib.BAD_REQUEST)
 
-    return Response(response='uploaded', status=httplib.OK)
+        return Response(response='uploaded', status=httplib.OK)
+
+    except Exception as e:
+        logging.error(str(e))
+
+    return Response(response='', status=httplib.INTERNAL_SERVER_ERROR)
 
 
 if __name__ == '__main__':
