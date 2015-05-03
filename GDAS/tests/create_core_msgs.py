@@ -5,6 +5,7 @@ import string
 import time
 import json
 
+
 class AggregatorMessage():
     def __init__(self, dbID, name, ip, port, ports_path, ports_status, res_path, res_status, unique_id, time, err):
         self._id = dbID
@@ -40,11 +41,14 @@ def create_random_string(size):
     choices = string.ascii_letters
     return ''.join(random.choice(choices) for _ in range(size))
 
+
 def create_random_value(min, max):
     return random.randint(min, max)
 
+
 def create_timestamp():
     return str(int(time.time()))
+
 
 def create_random_core_message():
     rand_id = create_random_string(10)
