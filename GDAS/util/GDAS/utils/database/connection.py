@@ -4,7 +4,7 @@ from pymongo import MongoClient
 
 
 class Fatty(object):
-    def __init__(self, db=('localhost', 29027)):
+    def __init__(self, db=('localhost', 27017)):
         self.host, self.port = db
         self.collection = None
 
@@ -16,6 +16,11 @@ class Fatty(object):
 
     def read(self, query):
         data = self.collection.find(query)
+
+        return data
+
+    def get_record(self, key, value):
+        data = self.collection.find_one({key: value})
 
         return data
 
