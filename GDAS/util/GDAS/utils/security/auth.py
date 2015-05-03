@@ -22,8 +22,8 @@ class UserAuth(object):
         if not username or not password:
             return False
 
-        self.db.open('gdas/accounts')
-        user_info = self.db.read(username)
+        self.db.open('gdas', 'accounts')
+        user_info = self.db.get_record('username', username)
         if not user_info:
             return False
 
@@ -31,7 +31,9 @@ class UserAuth(object):
         self.user_roles = user_info['roles']
         self.password = user_info['password']
 
-        if self.password != hashlib.sha1(password):
+        if self.password != hashlib.sha1(password).hexdigest() + \
+                hashlib.sha1(username).hexdigest():
+
             return False
 
         return True
