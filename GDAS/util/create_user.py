@@ -64,7 +64,7 @@ def main():
     user_roles = set(args['user_roles'])
 
     user = {
-        'username' : username,
+        'username': username,
         'password': password,
         'description': description,
         'roles': list(user_roles)
