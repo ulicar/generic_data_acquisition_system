@@ -9,7 +9,7 @@ from flask import Flask
 from flask import Response
 from flask import request
 
-from GDAS.utils.security import UserAuth
+from GDAS.utils.security.auth import UserAuth
 from GDAS.utils.communication import publisher
 
 
@@ -22,6 +22,7 @@ QUEUE = config.get('gdas', 'queue')
 NAME = config.get('gdas', 'name')
 MQ_URL = config.get('gdas', 'mq_url')
 DATABASE = config.get('gdas', 'database').split(':')
+ROLES = config.get('wizard', 'required_roles').split(',')
 
 log_level = {
     'DEBUG': logging.DEBUG,
@@ -50,19 +51,21 @@ def publish_to_mq(messages):
     queue.publish(messages)
 
 
-@app.route('/wizard/upload', methods=['POST'])
+@app.route('/wizard/upload', methods=['GET'])
 def collect_sensor_info():
     auth = UserAuth()
+    username = request.authorization['username']
+    password = request.authorization['password']
 
-    if not auth.authentificate(request.authorization):
+    if not auth.authentificate(username, password):
         return Response(response='Wrong username/password',
                         status=httplib.UNAUTHORIZED)
 
-    if not auth.authorize(app, request.authorization):
+    if not auth.authorize(app, ):
         return Response(response='Not allowed for this user',
                         status=httplib.FORBIDDEN)
 
-    logging.info('Received upload from: %s' % request.authorization.username)
+    logging.info('Received upload from: %s' % username)
 
     publish_to_mq(list(request.data))
 
