@@ -63,6 +63,10 @@ def main():
     description = args['user-descr']
     user_roles = set(args['user_roles'])
 
+    auth = UserAuth()
+    if not auth.is_admin(args['admin-username'], args['admin-pass']):
+        raise Exception('Only admin can add users.')
+
     user = {
         'username': username,
         'password': password,
