@@ -1,1 +1,5 @@
 include message_requester.ini.default
+include message_requester.py
+include config.py
+include setup.py
+include README.txt
