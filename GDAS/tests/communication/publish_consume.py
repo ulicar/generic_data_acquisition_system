@@ -3,8 +3,8 @@ __author__ = 'jdomsic'
 import time
 import sys
 
-from util.communication import publisher
-from util.communication import consumer
+from GDAS.utils.communication import publisher
+from GDAS.utils.communication import consumer
 
 MQ = 'amqp://guest:guest@localhost:5672/%2F'
 MESSAGE = 'string data'
