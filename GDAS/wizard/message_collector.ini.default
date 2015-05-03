@@ -9,4 +9,4 @@ log_level = INFO
 log_file = /var/log/gdas/wizard001.log
 
 [wizard]
-required_roles = upload
+required_roles = basic/upload,wizard/upload
