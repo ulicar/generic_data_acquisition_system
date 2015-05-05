@@ -26,7 +26,6 @@ class MessageSelector(object):
         self.consumer = None
         self.publisher = None
 
-
     def main(self):
         publisher_settings = publisher.Settings(
             self.app_id,
@@ -46,7 +45,7 @@ class MessageSelector(object):
             self.consumer.reject_msg()
 
         if not self.validate(message):
-            #TODO: what to do with them
+            # TODO: what to do with them
             self.consumer.reject_msg()
 
             return
@@ -54,12 +53,15 @@ class MessageSelector(object):
         self.publisher.publish()
         self.consumer.acknowledge_msg()
 
-
     def validate(self, message):
-        validictory.validate(message, self.schema)
+        try:
+            return validictory.validate(message, self.schema)
 
+        except ValueError as ve:
+            logging.WARNING(str(ve))
+            logging.WARNING(str(message))
 
-
+        return False
 
 
 def main():
