@@ -49,16 +49,19 @@ class MessageSelector(object):
 
             return
 
-        if not self.validate(json.loads(message)):
+        msg = json.loads(message)
+        if not self.validate(msg):
             self.consumer.reject_msg()
 
             return
 
         # TODO: implement recieving bulk messages
-        self.messages.append(message)
+        self.messages.append(msg)
         if len(self.messages) >= 10:
+            self.messages, msgs = list(), [json.dumps(self.messages)]
+
             self.publisher.run_connection = True
-            self.publisher.publish(self.messages)
+            self.publisher.publish(msgs)
 
         self.consumer.acknowledge_msg()
 
