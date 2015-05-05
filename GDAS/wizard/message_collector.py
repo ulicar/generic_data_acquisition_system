@@ -5,6 +5,7 @@ __author__ = 'jdomsic'
 import ConfigParser
 import httplib
 import logging
+import json
 import sys
 
 from flask import Flask
@@ -43,11 +44,14 @@ logging.basicConfig(
 
 
 def publish_to_mq(messages):
-    assert isinstance(messages, list), "messages must be a list"
-
     exchange_name, queue_name = QUEUE.split(':')
     routing_key = queue_name.split('.')[-1]
-    settings = publisher.Settings(NAME, queue_name, exchange_name, routing_key)
+    settings = publisher.Settings(
+        app_id=NAME,
+        mq_url=MQ_URL,
+        exchange=exchange_name,
+        routing_key=routing_key
+    )
 
     queue = publisher.Publisher(settings)
     queue.publish(messages)
@@ -71,9 +75,12 @@ def collect_sensor_info():
         logging.info('Received upload from: %s' % username)
 
         try:
-            publish_to_mq(list(request.data))
+            publish_to_mq(json.loads(request.data))
         except StopIteration:
             return Response('Empty payload', status=httplib.BAD_REQUEST)
+
+        except ValueError:
+            return Response('Not in JSON', status=httplib.BAD_REQUEST)
 
         return Response(response='uploaded', status=httplib.OK)
 
