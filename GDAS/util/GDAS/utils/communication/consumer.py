@@ -73,10 +73,10 @@ class Consumer(object):
         self.connection.add_on_close_callback(self._on_connection_closed)
 
         self.channel = self.connection.channel(on_open_callback=self._on_channel_open)
-        self.channel.add_on_close_callback(self._on_channel_close)
+        self.channel.add_on_close_callback(self._on_channel_close) #TODO: duplicate
 
     def _on_channel_open(self, _channel):
-        self.channel.add_on_close_callback(self._on_channel_close)
+        self.channel.add_on_close_callback(self._on_channel_close) #TODO: duplicate
         self._start_consuming()
 
     def _start_consuming(self):
