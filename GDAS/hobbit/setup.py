@@ -7,6 +7,7 @@ setup(name='GDAS Hobbit',
       description='GDAS message requester',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
+      license='MIT',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/hobbit', [
@@ -20,6 +21,6 @@ setup(name='GDAS Hobbit',
       install_requires=[
           'requests',
           'validictory',
-          'GDAS.utils'
+          'GDAS'
       ]
 )

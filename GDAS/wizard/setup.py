@@ -7,6 +7,7 @@ setup(name='GDAS Wizard',
       description='GDAS message collector',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
+      license='MIT',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/wizard', [
@@ -18,6 +19,6 @@ setup(name='GDAS Wizard',
       ],
       install_requires=[
           'GDAS',
-          'flask=0.10.1'
+          'flask==0.10.1'
       ]
 )

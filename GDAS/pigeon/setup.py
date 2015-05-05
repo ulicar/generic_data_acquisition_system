@@ -7,6 +7,7 @@ setup(name='GDAS Pigdeon',
       description='GDAS message selector',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
+      license='MIT',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/pigeon', [
@@ -18,6 +19,6 @@ setup(name='GDAS Pigdeon',
           ])
       ],
       install_requires=[
-          'GDAS.utils'
+          'GDAS'
       ]
 )

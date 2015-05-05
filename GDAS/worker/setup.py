@@ -7,6 +7,7 @@ setup(name='GDAS Worker',
       description='GDAS message processor',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
+      license='MIT',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/worker', [
@@ -18,8 +19,8 @@ setup(name='GDAS Worker',
           ])
       ],
       install_requires=[
-         'GDAS.utils',
-         'validictory',
-         'flask=0.10'
+          'GDAS',
+          'validictory',
+          'flask==0.10'
       ]
 )
