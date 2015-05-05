@@ -50,7 +50,9 @@ class MessageSelector(object):
 
             return
 
-        self.publisher.publish()
+        # TODO: implement recieving bulk messages
+
+        self.publisher.publish(message)
         self.consumer.acknowledge_msg()
 
     def validate(self, message):
