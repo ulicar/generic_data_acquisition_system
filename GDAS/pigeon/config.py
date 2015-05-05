@@ -11,7 +11,7 @@ class Configuration():
         self.output_exchange = None
         self.routing_key = None
         self.input_queue = None
-        self.name = None
+        self.app_id = None
         self.type = None
         self.log_level = None
         self.schema = self.create_schema()
@@ -54,6 +54,6 @@ class Configuration():
         self.mq_url = config.get('gdas', 'mq_url')
         self.input_queue = config.get('gdas', 'input_mq').split(':')[1]
         self.output_exchange, self.routing_key = config.get('gdas', 'output_mq').split(':')
-        self.name = config.get('gdas', 'name')
+        self.app_id = config.get('gdas', 'app_id')
 
         return self

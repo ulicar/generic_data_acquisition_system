@@ -75,7 +75,7 @@ def main():
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         level=cfg.log_level)
 
-    logging.info('Started Pigeon: %s. Collecting %s' % (cfg.name, cfg.type))
+    logging.info('Started Pigeon: %s. Collecting %s' % (cfg.app_id, cfg.type))
     message_selector = MessageSelector(cfg)
     message_selector.main()
 
