@@ -40,7 +40,7 @@ class MessageSelector(object):
 
         self.consumer.consume(self.on_message_received)
 
-    def on_message_received(self, message, message_type, properties):
+    def on_message_received(self, message, message_type, properties, stop):
         if message_type != self.type:
             self.consumer.reject_msg()
 
