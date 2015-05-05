@@ -51,7 +51,7 @@ def main():
         rand_id = module
         sensor_value = random.randint(int(VALUES[0]), int(VALUES[1]))
         module_type = TYPE
-        ts = str(TIME)
+        ts = int(TIME)
 
         msg = CoreMessage(APP_ID, rand_id, module_type, sensor_value, ts).get()
         msgs.append(msg)
