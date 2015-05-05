@@ -45,7 +45,7 @@ logging.basicConfig(
 
 def publish_to_mq(messages):
     if not isinstance(messages, list):
-        raise ValueError
+        raise TypeError
 
     exchange_name, queue_name = QUEUE.split(':')
     routing_key = queue_name.split('.')[-1]
@@ -79,11 +79,15 @@ def collect_sensor_info():
 
         try:
             publish_to_mq(json.loads(request.data))
+
         except StopIteration:
             return Response('Empty payload', status=httplib.BAD_REQUEST)
 
         except ValueError:
             return Response('Not in JSON', status=httplib.BAD_REQUEST)
+
+        except TypeError:
+            return Response('Payload must be a list of messages', status=httplib.BAD_REQUEST)
 
         return Response(response='uploaded', status=httplib.OK)
 
