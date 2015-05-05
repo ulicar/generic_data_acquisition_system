@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
 
 import ConfigParser
@@ -51,7 +53,7 @@ def publish_to_mq(messages):
     queue.publish(messages)
 
 
-@app.route('/wizard/upload', methods=['GET'])
+@app.route('/wizard/upload', methods=['POST'])
 def collect_sensor_info():
     try:
         auth = UserAuth()
