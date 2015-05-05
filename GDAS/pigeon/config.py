@@ -50,10 +50,12 @@ class Configuration():
             'ERROR': logging.ERROR,
             'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
+        self.log_file = config.get('log', 'log_file')
 
         self.mq_url = config.get('gdas', 'mq_url')
         self.input_queue = config.get('gdas', 'input_mq').split(':')[1]
         self.output_exchange, self.routing_key = config.get('gdas', 'output_mq').split(':')
         self.app_id = config.get('gdas', 'app_id')
+        self.type = config.get('gdas', 'type')
 
         return self
