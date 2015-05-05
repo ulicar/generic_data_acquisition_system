@@ -27,6 +27,8 @@ class MessageSelector(object):
         self.consumer = None
         self.publisher = None
 
+        self.messages = list()
+
     def main(self):
         publisher_settings = publisher.Settings(
             self.app_id,
@@ -53,13 +55,18 @@ class MessageSelector(object):
             return
 
         # TODO: implement recieving bulk messages
+        self.messages.append(message)
+        if len(self.messages) >= 10:
+            self.publisher.run_connection = True
+            self.publisher.publish(self.messages)
 
-        self.publisher.publish(message)
         self.consumer.acknowledge_msg()
 
     def validate(self, message):
         try:
-            return validictory.validate(message, self.schema)
+            validictory.validate(message, self.schema)
+
+            return True
 
         except ValueError as ve:
             logging.warning(str(ve))
