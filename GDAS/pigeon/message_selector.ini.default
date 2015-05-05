@@ -1,9 +1,9 @@
 [gdas]
-database = localhost:27017
 mq_url = amqp://guest:guest@localhost:5672/%2F
-input_mq = cpu
-output_mq = eSecondary.
+input_mq = :qDefault.all
+output_mq = eSecondary:cpu
 name = pigeon001
+type = cpu
 
 [log]
 log_file = /var/log/gdas/pigeon/pigeon001.log
