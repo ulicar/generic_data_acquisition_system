@@ -47,7 +47,9 @@ for qu in QUEUES:
 
 for qu, ex in BINDINGS.items():
     routing_key = qu.split('.')[1]
-    channel.queue_bind(exchange=ex, queue=qu, routing_key=routing_key)
+    channel.queue_bind(exchange=ex, queue=qu, routing_key=routing_key, arguments={
+        'x-dead-letter-exchange': "eDead"
+    })
 
 for q, e in DEADLETTER.items():
     channel.exchange_declare(exchange=e, type='fanout', durable=True)
