@@ -1,9 +1,20 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
 
+import json
 import random
 import string
+import sys
 import time
-import json
+import traceback
+
+TIME = 1430839235
+
+APP_ID = sys.argv[1]
+TYPE = sys.argv[2]
+MODULES = sys.argv[3].split(',')
+VALUES = sys.argv[4].split(',')
 
 
 class AggregatorMessage():
@@ -23,7 +34,8 @@ class AggregatorMessage():
 
 
 class CoreMessage():
-    def __init__(self, unique_id, module_type, value, timestamp, dbID=''):
+    def __init__(self, app_id, unique_id, module_type, value, timestamp, dbID=''):
+        self.app_id = app_id
         self.id = unique_id
         #self._id = dbID
         self.module = module_type
@@ -36,31 +48,38 @@ class CoreMessage():
     def get(self):
         return self.__dict__
 
+def main():
+    msgs = []
+    for _ in range(1, 10):
+        rand_id = random.choice(MODULES)
+        sensor_value = random.randint(int(VALUES[0]), int(VALUES[1]))
+        module_type = TYPE
+        ts = create_timestamp()
+        time.sleep(0.2)
+
+        msgs.append(CoreMessage(APP_ID, rand_id, sensor_value, module_type, ts))
+
+    print json.dumps(msgs)
+
+
+def create_timestamp():
+    global TIME
+    TIME += 1
+
+    return str(TIME)
+
 
 def create_random_string(size):
     choices = string.ascii_letters
     return ''.join(random.choice(choices) for _ in range(size))
 
+if __name__ == '__main__':
+    try:
+        while True:
+            main()
 
-def create_random_value(min, max):
-    return random.randint(min, max)
+    except Exception as e:
+        import traceback
 
-
-def create_timestamp():
-    return str(int(time.time()))
-
-
-def create_random_core_message():
-    rand_id = create_random_string(10)
-    sensor_value = create_random_value(-10, 50)
-    module_type = 'temperature'
-    ts = create_timestamp()
-
-    return CoreMessage(rand_id, module_type, sensor_value, ts).get()
-
-
-msgs = []
-for _ in range(1, 10):
-    msgs.append(create_random_core_message())
-
-print json.dumps(msgs)
+        traceback.print_exc()
+        print >>sys.stderr, str(e)
