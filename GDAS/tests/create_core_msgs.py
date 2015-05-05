@@ -48,6 +48,7 @@ class CoreMessage():
     def get(self):
         return self.__dict__
 
+
 def main():
     msgs = []
     for _ in range(1, 10):
