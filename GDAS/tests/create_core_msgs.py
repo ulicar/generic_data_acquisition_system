@@ -6,7 +6,6 @@ import json
 import random
 import string
 import sys
-import time
 import traceback
 
 TIME = 1430839235
@@ -56,8 +55,6 @@ def main():
 
         msg = CoreMessage(APP_ID, rand_id, module_type, sensor_value, ts).get()
         msgs.append(msg)
-
-        time.sleep(0.2)
 
     TIME += 1
 

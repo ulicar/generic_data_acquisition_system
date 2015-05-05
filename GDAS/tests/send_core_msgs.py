@@ -3,6 +3,7 @@ __author__ = 'jdomsic'
 import json
 import sys
 import requests
+import time
 
 
 def send_request(data):
@@ -19,12 +20,12 @@ for msg in sys.stdin:
 
     i = 1
     if len(msgs) > 3:
+        print 'START - '
         send_request(msgs)
         msgs = []
+        print ' END\n'
 
-        print 'SENT %d' % i,
-        sys.stdout.flush()
-        i += 1
+        time.sleep(1)
 
 if len(msgs) > 0:
     send_request(msgs)
