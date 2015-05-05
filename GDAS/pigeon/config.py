@@ -10,15 +10,17 @@ class Configuration():
         self.mq_url = None
         self.log_file = None
         self.output_exchange = None
-        self.input_exchange = None
+        self.routing_key = None
+        self.input_queue = None
         self.name = None
-        self.logger = None
+        self.type = None
+        self.log_level = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
 
-        log_level = {
+        self.log_level = {
             'DEBUG': logging.DEBUG,
             'INFO': logging.INFO,
             'WARNING': logging.WARNING,
@@ -27,16 +29,9 @@ class Configuration():
         }[config.get('log', 'log_level')]
 
         self.mq_url = config.get('gdas', 'mq_url')
-        self.input_exchange = config.get('gdas', 'input_mq')
-        self.output_exchange = config.get('gdas', 'output_mq')
+        self.input_queue = config.get('gdas', 'input_mq').split(':')[1]
+        self.output_exchange, self.routing_key = config.get('gdas', 'output_mq').split(':')
         self.database = config.get('gdas', 'database').split(':')
-
-        self.logger = logging.basicConfig(
-            filename=config.get('log', 'log_file'),
-            filemode='a',
-            format='%(asctime)s - %(levelname)s - %(message)s',
-            level=log_level
-        )
         self.name = config.get('GDAS', 'name')
 
         return self
