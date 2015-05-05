@@ -15,6 +15,25 @@ class Configuration():
         self.name = None
         self.type = None
         self.log_level = None
+        self.schema = self.create_schema()
+
+    @staticmethod
+    def create_schema():
+        schema = {
+            'type': 'array',
+            'items': [{
+                'type': 'object',
+                'properties': {
+                    'id': {'type': 'string'},
+                    'value': {'type': 'any'},
+                    'timestamp': {'type': 'integer'},
+                    'module': {'type': 'string'},
+                    'app_id': {'type': 'string'}
+                    }
+                }]
+        }
+
+        return schema
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()

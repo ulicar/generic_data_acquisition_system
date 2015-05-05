@@ -2,7 +2,9 @@
 
 __author__ = 'jdomsic'
 
+import logging
 import sys
+import validictory
 
 from GDAS.utils.communication import consumer
 from GDAS.utils.communication import publisher
@@ -14,22 +16,16 @@ class MessageSelector(object):
     def __init__(self, cfg):
         self.app_id = cfg.app_id
         self.mq_url = cfg.mq_url
-        self.input = cfg.input
-        self.output = cfg.output
+        self.input = cfg.input_queue
+        self.output = cfg.output_exchange
         self.loq = cfg.log_file
         self.routing_key = cfg.routing_key
+        self.type = cfg.type
+        self.schema = cfg.schema
+
         self.consumer = None
         self.publisher = None
 
-    def process(self, message):
-        # TODO: list -> to str maybe
-        return message
-
-    def on_message_received(self, message, message_type, properties):
-        print str(message)
-
-        self.publisher.publish(self.process(message))
-        self.consumer.acknowledge_msg()
 
     def main(self):
         publisher_settings = publisher.Settings(
@@ -42,13 +38,40 @@ class MessageSelector(object):
 
         consumer_settings = consumer.Settings(self.mq_url, self.input)
         self.consumer = consumer.Consumer(consumer_settings)
+
         self.consumer.consume(self.on_message_received)
+
+    def on_message_received(self, message, message_type, properties):
+        if message_type != self.type:
+            self.consumer.reject_msg()
+
+        if not self.validate(message):
+            #TODO: what to do with them
+            self.consumer.reject_msg()
+
+            return
+
+        self.publisher.publish()
+        self.consumer.acknowledge_msg()
+
+
+    def validate(self, message):
+        validictory.validate(message, self.schema)
+
+
+
 
 
 def main():
     args = argument_parser('Data Collector parser')
     cfg = Configuration().load_from_file(args.ini)
 
+    logging.basicConfig(filename=cfg.log_file,
+                        filemode='a',
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        level=cfg.log_level)
+
+    logging.INFO('Started Pigeon: %s. Collecting %s' % (cfg.name, cfg.type))
     message_selector = MessageSelector(cfg)
     message_selector.main()
 
