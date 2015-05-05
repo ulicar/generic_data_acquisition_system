@@ -91,7 +91,7 @@ class Consumer(object):
         message, m_type = Envelope.unpack(body)
         self.callback(message, m_type, properties, self.stop)
 
-    def _on_consumer_cancelled(self):
+    def _on_consumer_cancelled(self, property):
         # When consumer is canceled remotely
         if self.channel:
             self.channel.close()
