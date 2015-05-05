@@ -67,7 +67,7 @@ class MessageSelector(object):
 
 
 def main():
-    args = argument_parser('Data Collector parser')
+    args = argument_parser('Argument parser')
     cfg = Configuration().load_from_file(args.ini)
 
     logging.basicConfig(filename=cfg.log_file,
@@ -75,7 +75,7 @@ def main():
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         level=cfg.log_level)
 
-    logging.info('Started Pigeon: %s. Collecting %s' % (cfg.app_id, cfg.type))
+    logging.info('Started Pigeon: %s. Collecting %s info.' % (cfg.app_id, cfg.type))
     message_selector = MessageSelector(cfg)
     message_selector.main()
 
