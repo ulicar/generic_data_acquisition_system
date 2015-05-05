@@ -21,7 +21,7 @@ class Configuration():
     def create_schema():
         schema = {
             'type': 'array',
-            'items': [{
+            'items': {
                 'type': 'object',
                 'properties': {
                     'id': {'type': 'string'},
@@ -29,9 +29,14 @@ class Configuration():
                     'timestamp': {'type': 'integer'},
                     'module': {'type': 'string'},
                     'app_id': {'type': 'string'}
-                    }
-                }]
-        }
+                    },
+                "patternProperties": {
+                    "^.+$": {'type': 'any'}
+                    },
+                "additionalProperties": False,
+                'required': ['id', 'value', 'timestamp', 'module', 'app_id']
+                }
+            }
 
         return schema
 
