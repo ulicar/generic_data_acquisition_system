@@ -3,6 +3,7 @@
 __author__ = 'jdomsic'
 
 import logging
+import json
 import sys
 import validictory
 
@@ -41,11 +42,12 @@ class MessageSelector(object):
         self.consumer.consume(self.on_message_received)
 
     def on_message_received(self, message, message_type, properties, stop):
-        if message_type != self.type:
+        if not (message_type == self.type or message_type == 'all'):
             self.consumer.reject_msg()
 
-        if not self.validate(message):
-            # TODO: what to do with them
+            return
+
+        if not self.validate(json.loads(message)):
             self.consumer.reject_msg()
 
             return
