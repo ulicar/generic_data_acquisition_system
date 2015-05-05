@@ -44,6 +44,9 @@ logging.basicConfig(
 
 
 def publish_to_mq(messages):
+    if not isinstance(messages, list):
+        raise ValueError
+
     exchange_name, queue_name = QUEUE.split(':')
     routing_key = queue_name.split('.')[-1]
     settings = publisher.Settings(
