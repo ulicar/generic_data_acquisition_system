@@ -60,8 +60,8 @@ class MessageSelector(object):
             return validictory.validate(message, self.schema)
 
         except ValueError as ve:
-            logging.WARNING(str(ve))
-            logging.WARNING(str(message))
+            logging.warning(str(ve))
+            logging.warning(str(message))
 
         return False
 
@@ -75,7 +75,7 @@ def main():
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         level=cfg.log_level)
 
-    logging.INFO('Started Pigeon: %s. Collecting %s' % (cfg.name, cfg.type))
+    logging.info('Started Pigeon: %s. Collecting %s' % (cfg.name, cfg.type))
     message_selector = MessageSelector(cfg)
     message_selector.main()
 
