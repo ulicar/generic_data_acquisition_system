@@ -33,48 +33,67 @@ class MessageProcessor(object):
         self.consumer = Consumer(settings)
         self.consumer.consume(self.process_message)
 
-    def process_message(self, messages, message_type, properties):
+    def process_message(self, messages, message_type, properties, stop):
+        messages = json.loads(messages)
         for msg in messages:
             if msg['app_id'] != self.core_id or msg['module'] != self.type:
                 self.consumer.reject_msg()
 
                 return
+        try:
+            self.messages.append(messages)
+            self.consumer.acknowledge_msg()
+            if len(self.messages) >= 10:
+                self.save()
+                self.messages = list()
 
-        self.messages.append(messages)
-        self.consumer.acknowledge_msg()
-        if len(self.messages) >= 50:
-            self.save()
+        except Exception as e:
+            logging.error(str(e))
+            logging.info(str(self.messages))
+            raise Exception
 
     def save(self):
-        self.messages, msgs_by_time = list(), self.divide_by_time()
-        for msgs, timestamp in msgs_by_time:
-            self.update_record(msgs, timestamp)
+        self.messages, data = list(), self.prepare_data()
+        for module, hours in data.items():
+            for hour, measurements in hours.items():
+                db_key = {
+                    'module': module,
+                    'time': hour
+                }
 
-    def divide_by_time(self):
-        divided = list()
-        for msg in self.messages:
-            ts = datetime.datetime.fromtimestamp(int(msg['timestamp']))
-            msg['timestamp'] = ts.second
-            time = ts.strftime('%Y-%m-%d-%m')
+                self.update_record(db_key, measurements)
 
-            divided.append((time, msg))
+    def prepare_data(self):
+        """
+            data = {
+                'module': {
+                    'time': {mesuerements}
+                    }
+                }
 
-        return divided
+        """
+        data = dict()
+        for msgs in self.messages:
+            for msg in msgs:
+                module = msg['module']
+                if module not in data:
+                    data[module] = {}
 
-    def update_record(self, msgs, timestamp):
-        query = {
-            'module': self.type,
-            'timestamp': timestamp
-        }
+                sensor_time_data = datetime.datetime.fromtimestamp(int(msg['timestamp']))
+                sensor_time = sensor_time_data.minute * 60 + sensor_time_data.second
+                sensor_value = msg['value']
+                measurement = {'TIMESTAMP.%d' % sensor_time: sensor_value}
 
-        old_status = self.db.get_record(query)
-        for msg in msgs:
-            time = int(msg['timestamp'])
-            value = msg['value']
+                time = sensor_time_data.strftime('%Y-%m-%d-%H')
+                if time not in data[module]:
+                    data[module][time] = {}
 
-            old_status['timestamp'][time] = value
+                data[module][time].update(measurement)
 
-        self.db.write(query)
+        return data
+
+    def update_record(self, keys, time_series_data):
+        self.db.append(keys, time_series_data)
 
         return
 
