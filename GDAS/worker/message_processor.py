@@ -2,6 +2,7 @@
 
 __author__ = 'jdomsic'
 
+import json
 import logging
 import sys
 
@@ -20,6 +21,9 @@ class MessageProcessor(object):
         self.mq = cfg.mq_url
         self.queue_name = cfg.queue
         self.consumer = None
+        self.type = cfg.type
+
+        self.messages = list()
 
     def main(self):
         settings = Settings(self.mq, self.queue_name)
@@ -27,13 +31,19 @@ class MessageProcessor(object):
         self.consumer.consume(self.process_message)
 
     def process_message(self, message, message_type, properties):
-        print str(message)
+        messages = json.dumps(message)
 
+        for msg in messages:
+            if msg['type'] != self.type:
+                self.consumer.reject_msg()
+
+        self.messages.append(messages)
         self.consumer.acknowledge_msg()
-        self.save_to_database(message)
+        if len(self.messages) >= 50:
+            self.save_to_database()
 
-    def save_to_database(self, message):
-        self.db.write(message)
+    def save_to_database(self):
+        self.db.update(self.messages)
 
 
 def main():
