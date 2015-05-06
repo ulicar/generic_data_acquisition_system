@@ -69,7 +69,8 @@ class MessageSelector(object):
             self.messages, module_messages = list(), self.divide_by_module()
 
             self.publisher.run_connection = True
-            self.publisher.publish(module_messages)
+            for module_type, msgs in module_messages.items():
+                self.publisher.publish(module_messages, routing_key=module_type)
 
     def divide_by_module(self):
         msg_by_module = dict()
@@ -80,7 +81,7 @@ class MessageSelector(object):
 
             msg_by_module[module_id].append(msg)
 
-        return msg_by_module.values()
+        return msg_by_module
 
     def validate(self, message):
         try:
