@@ -1,11 +1,16 @@
 [gdas]
 database = localhost:27017
-collection = sensor_data:weather_data
 mq_url = amqp://guest:guest@localhost:5672/%2F
-type = temp
-queue = qSecondary.temp
-app_id = worker_temp_001
 
 [log]
 log_level = INFO
 log_file = /var/log/gdas/worker_temp_001.log
+
+[worker]
+collection = sensor_data:weather_data
+queue = qSecondary.temp
+app_id = worker_temp_001
+type = temp
+core_id = app1
+
+
