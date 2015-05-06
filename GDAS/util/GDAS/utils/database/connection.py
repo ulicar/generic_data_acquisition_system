@@ -29,4 +29,7 @@ class Fatty(object):
         self.collection.insert(data)
 
     def append(self, keys, values):
+        values = {
+            '$set': values
+        }
         self.collection.update(keys, values)
