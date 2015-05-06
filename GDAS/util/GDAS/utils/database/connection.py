@@ -28,5 +28,5 @@ class Fatty(object):
     def write(self, data):
         self.collection.insert(data)
 
-    def update(self, key, value):
-        self.collection.update(key, value)
+    def append(self, keys, values):
+        self.collection.update(keys, values)
