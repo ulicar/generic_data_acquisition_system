@@ -1,7 +1,7 @@
 [gdas]
 mq_url = amqp://guest:guest@localhost:5672/%2F
 input_mq = :qDefault.all
-output_mq = eSecondary.
+output_mq = eSecondary:
 app_id = pigeon001
 type = cpu
 
