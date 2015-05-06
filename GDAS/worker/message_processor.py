@@ -82,7 +82,7 @@ class MessageProcessor(object):
                 sensor_time_data = datetime.datetime.fromtimestamp(int(msg['timestamp']))
                 sensor_time = sensor_time_data.minute * 60 + sensor_time_data.second
                 sensor_value = msg['value']
-                measurement = {'TIMESTAMP.%d' % sensor_time: sensor_value}
+                measurement = {'data.%d' % sensor_time: sensor_value}
 
                 time = sensor_time_data.strftime('%Y-%m-%d-%H')
                 if time not in data[module_id]:
