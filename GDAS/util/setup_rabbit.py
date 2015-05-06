@@ -36,7 +36,7 @@ QUEUES = [
 BINDINGS = {
     'qDefault.all': 'ePrimary',
     'qPrimary.cpu': 'ePrimary',
-    'qPrimary.temp': 'ePrimary',
+    'qPrimary.temperature': 'ePrimary',
     'qSecondary.cpu': 'eSecondary',
     'qSecondary.humidity': 'eSecondary',
     'qSecondary.temperature': 'eSecondary',
