@@ -23,7 +23,7 @@ class UserAuth(object):
             return False
 
         self.db.open('gdas', 'accounts')
-        user_info = self.db.get_record({'username', username})
+        user_info = self.db.get_record(dict({'username', username}))
         if not user_info:
             return False
 
