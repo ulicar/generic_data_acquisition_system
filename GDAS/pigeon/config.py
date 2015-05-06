@@ -19,23 +19,20 @@ class Configuration():
     @staticmethod
     def create_schema():
         schema = {
-            'type': 'array',
-            'items': {
-                'type': 'object',
-                'properties': {
-                    'id': {'type': 'string'},
-                    'value': {'type': 'any'},
-                    'timestamp': {'type': 'integer'},
-                    'module': {'type': 'string'},
-                    'app_id': {'type': 'string'}
-                    },
-                "patternProperties": {
-                    "^.+$": {'type': 'any'}
-                    },
-                "additionalProperties": False,
-                'required': ['id', 'value', 'timestamp', 'module', 'app_id']
-                }
-            }
+            'type': 'object',
+            'properties': {
+                'id': {'type': 'string'},
+                'value': {'type': 'any'},
+                'timestamp': {'type': 'integer'},
+                'module': {'type': 'string'},
+                'app_id': {'type': 'string'}
+                },
+            "patternProperties": {
+                "^.+$": {'type': 'any'}
+                },
+            "additionalProperties": False,
+            'required': ['id', 'value', 'timestamp', 'module', 'app_id']
+        }
 
         return schema
 
