@@ -29,9 +29,11 @@ class Fatty(object):
         self.collection.insert(data)
 
     def append(self, keys, values, create=True):
+        assert isinstance(keys, dict), 'First argument must be dict'
+        assert isinstance(values, dict), 'Second argument must be dict'
+        assert isinstance(create, bool), 'Third argument must be bool'
         values = {
             '$set': values
         }
-        properties = {'upsert': create}
 
-        self.collection.update(keys, values, properties)
+        self.collection.update(keys, values, upsert=create)
