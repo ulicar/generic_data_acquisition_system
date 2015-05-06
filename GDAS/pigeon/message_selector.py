@@ -56,14 +56,13 @@ class MessageSelector(object):
 
             return
 
-        self.current_core_id = core_id
         if not self.validate(message):
             self.consumer.reject_msg()
 
             return
 
         # TODO: implement recieving bulk messages
-
+        self.current_core_id = core_id
         self.messages.append(message)
         self.consumer.acknowledge_msg()
         if len(self.messages) >= 60:
