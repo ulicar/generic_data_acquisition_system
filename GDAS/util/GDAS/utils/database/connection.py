@@ -19,10 +19,14 @@ class Fatty(object):
 
         return data
 
-    def get_record(self, key, value):
-        data = self.collection.find_one({key: value})
+    def get_record(self, keys):
+        assert isinstance(keys, dict), 'must be a key - value object'
+        data = self.collection.find_one(keys)
 
         return data
 
     def write(self, data):
         self.collection.insert(data)
+
+    def update(self, key, value):
+        self.collection.update(key, value)
