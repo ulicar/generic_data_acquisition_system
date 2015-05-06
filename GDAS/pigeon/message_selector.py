@@ -28,6 +28,7 @@ class MessageSelector(object):
         self.publisher = None
 
         self.messages = list()
+        self.current_core_id = None
 
     def main(self):
         publisher_settings = publisher.Settings(
@@ -49,21 +50,38 @@ class MessageSelector(object):
 
             return
 
-        msg = json.loads(message)
-        if not self.validate(msg):
+        core_id = message['app_id']
+        if self.current_core_id is not None and self.current_core_id != core_id:
+            self.consumer.reject_msg()
+
+            return
+
+        self.current_core_id = core_id
+        if not self.validate(message):
             self.consumer.reject_msg()
 
             return
 
         # TODO: implement recieving bulk messages
-        self.messages.append(msg)
-        if len(self.messages) >= 10:
-            self.messages, msgs = list(), [json.dumps(self.messages)]
+
+        self.messages.append(message)
+        self.consumer.acknowledge_msg()
+        if len(self.messages) >= 60:
+            self.messages, module_messages = list(), self.divide_by_module()
 
             self.publisher.run_connection = True
-            self.publisher.publish(msgs)
+            self.publisher.publish(module_messages)
 
-        self.consumer.acknowledge_msg()
+    def divide_by_module(self):
+        msg_by_module = dict()
+        for msg in self.messages:
+            module_id = msg['module']
+            if module_id not in msg_by_module:
+                msg_by_module[module_id] = list()
+
+            msg_by_module[module_id].append(msg)
+
+        return msg_by_module.values()
 
     def validate(self, message):
         try:
