@@ -2,6 +2,7 @@
 
 __author__ = 'jdomsic'
 
+import datetime
 import json
 import logging
 import sys
@@ -20,8 +21,10 @@ class MessageProcessor(object):
 
         self.mq = cfg.mq_url
         self.queue_name = cfg.queue
+
         self.consumer = None
         self.type = cfg.type
+        self.core_id = cfg.core_id
 
         self.messages = list()
 
@@ -30,20 +33,50 @@ class MessageProcessor(object):
         self.consumer = Consumer(settings)
         self.consumer.consume(self.process_message)
 
-    def process_message(self, message, message_type, properties):
-        messages = json.dumps(message)
-
+    def process_message(self, messages, message_type, properties):
         for msg in messages:
-            if msg['type'] != self.type:
+            if msg['app_id'] != self.core_id or msg['module'] != self.type:
                 self.consumer.reject_msg()
+
+                return
 
         self.messages.append(messages)
         self.consumer.acknowledge_msg()
         if len(self.messages) >= 50:
-            self.save_to_database()
+            self.save()
 
-    def save_to_database(self):
-        self.db.update(self.messages)
+    def save(self):
+        self.messages, msgs_by_time = list(), self.divide_by_time()
+        for msgs, timestamp in msgs_by_time:
+            self.update_record(msgs, timestamp)
+
+    def divide_by_time(self):
+        divided = list()
+        for msg in self.messages:
+            ts = datetime.datetime.fromtimestamp(int(msg['timestamp']))
+            msg['timestamp'] = ts.second
+            time = ts.strftime('%Y-%m-%d-%m')
+
+            divided.append((time, msg))
+
+        return divided
+
+    def update_record(self, msgs, timestamp):
+        query = {
+            'module': self.type,
+            'timestamp': timestamp
+        }
+
+        old_status = self.db.get_record(query)
+        for msg in msgs:
+            time = int(msg['timestamp'])
+            value = msg['value']
+
+            old_status['timestamp'][time] = value
+
+        self.db.write(query)
+
+        return
 
 
 def main():
