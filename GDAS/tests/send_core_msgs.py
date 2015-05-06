@@ -1,9 +1,62 @@
 __author__ = 'jdomsic'
 
 import json
-import sys
+import random
 import requests
+import string
+import sys
 import time
+
+
+class CoreMessage():
+    def __init__(self, app_id, unique_id, module_type, value, timestamp, dbID=''):
+        self.app_id = app_id
+        self.id = unique_id
+        #self._id = dbID
+        self.module = module_type
+        self.value = value
+        self.timestamp = timestamp
+
+    def validate(self):
+        assert type(self.id) is str and self.id != ''
+
+    def get(self):
+        return self.__dict__
+
+
+def main():
+    TIME = 1430839235
+
+    while True:
+        core = [
+            (create_random_string(5), 'temperature', random.randint(-10, 5), TIME),
+            (create_random_string(5), 'temperature', random.randint(0, 10), TIME),
+            (create_random_string(5), 'humidity',    random.randint(80, 90), TIME),
+            (create_random_string(5), 'humidity',    random.randint(70, 90), TIME),
+            (create_random_string(5), 'cpu',         random.randint(50, 60), TIME),
+            (create_random_string(5), 'cpu',         random.randint(50, 60), TIME),
+            (create_random_string(5), 'cpu',         random.randint(50, 60), str(TIME)),
+            (create_random_string(5), 'temperature', str(random.randint(-10, 5)), TIME),
+            (create_random_string(5), 'temperature', str(random.randint(-10, 5)), TIME)
+        ]
+
+        msgs = []
+        for msg in core:
+            APP_ID = 'CORE'
+            rand_id = msg[0]
+            module_type = msg[1]
+            sensor_value = msg[2]
+
+            msg = CoreMessage(APP_ID, rand_id, module_type, sensor_value, TIME).get()
+            msgs.append(msg)
+
+        TIME += 1
+        send_request(msgs)
+
+
+def create_random_string(size):
+    choices = string.ascii_letters
+    return ''.join(random.choice(choices) for _ in range(size))
 
 
 def send_request(data):
@@ -15,18 +68,12 @@ def send_request(data):
     )
 
 
-msgs = list()
-for msg in sys.stdin:
-    msgs.append(json.loads(msg))
+if __name__ == '__main__':
+    try:
+        main()
 
-    i = 1
-    if len(msgs) > 5:
-        print 'START - '
-        send_request(msgs)
-        msgs = []
-        print ' END\n'
+    except Exception as e:
+        import traceback
 
-        time.sleep(1)
-
-if len(msgs) > 0:
-    send_request(msgs)
+        traceback.print_exc()
+        print >>sys.stderr, str(e)
