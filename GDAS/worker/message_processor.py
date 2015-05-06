@@ -75,9 +75,9 @@ class MessageProcessor(object):
         data = dict()
         for msgs in self.messages:
             for msg in msgs:
-                module = msg['module']
-                if module not in data:
-                    data[module] = {}
+                module_id = msg['id']
+                if module_id not in data:
+                    data[module_id] = {}
 
                 sensor_time_data = datetime.datetime.fromtimestamp(int(msg['timestamp']))
                 sensor_time = sensor_time_data.minute * 60 + sensor_time_data.second
@@ -85,10 +85,10 @@ class MessageProcessor(object):
                 measurement = {'TIMESTAMP.%d' % sensor_time: sensor_value}
 
                 time = sensor_time_data.strftime('%Y-%m-%d-%H')
-                if time not in data[module]:
-                    data[module][time] = {}
+                if time not in data[module_id]:
+                    data[module_id][time] = {}
 
-                data[module][time].update(measurement)
+                data[module_id][time].update(measurement)
 
         return data
 
