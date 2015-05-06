@@ -28,8 +28,10 @@ class Fatty(object):
     def write(self, data):
         self.collection.insert(data)
 
-    def append(self, keys, values):
+    def append(self, keys, values, create=True):
         values = {
             '$set': values
         }
-        self.collection.update(keys, values)
+        properties = {'upsert': create}
+
+        self.collection.update(keys, values, properties)
