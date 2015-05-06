@@ -9,7 +9,7 @@ import time
 def send_request(data):
     requests.request(
         method='POST',
-        headers={'Connection':'close'},
+        headers={'Connection': 'close'},
         url="http://jdomsic:jdomsic@127.0.0.1:5000/wizard/upload",
         data=json.dumps(data)
     )
@@ -17,10 +17,10 @@ def send_request(data):
 
 msgs = list()
 for msg in sys.stdin:
-    msgs.append(msg)
+    msgs.append(json.loads(msg))
 
     i = 1
-    if len(msgs) > 3:
+    if len(msgs) > 5:
         print 'START - '
         send_request(msgs)
         msgs = []
