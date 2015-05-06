@@ -2,6 +2,7 @@
 
 __author__ = 'jdomsic'
 
+import logging
 import sys
 
 from config import Configuration
@@ -13,11 +14,11 @@ from GDAS.utils.communication.consumer import Settings
 
 class MessageProcessor(object):
     def __init__(self, cfg):
-        self.db = cfg.database
-        self.collection = cfg.collection_name
+        self.db = Fatty(cfg.database)
+        self.db.open(cfg.collection[0], cfg.collection[1])
+
         self.mq = cfg.mq_url
         self.queue_name = cfg.queue
-        self.loq = cfg.log_file
         self.consumer = None
 
     def main(self):
@@ -32,14 +33,19 @@ class MessageProcessor(object):
         self.save_to_database(message)
 
     def save_to_database(self, message):
-        db = Fatty(self.db)
-        db.open(self.collection)
-        db.write(message)
+        self.db.write(message)
 
 
 def main():
-    args = argument_parser('GDAS data processor')
+    args = argument_parser('Argument parser')
     cfg = Configuration().load_from_file(args.ini)
+
+    logging.basicConfig(filename=cfg.log_file,
+                        filemode='a',
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        level=cfg.log_level)
+
+    logging.info('Started Worker: %s. Saving %s info.' % (cfg.app_id, cfg.type))
 
     message_processor = MessageProcessor(cfg)
     message_processor.main()
