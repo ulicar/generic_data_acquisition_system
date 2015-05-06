@@ -9,6 +9,7 @@ import time
 def send_request(data):
     requests.request(
         method='POST',
+        headers={'Connection':'close'},
         url="http://jdomsic:jdomsic@127.0.0.1:5000/wizard/upload",
         data=json.dumps(data)
     )
