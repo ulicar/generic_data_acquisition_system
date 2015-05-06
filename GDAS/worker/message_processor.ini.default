@@ -8,9 +8,9 @@ log_file = /var/log/gdas/worker_temp_001.log
 
 [worker]
 collection = sensor_data:weather_data
-queue = qSecondary.temp
+queue = qSecondary.temperature
 app_id = worker_temp_001
-type = temp
-core_id = app1
+type = temperature
+core_id = CORE
 
 

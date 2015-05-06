@@ -12,7 +12,7 @@ class Configuration():
         self.mq_url = None
         self.database = None
 
-        self.queue_name = None
+        self.queue = None
         self.collection = None
         self.app_id = None
         self.type = None
@@ -28,14 +28,14 @@ class Configuration():
             'ERROR': logging.ERROR,
             'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
-        self.log_file = config.get('gdas', 'log_file')
+        self.log_file = config.get('log', 'log_file')
 
         self.mq_url = config.get('gdas', 'mq_url')
         self.database = config.get('gdas', 'database').split(':')
 
         self.collection = config.get('worker', 'collection').split(':')
         self.app_id = config.get('worker', 'app_id')
-        self.queue_name = config.get('worker', 'queue')
+        self.queue = config.get('worker', 'queue')
         self.type = config.get('worker', 'type')
         self.core_id = config.get('worker', 'core_id')
 
