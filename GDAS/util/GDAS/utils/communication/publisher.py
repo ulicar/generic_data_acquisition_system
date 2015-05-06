@@ -133,8 +133,11 @@ class Publisher(object):
         self.connection.ioloop.stop()
         self.connect()
 
-    def publish(self, messages):
+    def publish(self, messages, routing_key=None):
         """ Raises StopIteration Exception on empty iterator """
+        if routing_key is not None:
+            self.routing_key = routing_key
+
         self.message_iterator = iter(messages)
         self.message = self.message_iterator.next()
         self.connect()
