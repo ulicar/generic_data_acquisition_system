@@ -19,6 +19,9 @@ class SensorNode():
     def get(self):
         return self.__dict__
 
+    def update_value(self, timestamp, value):
+        self.value = value
+        self.timestamp = timestamp
 
 if __name__ == '__main__':
     import json
@@ -31,8 +34,7 @@ if __name__ == '__main__':
     while True:
         TIME = int(time.time())
 
-        sensor.timestamp = TIME
-        sensor.value = TIME % 50
+        sensor.update_value(timestamp=TIME, value=TIME % 50)
 
         print json.dumps(sensor.get())
         time.sleep(0.99)
