@@ -11,9 +11,9 @@ UPDATE = cycle([x * 0.25 for x in range(0, 20)])
 
 
 class TemperatureNode(SensorNode):
-    def __init__(self, unique_id, module_type, value, timestamp, optional=()):
+    def __init__(self, unique_id, module_type, value, timestamp):
         super(self.__class__, self).\
-            __init__( unique_id, module_type, value, timestamp, optional)
+            __init__(unique_id, module_type, value, timestamp)
 
     def update(self):
         self.update_value(int(time.time()), next(UPDATE))

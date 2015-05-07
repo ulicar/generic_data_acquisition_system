@@ -2,12 +2,11 @@ __author__ = 'jdomsic'
 
 
 class SensorNode(object):
-    def __init__(self, unique_id, module_type, value, timestamp, optional=()):
+    def __init__(self, unique_id, module_type, value, timestamp):
         self.id = unique_id
         self.module = module_type
         self.value = value
         self.timestamp = timestamp
-        self.optional = optional
 
     def validate(self):
         assert type(self.id) is str and self.id != ''
