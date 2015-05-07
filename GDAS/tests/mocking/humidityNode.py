@@ -11,9 +11,9 @@ UPDATE = cycle([x * 0.1 for x in range(70, 90)])
 
 
 class HumidityNode(SensorNode):
-    def __init__(self, app_id, unique_id, module_type, value, timestamp, optional=()):
+    def __init__(self, unique_id, module_type, value, timestamp, optional=()):
         super(self.__class__, self).\
-            __init__(app_id, unique_id, module_type, value, timestamp, optional)
+            __init__(unique_id, module_type, value, timestamp, optional)
 
     def update(self):
         self.update_value(int(time.time()), next(UPDATE))
@@ -21,7 +21,7 @@ class HumidityNode(SensorNode):
 
 if __name__ == '__main__':
     DUMMY = 0
-    sensor = HumidityNode('Humidity sensor', 'humidity01', 'humidity', DUMMY, DUMMY)
+    sensor = HumidityNode('humidity01', 'humidity', DUMMY, DUMMY)
     sensor.validate()
 
     while True:

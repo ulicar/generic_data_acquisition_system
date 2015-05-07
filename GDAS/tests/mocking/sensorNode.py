@@ -2,8 +2,7 @@ __author__ = 'jdomsic'
 
 
 class SensorNode(object):
-    def __init__(self, app_id, unique_id, module_type, value, timestamp, optional=()):
-        self.app_id = app_id
+    def __init__(self, unique_id, module_type, value, timestamp, optional=()):
         self.id = unique_id
         self.module = module_type
         self.value = value
@@ -28,7 +27,7 @@ if __name__ == '__main__':
     import time
 
     DUMMY = 0
-    sensor = SensorNode('Temperature sensor', 'zxy44', 'temperature', DUMMY, DUMMY)
+    sensor = SensorNode('zxy44', 'temperature', DUMMY, DUMMY)
     sensor.validate()
 
     while True:
