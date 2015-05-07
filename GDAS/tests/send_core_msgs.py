@@ -6,21 +6,7 @@ import requests
 import string
 import sys
 
-
-class CoreMessage():
-    def __init__(self, app_id, unique_id, module_type, value, timestamp, dbID=''):
-        self.app_id = app_id
-        self.id = unique_id
-        #self._id = dbID
-        self.module = module_type
-        self.value = value
-        self.timestamp = timestamp
-
-    def validate(self):
-        assert type(self.id) is str and self.id != ''
-
-    def get(self):
-        return self.__dict__
+from core.sensorNode import SensorNode
 
 
 def main():
@@ -55,7 +41,7 @@ def main():
             module_type = msg[1]
             sensor_value = msg[2]
 
-            msg = CoreMessage(APP_ID, rand_id, module_type, sensor_value, TIME).get()
+            msg = SensorNode(APP_ID, rand_id, module_type, sensor_value, TIME).get()
             msgs.append(msg)
 
         TIME += 1
