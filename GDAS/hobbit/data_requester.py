@@ -2,9 +2,10 @@
 
 __author__ = 'jdomsic'
 
-import sys
+import logging
 import requests
-import validictory
+import sys
+import time
 
 from GDAS.utils.input.argument_parser import argument_parser
 from GDAS.utils.communication import publisher
@@ -14,62 +15,66 @@ from config import Configuration
 class DataRequester(object):
     def __init__(self, cfg):
         self.app_id = cfg.app_id
-        self.mq_url = cfg.mq_url
-        self.input = cfg.input
-        self.loq = cfg.log_file
-        self.routing_key = cfg.routing_key
-        self.publisher = None
-        self.communication_token = cfg.token
         self.core_url = cfg.core_url
-        self.data_scheme = cfg.data_scheme
-    
-    def validate_data(self, user_data, config):
-        scheme = config['DATA_SCHEME']
-        for data in user_data:
-            if not validictory.validate(data, scheme):
-                return False
+        self.communication_token = cfg.token
+        self.sleep_time = int(cfg.sleep_time)
 
-        return True
+        self.mq_url = cfg.mq_url
+        self.exchange = cfg.exchange
+        self.routing_key = cfg.routing_key
 
-    def publish_to_mq(self, messages):
-        assert isinstance(messages, list), "messages must be a list"
-
-        routing_key = get_message_type(messages[0], config)
-
-        self.publisher(messages)
-
-    def run(self):
-        try:
-            while True:
-                headers = {'token' : self.communication_token}
-                data = requests.get(self.core_url, headers=headers, verify=False).json()
-
-                if self.validate_data(data, self.data_scheme):
-                    self.publish_to_mq(list(data))
-                    continue
-
-                raise Exception('Message not valid.')
-        except Exception as e:
-            raise Exception(str(e))
+        self.publisher = None
 
     def main(self):
         publisher_settings = publisher.Settings(
-            self.app_id,
-            self.mq_url,
-            self.output,
-            self.routing_key
+            app_id=self.app_id,
+            mq_url=self.mq_url,
+            exchange=self.exchange,
+            routing_key=self.routing_key
         )
         self.publisher = publisher.Publisher(publisher_settings)
 
-        self.run()
+        while True:
+            messages = self.get_messages()
+
+            self.publish_to_mq(messages)
+
+    def get_messages(self):
+        return requests.get(
+            url=self.core_url,
+            headers={'token': self.communication_token},
+            verify=False
+        ).json()
+
+    def publish_to_mq(self, messages):
+        if not isinstance(messages, list):
+            raise TypeError
+
+        self.publisher.run_connection = True
+        self.publisher.publish(messages)
+
+        time.sleep(self.sleep_time)
 
 if __name__ == '__main__':
     try:
         args = argument_parser('Data requester argument parser')
         cfg = Configuration().load_from_file(args.ini)
 
+        logging.basicConfig(
+            filename=cfg.log_file,
+            filemode='a',
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            level=cfg.log_level
+        )
+
         data_requester = DataRequester(cfg)
+        logging.info('Starting hobit %s. Collecting from %s' % (
+            data_requester.app_id,
+            data_requester.core_url
+        ))
+
         DataRequester.main()
+
     except Exception, e:
         print >>sys.stderr, str(e)
         sys.exit(-1)

@@ -8,31 +8,36 @@ class Configuration():
     def __init__(self):
         self.mq_url = None
         self.output_exchange = None
+        self.routing_key = None
+
+        self.log_file = None
+        self.log_level = None
+
+        self.app_id = None
         self.core_url = None
-        self.logger = None
-        self.name = None
+        self.token = None
+        self.roles = None
+        self.sleep_time = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
-        log_level = {
+
+        self.log_level = {
             'DEBUG': logging.DEBUG,
             'INFO': logging.INFO,
             'WARNING': logging.WARNING,
             'ERROR': logging.ERROR,
             'CRITICAL': logging.CRITICAL
         }[config.get('log', 'log_level')]
-
-        self.logger = logging.basicConfig(
-            filename=config.get('log', 'log_file'),
-            filemode='a',
-            format='%(asctime)s - %(levelname)s - %(message)s',
-            level=log_level
-        )
+        self.log_file = config.get('log', 'log_file')
 
         self.mq_url = config.get('gdas', 'mq_url')
-        self.output_exchange = config.get('gdas', 'output_mq')
-        self.core_url = config.get('gdas', 'core_url')
-        self.name = config.get('gdas', 'name')
+        self.output_exchange, self.routing_key = config.get('gdas', 'queue').split(':')
+        self.app_id = config.get('gdas', 'app_id')
+
+        self.core_url = config.get('hobit', 'core_url')
+        self.token = config.get('hobit', 'password_token')
+        self.sleep_time = config.get('hobit', 'sleep_time')
 
         return self

@@ -1,9 +1,13 @@
 [gdas]
 mq_url = amqp://hobbit:hobbit@localhost:5672/%2F
-output_mq = primary
-core_url = http://localhost:8000/api/ports
-name = Localhost-CPU-collector
+queue = ePrimary:example_core
+app_id = Localhost-collector
 
 [log]
 log_level = INFO
 log_file = /var/log/gdas/data_requester.log
+
+[hobbit]
+core_url = http://localhost:8000/api/ports
+password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
+sleep_time = 5
