@@ -11,27 +11,9 @@ import traceback
 TIME = 1430839235
 
 
-class AggregatorMessage():
-    def __init__(self, dbID, name, ip, port, ports_path, ports_status, res_path, res_status, unique_id, time, err):
-        self._id = dbID
-        self.name = name
-        self.ip = ip
-        self.port = port
-        self.ports = {'path': ports_path, 'status': ports_status}
-        self.resources = {'path': res_path, 'status': res_status}
-        self.id = unique_id
-        self.timeout = time
-        self.error = err
-
-    def validate(self):
-        assert type(self.id) is str and self.id != ''
-
-
 class CoreMessage():
-    def __init__(self, app_id, unique_id, module_type, value, timestamp, dbID=''):
-        self.app_id = app_id
+    def __init__(self, unique_id, module_type, value, timestamp):
         self.id = unique_id
-        #self._id = dbID
         self.module = module_type
         self.value = value
         self.timestamp = timestamp
@@ -53,12 +35,12 @@ def main():
         module_type = TYPE
         ts = int(TIME)
 
-        msg = CoreMessage(APP_ID, rand_id, module_type, sensor_value, ts).get()
+        msg = CoreMessage(rand_id, module_type, sensor_value, ts).get()
         msgs.append(msg)
 
     TIME += 1
 
-    print json.dumps(msgs)
+    print json.dumps({'id': APP_ID, 'data': msgs})
 
 
 def create_random_string(size):
