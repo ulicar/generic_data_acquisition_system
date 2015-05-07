@@ -1,7 +1,7 @@
 __author__ = 'jdomsic'
 
 
-class SensorNode():
+class SensorNode(object):
     def __init__(self, app_id, unique_id, module_type, value, timestamp, optional=()):
         self.app_id = app_id
         self.id = unique_id
