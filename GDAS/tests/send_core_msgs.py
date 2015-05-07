@@ -5,7 +5,6 @@ import random
 import requests
 import string
 import sys
-import time
 
 
 class CoreMessage():
@@ -26,18 +25,27 @@ class CoreMessage():
 
 def main():
     TIME = 1430839235
+    rand_id_1 = create_random_string(5)
+    rand_id_2 = create_random_string(5)
+    rand_id_3 = create_random_string(5)
+    rand_id_4 = create_random_string(5)
+    rand_id_5 = create_random_string(5)
+    rand_id_6 = create_random_string(5)
+    rand_id_7 = create_random_string(5)
+    rand_id_8 = create_random_string(5)
+    rand_id_9 = create_random_string(5)
 
     while True:
         core = [
-            (create_random_string(5), 'temperature', random.randint(-10, 5), TIME),
-            (create_random_string(5), 'temperature', random.randint(0, 10), TIME),
-            (create_random_string(5), 'humidity',    random.randint(80, 90), TIME),
-            (create_random_string(5), 'humidity',    random.randint(70, 90), TIME),
-            (create_random_string(5), 'cpu',         random.randint(50, 60), TIME),
-            (create_random_string(5), 'cpu',         random.randint(50, 60), TIME),
-            (create_random_string(5), 'cpu',         random.randint(50, 60), str(TIME)),
-            (create_random_string(5), 'temperature', str(random.randint(-10, 5)), TIME),
-            (create_random_string(5), 'temperature', str(random.randint(-10, 5)), TIME)
+            (rand_id_1, 'temperature', random.randint(-10, 5), TIME),
+            (rand_id_2, 'temperature', random.randint(0, 10), TIME),
+            (rand_id_3, 'humidity',    random.randint(80, 90), TIME),
+            (rand_id_4, 'humidity',    random.randint(70, 90), TIME),
+            (rand_id_5, 'cpu',         random.randint(50, 60), TIME),
+            (rand_id_6, 'cpu',         random.randint(50, 60), TIME),
+            (rand_id_7, 'cpu',         random.randint(50, 60), str(TIME)),
+            (rand_id_8, 'temperature', str(random.randint(-10, 5)), TIME),
+            (rand_id_9, 'temperature', str(random.randint(-10, 5)), TIME)
         ]
 
         msgs = []
