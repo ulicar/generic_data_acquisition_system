@@ -20,7 +20,7 @@ class DataRequester(object):
         self.sleep_time = int(cfg.sleep_time)
 
         self.mq_url = cfg.mq_url
-        self.exchange = cfg.exchange
+        self.exchange = cfg.output_exchange
         self.routing_key = cfg.routing_key
 
         self.publisher = None
@@ -73,7 +73,7 @@ if __name__ == '__main__':
             data_requester.core_url
         ))
 
-        DataRequester.main()
+        data_requester.main()
 
     except Exception, e:
         print >>sys.stderr, str(e)

@@ -1,6 +1,6 @@
 [gdas]
-mq_url = amqp://hobbit:hobbit@localhost:5672/%2F
-queue = ePrimary:example_core
+mq_url = amqp://guest:guest@localhost:5672/%2F
+queue = eDefault:all
 app_id = Localhost-collector
 
 [log]
