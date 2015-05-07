@@ -29,4 +29,3 @@ if __name__ == '__main__':
 
         print json.dumps(sensor.get())
         time.sleep(0.99)
-
