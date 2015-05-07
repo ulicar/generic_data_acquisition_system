@@ -1,5 +1,11 @@
 __author__ = 'jdomsic'
 
+"""
+    Mocks humidity sensor.
+    
+    Prints out humidty sensor data (changed) every second.
+"""
+
 import json
 import time
 

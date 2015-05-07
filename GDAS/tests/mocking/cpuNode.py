@@ -1,5 +1,11 @@
 __author__ = 'jdomsic'
 
+"""
+    Mocks cpu sensor.
+
+    Prints out cpu sensor data (changed) every second.
+"""
+
 import json
 import time
 

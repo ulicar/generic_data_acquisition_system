@@ -1,5 +1,11 @@
 __author__ = 'jdomsic'
 
+"""
+    Mocks light sensor.
+
+    Prints out light sensor data (changed) every second.
+"""
+
 import json
 import time
 

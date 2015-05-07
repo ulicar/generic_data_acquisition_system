@@ -1,5 +1,12 @@
 __author__ = 'jdomsic'
 
+"""
+    Mocks a generic sensor.
+    
+    Prints out temperature sensor data (changed) every second.
+    (Same as child class TemperatureNode from temperatureNode.py)
+"""
+
 
 class SensorNode(object):
     def __init__(self, unique_id, module_type, value, timestamp):

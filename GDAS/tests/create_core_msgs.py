@@ -2,6 +2,13 @@
 
 __author__ = 'jdomsic'
 
+"""
+     Mocks a CORE.
+     (1) Creates a CORE from STDIN data.
+     (2) Sends core_data to WIZARD.
+
+"""
+
 import json
 import random
 import string

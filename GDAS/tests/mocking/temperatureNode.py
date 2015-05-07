@@ -1,5 +1,11 @@
 __author__ = 'jdomsic'
 
+"""
+    Mocks temperature sensor.
+
+    Prints out temperature sensor data (changed) every second.
+"""
+    
 import json
 import time
 

@@ -1,5 +1,13 @@
 __author__ = 'jdomsic'
 
+
+"""
+    Mocks a CORE.
+
+    Prints out all sensor data (changed) every second.
+    (4x Temp, 3x Humidity, 2x Cpu, 2x Light senors.)
+"""
+
 import cpuNode as CPU
 import humidityNode as HUM
 import lightNode as LIG
