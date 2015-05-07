@@ -1,6 +1,9 @@
 __author__ = 'jdomsic'
 
-from sensorNode import SensorNode
+import cpuNode as CPU
+import humidityNode as HUM
+import lightNode as LIG
+import temperatureNode as TMP
 
 
 class Core(object):
@@ -10,36 +13,41 @@ class Core(object):
         self.time = 0
 
     def init(self, nodes):
-        for uniq_id, model, value in nodes:
-            self.nodes.append(SensorNode(self.name, uniq_id, model, value, self.time))
+        self.nodes.extend(nodes)
 
     def collect(self):
         measurements = []
         for node in self.nodes:
+            node.update()
             measurements.append(node.get())
 
-            node.timestamp = self.time
-
+        return measurements
 
 if __name__ == '__main__':
     import json
     import time
-    from testlib import create_random_value as rand
 
-    nodes = [
-        (rand('a', 5, str), 'temperature', rand(0, 10, int)),
-        (rand('b', 5, str), 'temperature', rand(0, 10, int)),
-        (rand('c', 5, str), 'humidity',    rand(80, 90, int)),
-        (rand('d', 5, str), 'humidity',    rand(70, 90, int)),
-        (rand('e', 5, str), 'cpu',         rand(50, 60, int)),
-        (rand('f', 5, str), 'cpu',         rand(50, 60, int)),
-        (rand('g', 5, str), 'cpu',         rand(50, 60, int)),
-        (rand('i', 5, str), 'temperature', rand(-10, 5, str)),
-        (rand('j', 5, str), 'temperature', rand(-5, 9, str))
+    DUMMY = 0
+    sensors = [
+        TMP.TemperatureNode('termo01', 'temperature', DUMMY, DUMMY),
+        TMP.TemperatureNode('termo02', 'temperature', DUMMY, DUMMY),
+        TMP.TemperatureNode('termo03', 'temperature', DUMMY, DUMMY),
+        TMP.TemperatureNode('termo04', 'temperature', DUMMY, DUMMY),
+
+        HUM.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
+        HUM.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
+        HUM.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
+
+        CPU.CpuNode('cpu01', 'cpu', DUMMY, DUMMY),
+        CPU.CpuNode('cpu02', 'cpu', DUMMY, DUMMY),
+
+        LIG.LightNode('light01', 'light', DUMMY, DUMMY),
+        LIG.LightNode('light02', 'light', DUMMY, DUMMY)
     ]
 
     c = Core('default')
-    c.init(nodes=nodes)
+    c.init(nodes=sensors)
     while True:
-
         print json.dumps(c.collect())
+
+        time.sleep(0.99)
