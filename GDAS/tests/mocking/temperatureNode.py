@@ -7,7 +7,7 @@ from itertools import cycle
 
 from sensorNode import SensorNode
 
-UPDATE = cycle([x * 0.25 for x in range(0, 20)])
+UPDATE = cycle([x * 0.25 for x in range(0, 20, 3)])
 
 
 class TemperatureNode(SensorNode):
