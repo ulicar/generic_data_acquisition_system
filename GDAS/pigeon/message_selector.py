@@ -50,22 +50,23 @@ class MessageSelector(object):
 
             return
 
-        core_id = message['app_id']
-        if self.current_core_id is not None and self.current_core_id != core_id:
+        if not self.validate(message):
             self.consumer.reject_msg()
 
             return
 
-        if not self.validate(message):
+        core_id = message['core']
+        data = message['data']
+        if self.current_core_id is not None and self.current_core_id != core_id:
             self.consumer.reject_msg()
 
             return
 
         # TODO: implement recieving bulk messages
         self.current_core_id = core_id
-        self.messages.append(message)
+        self.messages.append(data)
         self.consumer.acknowledge_msg()
-        if len(self.messages) >= 60:
+        if len(self.messages) >= 10:
             self.messages, module_messages = list(), self.divide_by_module()
 
             for module_type, msgs in module_messages.items():
