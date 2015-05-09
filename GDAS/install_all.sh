@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo 'Stopping. Script not yet tested'
+exit -1:
+
 # Setup script for GDAS system
 
 PYTHON=/usr/bin/python2.6
@@ -46,3 +49,7 @@ do
     echo -e 'Installed ${package} package. \n'
 done
 
+cp /etc/gdas/wizard/message_collector.nginx.ini.default /etc/nginx/sites-available/.
+ln -s /etc/nginx/sites-available/message_collector.nginx.ini.default /etc/nginx/sites-enabled/message_collector.nginx.ini.default
+
+ln -s /etc/gdas/wizard/message_collector.conf /etc/init/gdas-wizard.conf
