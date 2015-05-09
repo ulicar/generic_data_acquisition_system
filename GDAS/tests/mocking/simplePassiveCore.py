@@ -48,10 +48,10 @@ def query():
     if not request.headers.get('Token') == TOKEN:
         return Response(response='Not allowed for this user', status=httplib.FORBIDDEN)
 
-    data = {
+    data = [{
         'core': c.name,
         'data': c.collect()
-    }
+    }]
 
     return Response(response=json.dumps(data), status=httplib.OK)
 
