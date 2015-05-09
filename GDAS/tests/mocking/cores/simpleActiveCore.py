@@ -8,28 +8,12 @@ __author__ = 'jdomsic'
     (4x Temp, 3x Humidity, 2x Cpu, 2x Light senors.)
 """
 
-import cpuNode as CPU
-import humidityNode as HUM
-import lightNode as LIG
-import temperatureNode as TMP
+from sensorNodes import cpuNode as CPU
+from sensorNodes import humidityNode as HUM
+from sensorNodes import lightNode as LIG
+from sensorNodes import temperatureNode as TMP
 
-
-class Core(object):
-    def __init__(self, name='default'):
-        self.name = name
-        self.nodes = []
-        self.time = 0
-
-    def init(self, nodes):
-        self.nodes.extend(nodes)
-
-    def collect(self):
-        measurements = []
-        for node in self.nodes:
-            node.update()
-            measurements.append(node.get())
-
-        return measurements
+from simpleCore import Core
 
 if __name__ == '__main__':
     import json

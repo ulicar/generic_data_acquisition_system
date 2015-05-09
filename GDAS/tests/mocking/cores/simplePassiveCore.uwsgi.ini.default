@@ -1,0 +1,10 @@
+[uwsgi]
+http = 0.0.0.0:80
+chdir = /home/jdomsic/Diplomski/ictgen/GDAS/tests/mocking/cores
+wsgi-file = simplePassiveCore.py
+callable = app
+processes = 1
+listen = 1
+stats = 127.0.0.1:9080
+
+die-on-term = true

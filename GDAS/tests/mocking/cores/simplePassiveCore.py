@@ -10,11 +10,11 @@ from flask import Flask
 from flask import Response
 from flask import request
 
-from simpleActiveCore import Core
-import cpuNode as CPU
-import humidityNode as HUM
-import lightNode as LIG
-import temperatureNode as TMP
+from simpleCore import Core
+from sensorNodes import cpuNode as CPU
+from sensorNodes import humidityNode as HUM
+from sensorNodes import lightNode as LIG
+from sensorNodes import temperatureNode as TMP
 
 DUMMY = 0
 sensors = [
@@ -38,23 +38,29 @@ c.init(nodes=sensors)
 TOKEN = 'aaaaaAAAAAaaaaa'
 app = Flask(__name__)
 
-@app.route('/core', methods=['GET'])
+@app.route('/core/default', methods=['GET'])
 def query():
 
+    """
     if 'Token' not in request.headers:
-        header = {'WWW-Authenticate': 'Basic realm=\"Core ' + c.name + 'sensor data.\"'}
-        return Response(response='', status=httplib.UNAUTHORIZED, headers=header)
+        return Response(response='No authentification token in http headers',
+                        status=httplib.UNAUTHORIZED)
 
     if not request.headers.get('Token') == TOKEN:
-        return Response(response='Not allowed for this user', status=httplib.FORBIDDEN)
-
+        return Response(response='Incorrect token',
+                        status=httplib.FORBIDDEN
+    )
+    """
     data = [{
         'core': c.name,
         'data': c.collect()
     }]
 
-    return Response(response=json.dumps(data), status=httplib.OK)
-
+    return Response(
+        mimetype='application/json',
+        response=json.dumps(data),
+        status=httplib.OK,
+    )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
