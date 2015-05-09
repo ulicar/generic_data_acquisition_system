@@ -18,7 +18,6 @@ class Configuration():
         self.log_level = None
         self.schema = create_message_scheme()
 
-
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
