@@ -3,6 +3,8 @@ __author__ = 'jdomsic'
 import ConfigParser
 import logging
 
+from message_scheme import create_message_scheme
+
 
 class Configuration():
     def __init__(self):
@@ -14,27 +16,8 @@ class Configuration():
         self.app_id = None
         self.type = None
         self.log_level = None
-        self.schema = self.create_schema()
+        self.schema = create_message_scheme()
 
-    @staticmethod
-    def create_schema():
-        schema = {
-            'type': 'object',
-            'properties': {
-                'id': {'type': 'string'},
-                'value': {'type': 'any'},
-                'timestamp': {'type': 'integer'},
-                'module': {'type': 'string'},
-                'app_id': {'type': 'string'}
-                },
-            "patternProperties": {
-                "^.+$": {'type': 'any'}
-                },
-            "additionalProperties": False,
-            'required': ['id', 'value', 'timestamp', 'module', 'app_id']
-        }
-
-        return schema
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
