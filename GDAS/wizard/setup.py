@@ -14,7 +14,10 @@ setup(name='GDAS Wizard',
               'message_collector.py'
           ]),
           ('/etc/gdas/wizard', [
-              'message_collector.ini.default'
+              'message_collector.ini.default',
+              'message_collector.conf',
+              'message_collector.uwsgi.ini.default',
+              'message_collector.nginx.ini.default'
           ])
       ],
       install_requires=[

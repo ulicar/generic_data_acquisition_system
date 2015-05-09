@@ -1,0 +1,15 @@
+# use 'socket' instead of 'http' to communicate with nginx/apache2
+[uwsgi]
+
+#http               = 0.0.0.0:9000
+socket              = /tmp/message_collector.sock
+chmod-socket        = 666
+chdir               = /opt/gdas/wizard/
+mount               = /api/wizard/=message_collector:app
+manage-script-name  = true
+no-default-app      = true
+pyargv              = /etc/gdas/wizard/message_collector.ini.default
+processes           = 4
+listen              = 128
+
+die-on-term         = true

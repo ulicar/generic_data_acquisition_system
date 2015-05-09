@@ -60,7 +60,7 @@ def publish_to_mq(messages):
     queue.publish(messages)
 
 
-@app.route('/wizard/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def collect_sensor_info():
     try:
         auth = UserAuth()
