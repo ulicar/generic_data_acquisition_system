@@ -5,7 +5,11 @@ exit -1:
 
 # Setup script for GDAS system
 
-PYTHON=/usr/bin/python2.6
+PYTHON=$(which python2.7)
+UWSGI=$(which uwsgi)
+NGINX=$(which nginx)
+
+
 GDAS=$(pwd)
 HOBBIT=hobbit
 PIGEON=pigeon
@@ -25,11 +29,25 @@ PACKAGES={$UTIL $HOBBIT $WORKER $WIZARD $PIGEON}
 
 if [ ! -f $PYTHON ]; then
     echo 'sudo apt-get install python' && exit -1
+else
+    echo -e 'python installed.\n'
+fi
+
+if [ ! -f $UWSGI ]; then
+    echo 'sudo apt-get install uwsgi' && exit -1
+else
+    echo -e 'uwsgi installed.\n'
+fi
+
+if [ ! -f $NGINX ]; then
+    echo 'sudo apt-get install nginx' && exit -1
+else
+    echo -e 'nginx installed.\n'
 fi
 
 # Test prerequisites
 python -c 'import setuptools' 2>/dev/null
-[ $? == 1 ] && echo '[REQUIRED] Install python2.7 setuptools' && exit -1
+[ $? == 1 ] && echo -e '[REQUIRED] Install python2.7 setuptools\n' &&
 
 # Install subsystems
 echo -e 'Starting installation...\n'
