@@ -67,21 +67,24 @@ class MessageSelector(object):
         self.messages.append(data)
         self.consumer.acknowledge_msg()
         if len(self.messages) >= 10:
-            self.messages, module_messages = list(), self.divide_by_module()
+            module_messages = self.divide_by_module()
 
             for module_type, msgs in module_messages.items():
                 self.publisher.run_connection = True
                 msg = self.create_msg(msgs)
                 self.publisher.publish([msg], routing_key=module_type)
 
+            self.messages = list()
+
     def divide_by_module(self):
         msg_by_module = dict()
-        for msg in self.messages:
-            module_id = msg['module']
-            if module_id not in msg_by_module:
-                msg_by_module[module_id] = list()
+        for msgs in self.messages:
+            for msg in msgs:
+                module_id = msg['module']
+                if module_id not in msg_by_module:
+                    msg_by_module[module_id] = list()
 
-            msg_by_module[module_id].append(msg)
+                msg_by_module[module_id].append(msg)
 
         return msg_by_module
 
