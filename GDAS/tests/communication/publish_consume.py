@@ -5,7 +5,7 @@ __author__ = 'jdomsic'
     (1) Creates 1 consumer and 1 publisher.
     (2) Publishes data on RabbitMq
     (3) Consumes data from RabbitMq
-    (4) Prints 'Tessed passed'
+    (4) Prints 'Test passed'
 
 """
 
@@ -45,13 +45,13 @@ def create_output():
 
 
 def main():
-    oMQ = create_output()
-    iMQ = create_input()
+    output_mq = create_output()
+    input_mq = create_input()
 
-    oMQ.publish([MESSAGE])
+    output_mq.publish([MESSAGE])
     time.sleep(2)
 
-    iMQ.consume(callback)
+    input_mq.consume(callback)
 
     return
 
@@ -62,4 +62,3 @@ if __name__ == '__main__':
         import traceback
         print >>sys.stderr, str(e)
         traceback.print_exc(file=sys.stderr)
-

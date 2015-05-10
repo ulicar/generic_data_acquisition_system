@@ -6,11 +6,11 @@ import requests
 import string
 import sys
 
-from core.sensorNode import SensorNode
+from mocking.cores.sensorNodes.sensorNode import SensorNode
 
 
 def main():
-    TIME = 1430839235
+    timestamp = 1430839235
     rand_id_1 = create_random_string(5)
     rand_id_2 = create_random_string(5)
     rand_id_3 = create_random_string(5)
@@ -23,28 +23,28 @@ def main():
 
     while True:
         core = [
-            (rand_id_1, 'temperature', random.randint(-10, 5), TIME),
-            (rand_id_2, 'temperature', random.randint(0, 10), TIME),
-            (rand_id_3, 'humidity',    random.randint(80, 90), TIME),
-            (rand_id_4, 'humidity',    random.randint(70, 90), TIME),
-            (rand_id_5, 'cpu',         random.randint(50, 60), TIME),
-            (rand_id_6, 'cpu',         random.randint(50, 60), TIME),
-            (rand_id_7, 'cpu',         random.randint(50, 60), str(TIME)),
-            (rand_id_8, 'temperature', str(random.randint(-10, 5)), TIME),
-            (rand_id_9, 'temperature', str(random.randint(-10, 5)), TIME)
+            (rand_id_1, 'temperature', random.randint(-10, 5), timestamp),
+            (rand_id_2, 'temperature', random.randint(0, 10), timestamp),
+            (rand_id_3, 'humidity',    random.randint(80, 90), timestamp),
+            (rand_id_4, 'humidity',    random.randint(70, 90), timestamp),
+            (rand_id_5, 'cpu',         random.randint(50, 60), timestamp),
+            (rand_id_6, 'cpu',         random.randint(50, 60), timestamp),
+            (rand_id_7, 'cpu',         random.randint(50, 60), str(timestamp)),
+            (rand_id_8, 'temperature', str(random.randint(-10, 5)), timestamp),
+            (rand_id_9, 'temperature', str(random.randint(-10, 5)), timestamp)
         ]
 
         msgs = []
         for msg in core:
-            APP_ID = 'CORE'
+            app_id = 'CORE'
             rand_id = msg[0]
             module_type = msg[1]
             sensor_value = msg[2]
 
-            msg = SensorNode(APP_ID, rand_id, module_type, sensor_value, TIME).get()
+            msg = SensorNode(app_id, rand_id, module_type, sensor_value).get()
             msgs.append(msg)
 
-        TIME += 1
+        timestamp += 1
         send_request(msgs)
 
 

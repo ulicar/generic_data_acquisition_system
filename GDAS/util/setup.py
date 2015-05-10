@@ -28,5 +28,4 @@ setup(name='GDAS',
           'pika==0.9.14',
           'pymongo==3.0',
           'validictory'
-      ]
-)
+      ])

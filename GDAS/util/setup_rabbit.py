@@ -30,7 +30,7 @@ QUEUES = [
     'qSecondary.cpu',
     'qSecondary.humidity',
     'qSecondary.temperature',
-    'qSecundary.light'
+    'qSecondary.light'
 ]
 
 BINDINGS = {

@@ -22,5 +22,4 @@ setup(name='GDAS Worker',
           'GDAS',
           'validictory',
           'flask==0.10'
-      ]
-)
+      ])

@@ -22,5 +22,4 @@ setup(name='GDAS Core',
       ],
       install_requires=[
           'flask==0.10'
-      ]
-)
+      ])
