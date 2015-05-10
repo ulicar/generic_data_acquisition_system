@@ -33,27 +33,28 @@ class MessageProcessor(object):
         self.consumer = Consumer(settings)
         self.consumer.consume(self.process_message)
 
-    def process_message(self, messages, message_type, properties, stop):
-        messages = json.loads(messages)
-        for msg in messages:
-            if msg['app_id'] != self.core_id or msg['module'] != self.type:
-                self.consumer.reject_msg()
+    def process_message(self, message, _message_type, _properties, _stop):
+        msg = json.loads(message)
+        core_id = msg['core']
+        data = msg['data']
 
-                return
+        if core_id != self.core_id:
+            self.consumer.reject_msg()
+
         try:
-            self.messages.append(messages)
+            self.messages.extend(data)
             self.consumer.acknowledge_msg()
             if len(self.messages) >= 10:
                 self.save()
                 self.messages = list()
 
-        except Exception as e:
-            logging.error(str(e))
+        except Exception as err:
+            logging.error(str(err))
             logging.info(str(self.messages))
             raise Exception
 
     def save(self):
-        self.messages, data = list(), self.prepare_data()
+        data = self.prepare_data()
         for module, hours in data.items():
             for hour, measurements in hours.items():
                 db_key = {
@@ -73,22 +74,21 @@ class MessageProcessor(object):
 
         """
         data = dict()
-        for msgs in self.messages:
-            for msg in msgs:
-                module_id = msg['id']
-                if module_id not in data:
-                    data[module_id] = {}
+        for msg in self.messages:
+            module_id = msg['id']
+            if module_id not in data:
+                data[module_id] = {}
 
-                sensor_time_data = datetime.datetime.fromtimestamp(int(msg['timestamp']))
-                sensor_time = sensor_time_data.minute * 60 + sensor_time_data.second
-                sensor_value = msg['value']
-                measurement = {'data.%d' % sensor_time: sensor_value}
+            sensor_time_data = datetime.datetime.fromtimestamp(int(msg['timestamp']))
+            sensor_time = sensor_time_data.minute * 60 + sensor_time_data.second
+            sensor_value = msg['value']
+            measurement = {'data.%d' % sensor_time: sensor_value}
 
-                time = sensor_time_data.strftime('%Y-%m-%d-%H')
-                if time not in data[module_id]:
-                    data[module_id][time] = {}
+            time = sensor_time_data.strftime('%Y-%m-%d-%H')
+            if time not in data[module_id]:
+                data[module_id][time] = {}
 
-                data[module_id][time].update(measurement)
+            data[module_id][time].update(measurement)
 
         return data
 

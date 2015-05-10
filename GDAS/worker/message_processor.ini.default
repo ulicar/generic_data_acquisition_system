@@ -8,9 +8,7 @@ log_file = /var/log/gdas/worker_temp_001.log
 
 [worker]
 collection = FER:temperature
+core_id = FER
 queue = qSecondary.temperature
 app_id = worker_temp_001
 type = temperature
-core_id = CORE
-
-
