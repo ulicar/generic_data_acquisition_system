@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
 
 
@@ -10,7 +12,6 @@ __author__ = 'jdomsic'
 
 import json
 import sys
-import time
 import requests
 
 from sensorNodes import cpuNode
@@ -31,16 +32,17 @@ def main():
         push_flag = True
 
     while True:
-        data = json.dumps(c.collect())
+        data = [{
+            'core': c.name,
+            'data': c.collect()
+        }]
 
         if push_flag:
-            send_request(data)
+            send_request(json.dumps(data))
             print 'Data sent to server.'
 
         else:
             print data
-
-        time.sleep(0.99)
 
 
 def init_sensors():
@@ -75,7 +77,7 @@ def send_request(data):
             'token': auth_token,
             'Content-Type': 'application/json'
             },
-        url="http://jdomsic:jdomsic@victim.no-ip.org/wizard/upload",
+        url="http://jdomsic:jdomsic@localhost:5000/upload",
         data=data
     )
 
