@@ -44,7 +44,7 @@ class MessageSelector(object):
 
         self.consumer.consume(self.on_message_received)
 
-    def on_message_received(self, message, message_type, properties, stop):
+    def on_message_received(self, message, message_type, _properties, _stop):
         if not (message_type == self.type or message_type == 'all'):
             self.consumer.reject_msg()
 
@@ -62,7 +62,7 @@ class MessageSelector(object):
 
             return
 
-        # TODO: implement recieving bulk messages
+        # TODO: implement receiving bulk messages (in GDAS/utils/Communication/consumer)
         self.current_core_id = core_id
         self.messages.append(data)
         self.consumer.acknowledge_msg()
@@ -71,7 +71,7 @@ class MessageSelector(object):
 
             for module_type, msgs in module_messages.items():
                 self.publisher.run_connection = True
-                msg = json.dumps(msgs)
+                msg = self.create_msg(msgs)
                 self.publisher.publish([msg], routing_key=module_type)
 
     def divide_by_module(self):
@@ -96,6 +96,14 @@ class MessageSelector(object):
             logging.warning(str(message))
 
         return False
+
+    def create_msg(self, msgs):
+        msg = {
+            'core': self.current_core_id,
+            'data': msgs
+        }
+
+        return json.dumps(msg)
 
 
 def main():
