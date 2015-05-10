@@ -3,7 +3,7 @@ __author__ = 'jdomsic'
 import ConfigParser
 import logging
 
-from message_scheme import create_message_scheme
+from message_scheme import create_core_scheme
 
 
 class Configuration():
@@ -16,7 +16,7 @@ class Configuration():
         self.app_id = None
         self.type = None
         self.log_level = None
-        self.schema = create_message_scheme()
+        self.schema = create_core_scheme()
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
