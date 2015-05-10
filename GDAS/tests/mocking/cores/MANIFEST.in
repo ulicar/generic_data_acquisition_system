@@ -1,0 +1,7 @@
+include __init__.py
+include simpleActiveCore.py
+include simpleCore.py
+include simplePassiveCore.ini.default
+include simplePassiveCore.nginx.ini.default
+include simplePassiveCore.py
+include simplePassiveCore.uwsgi.ini.default

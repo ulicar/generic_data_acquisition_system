@@ -1,16 +1,16 @@
 [uwsgi]
-http                = 0.0.0.0:8000
-#socket             = /tmp/simplePassiveCore.sock
-#chmod-socket       = 666
-chdir               = /home/josip/mocking/cores
+#http               = 0.0.0.0:8000
+socket              = /tmp/simplePassiveCore.sock
+chmod-socket        = 666
+chdir               = /opt/gdas/test/cores/
 mount               = /api/core/=simplePassiveCore:app
 #wsgi-file          = simplePassiveCore.py
 #callable           = app
-pyargv              = simplePassiveCore.ini.default
+pyargv              = /etc/gdas/test/cores/simplePassiveCore.ini.default
 manage-script-name  = true
 no-default-app      = true
-processes           = 1
-listen              = 1
+processes           = 2
+listen              = 4
 #stats              = 127.0.0.1:9080
 
 die-on-term         = true
