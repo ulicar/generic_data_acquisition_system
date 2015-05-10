@@ -11,18 +11,18 @@ setup(name='GDAS test cores',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/test/cores', [
-              '__init__.py'
+              '__init__.py',
               'simpleCore.py',
               'simpleActiveCore.py',
               'simplePassiveCore.py',
           ]),
           ('/opt/gdas/test/cores/sensorNodes', [
-              '__init__.py'
-              'cpuNode.py',
-              'humidityNode.py',
-              'lightNode.py',
-              'sensorNode.py',
-              'temperatureNode.py'
+              'sensorNodes/__init__.py',
+              'sensorNodes/cpuNode.py',
+              'sensorNodes/humidityNode.py',
+              'sensorNodes/lightNode.py',
+              'sensorNodes/sensorNode.py',
+              'sensorNodes/temperatureNode.py'
           ]),
           ('/etc/gdas/test/cores', [
               'simplePassiveCore.ini.default',
