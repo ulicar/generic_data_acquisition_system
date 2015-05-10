@@ -20,6 +20,5 @@ setup(name='GDAS Worker',
       ],
       install_requires=[
           'GDAS',
-          'validictory',
-          'flask==0.10'
+          'validictory'
       ])
