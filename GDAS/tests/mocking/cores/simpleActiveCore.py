@@ -13,10 +13,10 @@ import sys
 import time
 import requests
 
-from sensorNodes import cpuNode as CPU
-from sensorNodes import humidityNode as HUM
-from sensorNodes import lightNode as LIG
-from sensorNodes import temperatureNode as TMP
+from sensorNodes import cpuNode
+from sensorNodes import humidityNode
+from sensorNodes import lightNode
+from sensorNodes import temperatureNode
 
 from simpleCore import Core
 
@@ -26,14 +26,14 @@ def main():
     c = Core(name=sys.argv[1])
     c.init(nodes=sensors)
 
-    PUSH = False
+    push_flag = False
     if len(sys.argv) > 2 and sys.argv[2] == '--push':
-        PUSH = True
+        push_flag = True
 
     while True:
         data = json.dumps(c.collect())
 
-        if PUSH:
+        if push_flag:
             send_request(data)
             print 'Data sent to server.'
 
@@ -44,22 +44,22 @@ def main():
 
 
 def init_sensors():
-    DUMMY = 0
+    dummy = 0
     sensors = [
-        TMP.TemperatureNode('termo01', 'temperature', DUMMY, DUMMY),
-        TMP.TemperatureNode('termo02', 'temperature', DUMMY, DUMMY),
-        TMP.TemperatureNode('termo03', 'temperature', DUMMY, DUMMY),
-        TMP.TemperatureNode('termo04', 'temperature', DUMMY, DUMMY),
+        temperatureNode.TemperatureNode('termo01', 'temperature', dummy, dummy),
+        temperatureNode.TemperatureNode('termo02', 'temperature', dummy, dummy),
+        temperatureNode.TemperatureNode('termo03', 'temperature', dummy, dummy),
+        temperatureNode.TemperatureNode('termo04', 'temperature', dummy, dummy),
 
-        HUM.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
-        HUM.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
-        HUM.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
+        humidityNode.HumidityNode('humidity01', 'humidity', dummy, dummy),
+        humidityNode.HumidityNode('humidity01', 'humidity', dummy, dummy),
+        humidityNode.HumidityNode('humidity01', 'humidity', dummy, dummy),
 
-        CPU.CpuNode('cpu01', 'cpu', DUMMY, DUMMY),
-        CPU.CpuNode('cpu02', 'cpu', DUMMY, DUMMY),
+        cpuNode.CpuNode('cpu01', 'cpu', dummy, dummy),
+        cpuNode.CpuNode('cpu02', 'cpu', dummy, dummy),
 
-        LIG.LightNode('light01', 'light', DUMMY, DUMMY),
-        LIG.LightNode('light02', 'light', DUMMY, DUMMY)
+        lightNode.LightNode('light01', 'light', dummy, dummy),
+        lightNode.LightNode('light02', 'light', dummy, dummy)
     ]
 
     return sensors
@@ -87,4 +87,3 @@ if __name__ == '__main__':
         traceback.print_exc()
 
         print >>sys.stderr, str(e)
-
