@@ -39,15 +39,15 @@ def create_sensors(parser, name):
             'humidity': humidityNode.HumidityNode
         }[sensor_type]
 
-        core_sensors.append(get_sensors_by_type(parser, sensor_type, sensor_map))
+        core_sensors.extend(get_sensors_by_type(parser, name, sensor_type, sensor_map))
 
     return core_sensors
 
 
-def get_sensors_by_type(parser, sensor_type, sensor_map):
+def get_sensors_by_type(parser, name, sensor_type, sensor_map):
     dummy = 0
     sensors = list()
-    for name in parser.get(app, sensor_type).strip().split(','):
+    for name in parser.get(name, sensor_type).strip().split(','):
         sensor = sensor_map(
             name,
             sensor_type,
