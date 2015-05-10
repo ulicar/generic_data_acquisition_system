@@ -8,6 +8,6 @@ log_level = INFO
 log_file = /var/log/gdas/worker_temp_001.log
 
 [worker]
-collection = UNIZG
+db = UNIZG
 cores = fer,tvz,fsb
 app_id = worker_unizg

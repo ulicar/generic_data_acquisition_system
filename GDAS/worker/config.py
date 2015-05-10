@@ -15,8 +15,7 @@ class Configuration():
         self.queue = None
         self.collection = None
         self.app_id = None
-        self.type = None
-        self.core_id = None
+        self.cores = None
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
@@ -34,11 +33,10 @@ class Configuration():
         self.database = config.get('gdas', 'database').split(':')
         self.queue = config.get('gdas', 'queue')
 
-        self.collection = config.get('worker', 'collection')
+        self.collection = config.get('worker', 'db')
         self.app_id = config.get('worker', 'app_id')
 
-        self.type = config.get('worker', 'type')
-        self.core_id = config.get('worker', 'core_id')
+        self.cores = config.get('worker', 'cores').strip().split(':')
 
         return self
 

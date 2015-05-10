@@ -16,16 +16,16 @@ from GDAS.utils.communication.consumer import Settings
 
 class Worker(object):
     def __init__(self, cfg):
-        self.db = Fatty(cfg.database)
-        self.db.open(cfg.collection[0], cfg.collection[1])
+        self.distdb = Fatty(cfg.database)
+        self.db = cfg.db
 
         self.mq = cfg.mq_url
         self.queue_name = cfg.queue
 
         self.consumer = None
         self.type = cfg.type
-        self.core_id = cfg.core_id
-
+        self.cores = cfg.cores
+        self.current_core_id = None
         self.messages = list()
 
     def main(self):
@@ -38,17 +38,26 @@ class Worker(object):
         core_id = msg['core']
         data = msg['data']
 
-        if core_id != self.core_id:
+        if core_id not in self.cores:
             self.consumer.reject_msg()
 
             return
 
+        if self.current_core_id is not None and self.current_core_id != core_id:
+            self.consumer.reject_msg()
+
+            return
+
+        self.current_core_id = core_id
         try:
             self.messages.extend(data)
             self.consumer.acknowledge_msg()
-            if len(self.messages) >= 10:
-                self.save()
-                self.messages = list()
+            if len(self.messages) < 10:
+                return
+
+            self.save()
+            self.messages = list()
+            self.current_core_id = None
 
         except Exception as err:
             logging.error(str(err))
@@ -70,7 +79,7 @@ class Worker(object):
         """
             data = {
                 'module': {
-                    'time': {mesuerements}
+                    'time': {measurements}
                     }
                 }
 
@@ -95,7 +104,8 @@ class Worker(object):
         return data
 
     def update_record(self, keys, time_series_data):
-        self.db.append(keys, time_series_data)
+        self.distdb.open(self.db, self.current_core_id)
+        self.distdb.append(keys, time_series_data)
 
         return
 
