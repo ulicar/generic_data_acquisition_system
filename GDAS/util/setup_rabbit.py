@@ -26,7 +26,7 @@ EXCHANGES = ['ePrimary', 'eSecondary']
 
 QUEUES = [
     'qDefault.all',
-    'qPrimary.all',
+    'qPrimary.core',
     'qSecondary.cpu',
     'qSecondary.humidity',
     'qSecondary.temperature',
@@ -35,7 +35,7 @@ QUEUES = [
 
 BINDINGS = {
     'qDefault.all': 'ePrimary',
-    'qPrimary.all': 'ePrimary',
+    'qPrimary.core': 'ePrimary',
     'qSecondary.cpu': 'eSecondary',
     'qSecondary.humidity': 'eSecondary',
     'qSecondary.temperature': 'eSecondary',
