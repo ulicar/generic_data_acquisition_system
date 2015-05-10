@@ -5,6 +5,7 @@ __author__ = 'jdomsic'
 
 import json
 import httplib
+import sys
 
 from flask import Flask
 from flask import Response
@@ -32,13 +33,13 @@ sensors = [
     LIG.LightNode('light02', 'light', DUMMY, DUMMY)
 ]
 
-c = Core('default')
+c = Core(name=sys.argv[1])
 c.init(nodes=sensors)
 
 TOKEN = 'aaaaaAAAAAaaaaa'
 app = Flask(__name__)
 
-@app.route('/core/default', methods=['GET'])
+@app.route('/default', methods=['GET'])
 def query():
 
     """
