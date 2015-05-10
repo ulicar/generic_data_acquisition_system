@@ -2,10 +2,11 @@ __author__ = 'jdomsic'
 
 
 def create_message_scheme():
+    """ message on the RabbitMq. It's received in Wizard or from active Core"""
     schema = {
         'type': 'array',
         'items': {
-            'type': create_sensor_scheme()
+            'type': create_core_scheme()
         },
         "additionalProperties": False,
     }
@@ -14,6 +15,7 @@ def create_message_scheme():
 
 
 def create_core_scheme():
+    """ Message created by a single Core whose name is in 'core' """
     schema = {
         'type': 'object',
         'properties': {
@@ -31,20 +33,20 @@ def create_core_scheme():
 
 
 def create_sensor_scheme():
+    """ Sensor value """
     schema = {
         'type': 'object',
         'properties': {
             'id': {'type': 'string'},
             'value': {'type': 'any'},
             'timestamp': {'type': 'integer'},
-            'module': {'type': 'string'},
-            'app_id': {'type': 'string'}
+            'module': {'type': 'string'}
             },
         "patternProperties": {
             "^.+$": {'type': 'any'}
             },
         "additionalProperties": False,
-        'required': ['id', 'value', 'timestamp', 'module', 'app_id']
+        'required': ['id', 'value', 'timestamp', 'module']
     }
 
     return schema
