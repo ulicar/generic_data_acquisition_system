@@ -6,7 +6,7 @@ chdir               = /home/josip/mocking/cores
 mount               = /api/core/=simplePassiveCore:app
 #wsgi-file          = simplePassiveCore.py
 #callable           = app
-pyargv              = default
+pyargv              = simplePassiveCore.ini.default
 manage-script-name  = true
 no-default-app      = true
 processes           = 1

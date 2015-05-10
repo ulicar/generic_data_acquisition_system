@@ -3,6 +3,7 @@
 __author__ = 'jdomsic'
 
 
+import ConfigParser
 import json
 import httplib
 import sys
@@ -16,31 +17,62 @@ from sensorNodes import humidityNode
 from sensorNodes import lightNode
 from sensorNodes import temperatureNode
 
-DUMMY = 0
-sensors = [
-    temperatureNode.TemperatureNode('termo01', 'temperature', DUMMY, DUMMY),
-    temperatureNode.TemperatureNode('termo03', 'temperature', DUMMY, DUMMY),
-    temperatureNode.TemperatureNode('termo04', 'temperature', DUMMY, DUMMY),
 
-    humidityNode.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
-    humidityNode.HumidityNode('humidity01', 'humidity', DUMMY, DUMMY),
+def create_cores(parser):
+    cores = dict()
+    for name in parser.get('core', 'apps').strip().split(','):
+        core = Core(name=name)
+        cores[name] = core
+        core_sensors = create_sensors(parser, name)
+        core.init(nodes=core_sensors)
 
-    cpuNode.CpuNode('cpu01', 'cpu', DUMMY, DUMMY),
-    cpuNode.CpuNode('cpu02', 'cpu', DUMMY, DUMMY),
+    return cores
 
-    lightNode.LightNode('light01', 'light', DUMMY, DUMMY),
-    lightNode.LightNode('light02', 'light', DUMMY, DUMMY)
-]
 
-c = Core(name=sys.argv[1])
-c.init(nodes=sensors)
+def create_sensors(parser, name):
+    core_sensors = list()
+    for sensor_type in parser.get(name, 'sensors').strip().split(','):
+        sensor_map = {
+            'temperature': temperatureNode.TemperatureNode,
+            'light': lightNode.LightNode,
+            'cpu': cpuNode.CpuNode,
+            'humidity': humidityNode.HumidityNode
+        }[sensor_type]
+
+        core_sensors.append(get_sensors_by_type(parser, sensor_type, sensor_map))
+
+    return core_sensors
+
+
+def get_sensors_by_type(parser, sensor_type, sensor_map):
+    dummy = 0
+    sensors = list()
+    for name in parser.get(app, sensor_type).strip().split(','):
+        sensor = sensor_map(
+            name,
+            sensor_type,
+            dummy,
+            dummy
+        )
+
+        sensors.append(sensor)
+
+    return sensors
+
 
 TOKEN = 'aaaaaAAAAAaaaaa'
 app = Flask(__name__)
+parser = ConfigParser.ConfigParser()
+parser.read(sys.argv[1])
+cores = create_cores(parser)
 
 
-@app.route('/default', methods=['GET'])
-def query():
+@app.route('/<core_name>/fetch', methods=['GET'])
+def query(core_name):
+    if core_name not in cores:
+        return Response(response='No core by that name',
+                        status=httplib.BAD_REQUEST
+        )
 
     """
     if 'Token' not in request.headers:
@@ -52,6 +84,8 @@ def query():
                         status=httplib.FORBIDDEN
     )
     """
+
+    c = cores[core_name]
     data = [{
         'core': c.name,
         'data': c.collect()
