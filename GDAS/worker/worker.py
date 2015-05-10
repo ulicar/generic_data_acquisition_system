@@ -14,7 +14,7 @@ from GDAS.utils.communication.consumer import Consumer
 from GDAS.utils.communication.consumer import Settings
 
 
-class MessageProcessor(object):
+class Worker(object):
     def __init__(self, cfg):
         self.db = Fatty(cfg.database)
         self.db.open(cfg.collection[0], cfg.collection[1])
@@ -40,6 +40,8 @@ class MessageProcessor(object):
 
         if core_id != self.core_id:
             self.consumer.reject_msg()
+
+            return
 
         try:
             self.messages.extend(data)
@@ -109,8 +111,8 @@ def main():
 
     logging.info('Started Worker: %s. Saving %s info.' % (cfg.app_id, cfg.type))
 
-    message_processor = MessageProcessor(cfg)
-    message_processor.main()
+    worker = Worker(cfg)
+    worker.main()
 
 if __name__ == '__main__':
     try:

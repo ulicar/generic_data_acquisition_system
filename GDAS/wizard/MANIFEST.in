@@ -1,7 +1,7 @@
-include message_collector.ini.default
-message_collector.uwsgi.ini.default
-message_collector.nginx.ini.default
-message_collector.conf
+include wizard.ini.default
+include wizard.uwsgi.ini.default
+include wizard.nginx.ini.default
+include wizard.conf
 include message_collector.py
 include config.py
 include setup.py

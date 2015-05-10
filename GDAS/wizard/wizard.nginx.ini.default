@@ -6,6 +6,6 @@ server {
 
     location /api/wizard/ {
         include uwsgi_params;
-        uwsgi_pass unix:///tmp/message_collector.sock;
+        uwsgi_pass unix:///tmp/wizard.sock;
     }
 }

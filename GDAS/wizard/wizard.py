@@ -24,7 +24,6 @@ config.read(sys.argv[1])
 QUEUE = config.get('gdas', 'queue')
 NAME = config.get('gdas', 'name')
 MQ_URL = config.get('gdas', 'mq_url')
-DATABASE = config.get('gdas', 'database').split(':')
 ROLES = config.get('wizard', 'required_roles').split(',')
 
 log_level = {
@@ -43,8 +42,8 @@ logging.basicConfig(
 )
 
 
-def publish_to_mq(messages):
-    if not isinstance(messages, list):
+def publish_to_mq(core_data):
+    if not isinstance(core_data, list):
         raise TypeError
 
     exchange_name, queue_name = QUEUE.split(':')
@@ -57,7 +56,7 @@ def publish_to_mq(messages):
     )
 
     queue = publisher.Publisher(settings)
-    queue.publish(messages)
+    queue.publish(core_data)
 
 
 @app.route('/upload', methods=['POST'])

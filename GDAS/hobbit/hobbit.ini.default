@@ -1,11 +1,11 @@
 [gdas]
 mq_url = amqp://jdomsic:jdomsic@localhost:5672/%2F
 queue = ePrimary:core
-app_id = hobbit001
+app_id = hobbit
 
 [log]
 log_level = INFO
-log_file = /var/log/gdas/data_requester.log
+log_file = /var/log/gdas/hobbit.log
 
 [hobbit]
 core_url = http://localhost/api/core/default

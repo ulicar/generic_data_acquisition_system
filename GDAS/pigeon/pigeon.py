@@ -13,7 +13,7 @@ from GDAS.utils.input.argument_parser import argument_parser
 from config import Configuration
 
 
-class MessageSelector(object):
+class Pigeon(object):
     def __init__(self, cfg):
         self.app_id = cfg.app_id
         self.mq_url = cfg.mq_url
@@ -119,8 +119,8 @@ def main():
                         level=cfg.log_level)
 
     logging.info('Started Pigeon: %s. Collecting %s info.' % (cfg.app_id, cfg.type))
-    message_selector = MessageSelector(cfg)
-    message_selector.main()
+    pigeon = Pigeon(cfg)
+    pigeon.main()
 
 if __name__ == '__main__':
     try:

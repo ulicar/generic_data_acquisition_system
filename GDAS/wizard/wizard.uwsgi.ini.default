@@ -2,13 +2,13 @@
 [uwsgi]
 
 #http               = 0.0.0.0:9000
-socket              = /tmp/message_collector.sock
+socket              = /tmp/wizard.sock
 chmod-socket        = 666
 chdir               = /opt/gdas/wizard/
-mount               = /api/wizard/=message_collector:app
+mount               = /api/wizard/=wizard:app
 manage-script-name  = true
 no-default-app      = true
-pyargv              = /etc/gdas/wizard/message_collector.ini.default
+pyargv              = /etc/gdas/wizard/wizard.ini.default
 processes           = 4
 listen              = 128
 
