@@ -12,6 +12,7 @@ setup(name='GDAS Pigdeon',
       data_files=[
           ('/opt/gdas/pigeon', [
               'message_selector.py',
+              'message_scheme.py',
               'config.py'
           ]),
           ('/etc/gdas/pigeon', [
@@ -19,6 +20,6 @@ setup(name='GDAS Pigdeon',
           ])
       ],
       install_requires=[
-          'GDAS'
-      ]
-)
+          'GDAS',
+          'validictory'
+      ])

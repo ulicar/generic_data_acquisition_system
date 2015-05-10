@@ -1,4 +1,5 @@
 include message_selector.ini.default
+include message_schema.py
 include message_selector.py
 include config.py
 include setup.py
