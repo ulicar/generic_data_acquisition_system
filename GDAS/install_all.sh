@@ -55,7 +55,7 @@ echo -e 'Starting installation...\n'
 #Creating User
 for package in ${array[*]}
 do
-    adduser gdas -g gdas
+    adduser gdas --no-create-home --system --group
     echo -e "Created gdas user.\n"
 done
 
