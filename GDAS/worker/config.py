@@ -32,10 +32,11 @@ class Configuration():
 
         self.mq_url = config.get('gdas', 'mq_url')
         self.database = config.get('gdas', 'database').split(':')
+        self.queue = config.get('gdas', 'queue')
 
-        self.collection = config.get('worker', 'collection').split(':')
+        self.collection = config.get('worker', 'collection')
         self.app_id = config.get('worker', 'app_id')
-        self.queue = config.get('worker', 'queue')
+
         self.type = config.get('worker', 'type')
         self.core_id = config.get('worker', 'core_id')
 

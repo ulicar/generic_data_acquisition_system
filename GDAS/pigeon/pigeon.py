@@ -72,7 +72,7 @@ class Pigeon(object):
             for module_type, msgs in module_messages.items():
                 self.publisher.run_connection = True
                 msg = self.create_msg(msgs)
-                self.publisher.publish([msg], routing_key=module_type)
+                self.publisher.publish([msg])
 
             self.messages = list()
 

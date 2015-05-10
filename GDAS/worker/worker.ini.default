@@ -1,6 +1,7 @@
 [gdas]
 database = localhost:27017
-mq_url = amqp://guest:guest@localhost:5672/%2F
+mq_url = amqp://jdomsic:jdomsic@localhost:5672/%2F
+queue = qSecondary.unizg
 
 [log]
 log_level = INFO
@@ -9,5 +10,4 @@ log_file = /var/log/gdas/worker_temp_001.log
 [worker]
 collection = UNIZG
 cores = fer,tvz,fsb
-queue = qSecondary.unizg
 app_id = worker_unizg

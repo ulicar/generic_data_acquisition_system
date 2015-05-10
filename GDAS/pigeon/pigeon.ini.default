@@ -1,7 +1,7 @@
 [gdas]
 mq_url = amqp://jdomsic:jdomsic@localhost:5672/%2F
 input_mq = :qDefault.all
-output_mq = eSecondary:
+output_mq = eSecondary:unizg
 app_id = pigeon
 
 [log]

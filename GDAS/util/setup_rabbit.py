@@ -26,20 +26,14 @@ EXCHANGES = ['ePrimary', 'eSecondary']
 
 QUEUES = [
     'qDefault.all',
-    'qPrimary.core',
-    'qSecondary.cpu',
-    'qSecondary.humidity',
-    'qSecondary.temperature',
-    'qSecondary.light'
+    'qPrimary.unizg',
+    'qSecondary.unizg',
 ]
 
 BINDINGS = {
     'qDefault.all': 'ePrimary',
-    'qPrimary.core': 'ePrimary',
-    'qSecondary.cpu': 'eSecondary',
-    'qSecondary.humidity': 'eSecondary',
-    'qSecondary.temperature': 'eSecondary',
-    'qSecondary.light': 'eSecondary'
+    'qPrimary.unizg': 'ePrimary',
+    'qSecondary.unizg': 'eSecondary',
 }
 
 URL = 'localhost'

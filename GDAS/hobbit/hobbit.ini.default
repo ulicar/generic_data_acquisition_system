@@ -1,6 +1,6 @@
 [gdas]
 mq_url = amqp://jdomsic:jdomsic@localhost:5672/%2F
-queue = ePrimary:core
+queue = ePrimary:unizg
 app_id = hobbit
 
 [log]
