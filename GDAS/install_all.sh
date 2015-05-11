@@ -71,3 +71,8 @@ cp /etc/gdas/wizard/message_collector.nginx.ini.default /etc/nginx/sites-availab
 ln -s /etc/nginx/sites-available/message_collector.nginx.ini.default /etc/nginx/sites-enabled/message_collector.nginx.ini.default
 
 ln -s /etc/gdas/wizard/message_collector.conf /etc/init/gdas-wizard.conf
+
+
+mkdir /opt/gdas/var/log -p
+
+chmod -R gdas:gdas /opt/gdas
