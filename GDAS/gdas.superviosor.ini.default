@@ -1,3 +1,6 @@
+; apt-get install supervisor
+; save this file to /etc/supervisor/conf.d/gdas.ini
+
 [program:uwsgi-wizard]
 command=/usr/local/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
 autostart=true
