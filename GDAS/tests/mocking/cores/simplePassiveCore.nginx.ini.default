@@ -6,6 +6,6 @@ server {
 
     location /api/core/ {
         include uwsgi_params;
-        uwsgi_pass unix:///tmp/simplePassiveCore.sock;
+        uwsgi_pass unix:///opt/gdas/var/simplePassiveCore.sock;
     }
 }

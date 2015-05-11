@@ -5,7 +5,7 @@ queue = qSecondary.unizg
 
 [log]
 log_level = INFO
-log_file = /var/log/gdas/worker_temp_001.log
+log_file = /opt/gdas/log/worker.log
 
 [worker]
 db = UNIZG

@@ -5,7 +5,7 @@ name = wizard
 
 [log]
 log_level = INFO
-log_file = /var/log/gdas/wizard.log
+log_file = /opt/gdas/log/wizard.log
 
 [wizard]
 required_roles = basic/upload,wizard/upload

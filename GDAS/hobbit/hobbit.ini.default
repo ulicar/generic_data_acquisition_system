@@ -5,7 +5,7 @@ app_id = hobbit
 
 [log]
 log_level = INFO
-log_file = /var/log/gdas/hobbit.log
+log_file = /opt/gdas/log/hobbit.log
 
 [hobbit]
 core_url = http://localhost/api/core/fer/fetch

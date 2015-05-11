@@ -1,6 +1,6 @@
 [uwsgi]
 #http               = 0.0.0.0:8000
-socket              = /tmp/simplePassiveCore.sock
+socket              = /opt/gdas/var/simplePassiveCore.sock
 chmod-socket        = 666
 chdir               = /opt/gdas/test/cores/
 mount               = /api/core/=simplePassiveCore:app
@@ -12,5 +12,8 @@ no-default-app      = true
 processes           = 2
 listen              = 4
 #stats              = 127.0.0.1:9080
+setuid              = gdas
+setgid              = gdas
+logto               = /opt/gdas/var/log/uwsgi-simplePassiveCore.log
 
 die-on-term         = true

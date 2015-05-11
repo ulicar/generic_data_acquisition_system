@@ -5,5 +5,5 @@ output_mq = eSecondary:unizg
 app_id = pigeon
 
 [log]
-log_file = /var/log/gdas/pigeon.log
+log_file = /opt/gdas/log/pigeon.log
 log_level = INFO
