@@ -32,7 +32,7 @@ echo 'Moving config files to appropriate locations.'
 cp "$NGINX_CONF" /etc/nginx/sites-available/.
 ln -fs /etc/nginx/sites-available/"$NGINX_CONF" /etc/nginx/sites-enabled/"$NGINX_CONF"
 
-cp "$SUPER_CONF" /etc/supervisor/conf.d/"$SUPER_CONF"
+cp "$SUPER_CONF" /etc/supervisor/conf.d/"$SUPER_CONF".conf
 
 mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old
 cp "$HAPROXY_CONF" /etc/haproxy/haproxy.cfg
