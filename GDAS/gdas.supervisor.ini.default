@@ -1,26 +1,6 @@
 ; apt-get install supervisor
 ; save this file to /etc/supervisor/conf.d/gdas.ini
 
-[program:uwsgi-wizard]
-command=/usr/local/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
-user=gdas
-autostart=true
-autorestart=true
-redirect_stderr=true
-stdout_logfile=/opt/gdas/var/log/supervisord.log
-numprocs=1
-exitcodes=0
-
-[program:gdas-pigeon]
-command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default
-user=gdas
-autostart=true
-autorestart=true
-redirect_stderr=true
-stdout_logfile=/opt/gdas/var/log/supervisord.log
-numprocs=1
-exitcodes=0
-
 [program:gdas-worker-unizg]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.unizg
 user=gdas
@@ -33,6 +13,26 @@ exitcodes=0
 
 [program:gdas-worker-hgk]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.hgk
+user=gdas
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-wizard]
+command=/usr/local/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
+user=gdas
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-pigeon]
+command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default
 user=gdas
 autostart=true
 autorestart=true
@@ -59,6 +59,7 @@ autorestart=true
 redirect_stderr=true
 stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
+stopsignal=QUIT
 exitcodes=0
 
 [program:gdas-hobbit]
