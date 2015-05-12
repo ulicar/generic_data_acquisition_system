@@ -9,7 +9,7 @@ mount               = /api/wizard/=wizard:app
 manage-script-name  = true
 no-default-app      = true
 pyargv              = /etc/gdas/wizard/wizard.ini.default
-processes           = 4
+#processes           = 4 # control this in supervisor
 listen              = 128
 setuid              = gdas
 setgid              = gdas

@@ -9,8 +9,8 @@ mount               = /api/core/=simplePassiveCore:app
 pyargv              = /etc/gdas/test/cores/simplePassiveCore.ini.default
 manage-script-name  = true
 no-default-app      = true
-processes           = 2
-listen              = 4
+#processes          = 4 # control this in supervisor
+listen              = 16
 #stats              = 127.0.0.1:9080
 uid                 = gdas
 gid                 = gdas
