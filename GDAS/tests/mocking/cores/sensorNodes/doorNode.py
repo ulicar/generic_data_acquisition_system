@@ -16,7 +16,7 @@ from random import random
 from sensorNode import SensorNode
 
 
-class DoorNone(SensorNode):
+class DoorNode(SensorNode):
     def __init__(self, unique_id, module_type, value, timestamp):
         super(self.__class__, self).\
             __init__(unique_id, module_type, value, timestamp)
@@ -27,7 +27,7 @@ class DoorNone(SensorNode):
 
 if __name__ == '__main__':
     DUMMY = 0
-    sensor = DoorNone('Doors01', 'door', DUMMY, DUMMY)
+    sensor = DoorNode('Doors01', 'door', DUMMY, DUMMY)
     sensor.validate()
 
     while True:
