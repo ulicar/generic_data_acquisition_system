@@ -3,6 +3,7 @@ mq_url = amqp://jdomsic:jdomsic@localhost:5672/%2F
 input_mq = :qDefault.all
 output_mq = eSecondary:
 app_id = pigeon
+type = all
 
 [log]
 log_file = /opt/gdas/var/log/pigeon.log
