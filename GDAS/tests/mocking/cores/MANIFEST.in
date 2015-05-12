@@ -1,7 +1,10 @@
 include __init__.py
+include coreCreator.py
 include simpleActiveCore.py
 include simpleCore.py
+include simpleActiveCore.ini.default
 include simplePassiveCore.ini.default
 include simplePassiveCore.nginx.ini.default
 include simplePassiveCore.py
 include simplePassiveCore.uwsgi.ini.default
+include sensorNodes/*

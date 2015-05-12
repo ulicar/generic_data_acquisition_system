@@ -19,7 +19,7 @@ setup(name='GDAS test cores',
           ]),
           ('/opt/gdas/test/cores/sensorNodes', [
               'sensorNodes/__init__.py',
-              'counterNode.py',
+              'sensorNodes/counterNode.py',
               'sensorNodes/cpuNode.py',
               'sensorNodes/doorNode.py',
               'sensorNodes/humidityNode.py',
