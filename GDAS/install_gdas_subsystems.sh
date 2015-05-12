@@ -27,3 +27,8 @@ for dir in ${DIRS[@]}; do
         echo "Missing $dir"
     fi
 done
+
+echo 'Setting up Rabbit queues' && cd $UTILS
+/usr/bin/python setup_rabbit.py
+
+echo 'Rabbit set up.'
