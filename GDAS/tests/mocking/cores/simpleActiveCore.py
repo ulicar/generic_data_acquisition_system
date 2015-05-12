@@ -10,31 +10,38 @@ __author__ = 'jdomsic'
     (4x Temp, 3x Humidity, 2x Cpu, 2x Light senors.)
 """
 
+import ConfigParser
 import json
 import sys
+import time
 import requests
 
-from sensorNodes import cpuNode
-from sensorNodes import humidityNode
-from sensorNodes import lightNode
-from sensorNodes import temperatureNode
+from multiprocessing import Pool
 
-from simpleCore import Core
+from coreCreator import create_cores
+
+TOKEN = 'aaaaaAAAAAaaaaa'
+parser = ConfigParser.ConfigParser()
+parser.read(sys.argv[1])
+cores = create_cores(parser).values()
+push_flag = True if len(sys.argv) > 2 and '--push' in sys.argv else False
+run_for = int(sys.argv[3]) if len(sys.argv) > 2 and '--run-for' in sys.argv else 1
+START = time.time()
 
 
 def main():
-    sensors = init_sensors()
-    c = Core(name=sys.argv[1])
-    c.init(nodes=sensors)
+    p = Pool(len(cores))
+    p.map(get_data, cores)
 
-    push_flag = False
-    if len(sys.argv) > 2 and sys.argv[2] == '--push':
-        push_flag = True
 
+def get_data(core):
     while True:
+        if time.time() >= START + run_for:
+            break
+
         data = [{
-            'core': c.name,
-            'data': c.collect()
+            'core': core.name,
+            'data': core.collect()
         }]
 
         if push_flag:
@@ -44,27 +51,7 @@ def main():
         else:
             print data
 
-
-def init_sensors():
-    dummy = 0
-    sensors = [
-        temperatureNode.TemperatureNode('termo01', 'temperature', dummy, dummy),
-        temperatureNode.TemperatureNode('termo02', 'temperature', dummy, dummy),
-        temperatureNode.TemperatureNode('termo03', 'temperature', dummy, dummy),
-        temperatureNode.TemperatureNode('termo04', 'temperature', dummy, dummy),
-
-        humidityNode.HumidityNode('humidity01', 'humidity', dummy, dummy),
-        humidityNode.HumidityNode('humidity01', 'humidity', dummy, dummy),
-        humidityNode.HumidityNode('humidity01', 'humidity', dummy, dummy),
-
-        cpuNode.CpuNode('cpu01', 'cpu', dummy, dummy),
-        cpuNode.CpuNode('cpu02', 'cpu', dummy, dummy),
-
-        lightNode.LightNode('light01', 'light', dummy, dummy),
-        lightNode.LightNode('light02', 'light', dummy, dummy)
-    ]
-
-    return sensors
+        time.sleep(0.97)
 
 
 def send_request(data):
@@ -81,11 +68,11 @@ def send_request(data):
         data=data
     )
 
+
 if __name__ == '__main__':
     try:
         main()
     except Exception as e:
         import traceback
         traceback.print_exc()
-
         print >>sys.stderr, str(e)
