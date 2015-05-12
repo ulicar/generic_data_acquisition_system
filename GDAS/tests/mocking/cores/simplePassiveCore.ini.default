@@ -1,5 +1,5 @@
 [core]
-apps = fer,tvz,fsb
+apps = fer,tvz,fsb,mit,ucla
 
 [fer]
 name = fer
@@ -21,4 +21,14 @@ light = room01,room02,room03,room04,room05
 name = fsb
 sensors = temperature,humidity
 temperature = termo01,termo02
+humidity = humy01,humy02,hum03,hum03
+
+[mit]
+name = mit
+sensors = temperature
+temperature = tempMit
+
+[ucla]
+name = ucla
+sensors = humidity
 humidity = humy01,humy02,hum03,hum03
