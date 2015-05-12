@@ -3,6 +3,7 @@
 
 [program:uwsgi-wizard]
 command=/usr/local/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
@@ -12,6 +13,7 @@ exitcodes=0
 
 [program:gdas-pigeon]
 command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
@@ -21,6 +23,7 @@ exitcodes=0
 
 [program:gdas-worker-unizg]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.unizg
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
@@ -30,6 +33,7 @@ exitcodes=0
 
 [program:gdas-worker-hgk]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.hgk
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
@@ -39,6 +43,7 @@ exitcodes=0
 
 [program:gdas-simpleActiveCore]
 command=/usr/bin/python /etc/gdas/test/cores/simpleActiveCore.py /etc/gdas/test/cores/simpleActiveCore.ini.default --push --run-for 1000
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
@@ -48,6 +53,7 @@ exitcodes=0
 
 [program:gdas-simplePassiveCore]
 command=/usr/local/bin/uwsgi --ini /etc/gdas/test/cores/simplePassiveCore.uwsgi.ini.default
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
@@ -57,6 +63,7 @@ exitcodes=0
 
 [program:gdas-hobbit]
 command=/usr/local/bin/uwsgi --ini /etc/gdas/hobbit/hobbit.uwsgi.ini.default
+user=gdas
 autostart=true
 autorestart=true
 redirect_stderr=true
