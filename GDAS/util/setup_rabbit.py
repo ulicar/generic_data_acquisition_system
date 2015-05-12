@@ -26,14 +26,16 @@ EXCHANGES = ['ePrimary', 'eSecondary']
 
 QUEUES = [
     'qDefault.all',
-    'qPrimary.unizg',
+    'qPrimary.hgk',
     'qSecondary.unizg',
+    'qSecondary.hgk'
 ]
 
 BINDINGS = {
     'qDefault.all': 'ePrimary',
-    'qPrimary.unizg': 'ePrimary',
+    'qPrimary.hgk': 'ePrimary',
     'qSecondary.unizg': 'eSecondary',
+    'qSecondary.hgk': 'eSecondary'
 }
 
 URL = 'localhost'
