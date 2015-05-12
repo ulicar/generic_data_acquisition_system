@@ -62,7 +62,7 @@ numprocs=1
 exitcodes=0
 
 [program:gdas-hobbit]
-command=/usr/local/bin/uwsgi --ini /etc/gdas/hobbit/hobbit.uwsgi.ini.default
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default
 user=gdas
 autostart=true
 autorestart=true
