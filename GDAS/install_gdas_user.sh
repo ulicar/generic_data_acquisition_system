@@ -8,4 +8,4 @@ fi
 
 GDASUSER=gdas
 
-adduser $GDASUSER --no-create-home --system --group
+adduser $GDASUSER --system --group
