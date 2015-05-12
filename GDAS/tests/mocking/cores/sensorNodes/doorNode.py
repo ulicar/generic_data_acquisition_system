@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
 
 """
@@ -31,5 +33,5 @@ if __name__ == '__main__':
     while True:
         sensor.update()
 
-        print json.dumps(sensor.get())
+        print json.dumps(sensor.get(), indent=4)
         time.sleep(0.99)

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
 
 """
@@ -5,7 +7,7 @@ __author__ = 'jdomsic'
 
     Prints out temperature sensor data (changed) every second.
 """
-    
+
 import json
 import time
 
@@ -33,5 +35,5 @@ if __name__ == '__main__':
     while True:
         sensor.update()
 
-        print json.dumps(sensor.get())
+        print json.dumps(sensor.get(), indent=4)
         time.sleep(0.99)

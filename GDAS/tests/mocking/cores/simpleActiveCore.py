@@ -45,7 +45,7 @@ def get_data(core):
         }]
 
         if push_flag:
-            send_request(json.dumps(data))
+            send_request(json.dumps(data, indent=4))
             print 'Data sent to server.'
 
         else:

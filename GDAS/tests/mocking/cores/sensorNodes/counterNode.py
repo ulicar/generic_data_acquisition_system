@@ -1,10 +1,12 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
 
 """
     Mocks (strange hehe) counter sensor.
     
     Prints out multiple values in one sensor data (changed) every second.
-    (Could be seen as weight of 3 (alien) fishes in a aquarium, every second)
+    (Could be seen as weight of 3 (alien) fish in a aquarium, every second)
 """
 
 import json
@@ -14,7 +16,7 @@ from itertools import cycle
 
 from sensorNode import SensorNode
 
-UPDATE = cycle([(x, x % 45, x // 11) for x in range(0, 190)])
+UPDATE = cycle([(x, x % 45,  x // 11) for x in range(0, 190)])
 
 
 class CounterNode(SensorNode):
@@ -34,5 +36,5 @@ if __name__ == '__main__':
     while True:
         sensor.update()
 
-        print json.dumps(sensor.get())
+        print json.dumps(sensor.get(), indent=4)
         time.sleep(0.99)
