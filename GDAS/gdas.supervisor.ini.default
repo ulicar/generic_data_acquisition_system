@@ -42,7 +42,7 @@ numprocs=1
 exitcodes=0
 
 [program:gdas-simpleActiveCore]
-command=/usr/bin/python /etc/gdas/test/cores/simpleActiveCore.py /etc/gdas/test/cores/simpleActiveCore.ini.default --push --run-for 1000
+command=/usr/bin/python /opt/gdas/test/cores/simpleActiveCore.py /etc/gdas/test/cores/simpleActiveCore.ini.default --push --run-for 1000
 user=gdas
 autostart=true
 autorestart=true
