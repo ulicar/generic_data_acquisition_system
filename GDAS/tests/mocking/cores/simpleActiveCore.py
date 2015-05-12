@@ -25,7 +25,7 @@ parser = ConfigParser.ConfigParser()
 parser.read(sys.argv[1])
 cores = create_cores(parser).values()
 push_flag = True if len(sys.argv) > 2 and '--push' in sys.argv else False
-run_for = int(sys.argv[3]) if len(sys.argv) > 2 and '--run-for' in sys.argv else 1
+run_for = int(sys.argv[4]) if len(sys.argv) > 2 and '--run-for' in sys.argv else 1
 START = time.time()
 
 
