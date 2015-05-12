@@ -35,7 +35,13 @@ class Hobbit(object):
         self.publisher = publisher.Publisher(publisher_settings)
 
         while True:
-            messages = self.get_messages()
+            try:
+                messages = self.get_messages()
+
+            except ValueError as err:
+                logging.info('%s %s' % (self.app_id, str(err)))
+                time.sleep(self.sleep_time)
+                continue
 
             self.publish_to_mq(messages)
 
