@@ -13,7 +13,7 @@ from itertools import cycle
 
 from sensorNode import SensorNode
 
-UPDATE = cycle([x for x in range(50, 100)])
+UPDATE = cycle([(x, x % 7) for x in range(50, 100)])
 
 
 class CpuNode(SensorNode):
