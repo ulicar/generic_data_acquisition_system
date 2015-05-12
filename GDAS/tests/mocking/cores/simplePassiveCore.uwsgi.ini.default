@@ -12,8 +12,8 @@ no-default-app      = true
 processes           = 2
 listen              = 4
 #stats              = 127.0.0.1:9080
-setuid              = gdas
-setgid              = gdas
+uid                 = gdas
+gid                 = gdas
 logto               = /opt/gdas/var/log/uwsgi-simplePassiveCore.log
 
 die-on-term         = true
