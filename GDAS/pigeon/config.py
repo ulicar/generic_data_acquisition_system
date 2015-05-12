@@ -14,7 +14,7 @@ class Configuration():
         self.routing_key = None
         self.input_queue = None
         self.app_id = None
-        self.type = None
+        self.cores = None
         self.log_level = None
         self.schema = create_core_scheme()
 
@@ -33,8 +33,10 @@ class Configuration():
 
         self.mq_url = config.get('gdas', 'mq_url')
         self.input_queue = config.get('gdas', 'input_mq').split(':')[1]
-        self.output_exchange, self.routing_key = config.get('gdas', 'output_mq').split(':')
+        self.output_exchange = config.get('gdas', 'output_mq').split(':')[0]
         self.app_id = config.get('gdas', 'app_id')
-        self.type = config.get('gdas', 'type')
+
+        self.routing_key = config.get('pigeon', 'routing_key')
+        self.cores = config.get('pigeon', 'cores')
 
         return self

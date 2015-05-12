@@ -28,6 +28,8 @@ class Pigeon(object):
         self.publisher = None
 
         self.messages = list()
+
+        self.trigger_cores = cfg.cores
         self.current_core_id = None
 
     def main(self):
@@ -56,12 +58,17 @@ class Pigeon(object):
             return
 
         core_id = message['core']
-        data = message['data']
+        if core_id not in self.trigger_cores:
+            self.consumer.reject_msg()
+
+            return
+
         if self.current_core_id is not None and self.current_core_id != core_id:
             self.consumer.reject_msg()
 
             return
 
+        data = message['data']
         # TODO: implement receiving bulk messages (in GDAS/utils/Communication/consumer)
         self.current_core_id = core_id
         self.messages.append(data)
