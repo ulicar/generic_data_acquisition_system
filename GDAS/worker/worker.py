@@ -23,7 +23,6 @@ class Worker(object):
         self.queue_name = cfg.queue
 
         self.consumer = None
-        self.type = cfg.type
         self.cores = cfg.cores
         self.current_core_id = None
         self.messages = list()
@@ -119,7 +118,7 @@ def main():
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         level=cfg.log_level)
 
-    logging.info('Started Worker: %s. Saving %s info.' % (cfg.app_id, cfg.type))
+    logging.info('Started Worker: %s. Saving %s info.' % (cfg.app_id, cfg.db))
 
     worker = Worker(cfg)
     worker.main()

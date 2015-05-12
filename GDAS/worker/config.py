@@ -13,7 +13,7 @@ class Configuration():
         self.database = None
 
         self.queue = None
-        self.collection = None
+        self.db = None
         self.app_id = None
         self.cores = None
 
@@ -33,10 +33,9 @@ class Configuration():
         self.database = config.get('gdas', 'database').split(':')
         self.queue = config.get('gdas', 'queue')
 
-        self.collection = config.get('worker', 'db')
+        self.db = config.get('worker', 'db')
         self.app_id = config.get('worker', 'app_id')
 
         self.cores = config.get('worker', 'cores').strip().split(':')
 
         return self
-
