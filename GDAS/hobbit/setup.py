@@ -15,7 +15,12 @@ setup(name='GDAS Hobbit',
               'config.py'
           ]),
           ('/etc/gdas/hobbit', [
-              'hobbit.ini.default'
+              'hobbit.ini.default.fer',
+              'hobbit.ini.default.fsb',
+              'hobbit.ini.default.tvz',
+              'hobbit.ini.default.mit',
+              'hobbit.ini.default.ucla',
+
           ])
       ],
       install_requires=[
