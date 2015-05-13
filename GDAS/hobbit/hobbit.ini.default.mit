@@ -1,6 +1,6 @@
 [gdas]
 mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
-queue = ePrimary:unizg
+queue = ePrimary:usa
 app_id = hobbit_mit
 
 [log]
