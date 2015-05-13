@@ -68,8 +68,52 @@ numprocs=2
 stopsignal=STOP
 exitcodes=0
 
-[program:gdas-hobbit]
-command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default
+[program:gdas-hobbit-fer]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.fer
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-fsb]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.fsb
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-tvz]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.tvz
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-ucla]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.ucla
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-mit]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.mit
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=true
