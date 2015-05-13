@@ -1,6 +1,6 @@
 [gdas]
 database = localhost:27017
-mq_url = amqp://jdomsic:jdomsic@localhost:5672/%2F
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
 queue = qSecondary.unizg
 
 [log]

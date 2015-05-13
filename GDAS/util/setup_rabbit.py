@@ -38,9 +38,11 @@ BINDINGS = {
     'qSecondary.hgk': 'eSecondary'
 }
 
-URL = 'localhost'
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=URL))
+username = 'gdas'
+password = 'GgdasS'
+host = 'localhost'
+params = pika.URLParameters('ampq://%s:%s@%s:5672/%%2F' % (username, password, host))
+connection = pika.BlockingConnection(parameters=params)
 channel = connection.channel()
 
 for q, e in DEADLETTER.items():
