@@ -5,5 +5,5 @@ app_id = santa
 log_level = INFO
 log_file = /opt/gdas/var/log/santa.log
 
-[wizard]
-required_roles = basic/download,wizard/upload
+[santa]
+required_roles = basic/read
