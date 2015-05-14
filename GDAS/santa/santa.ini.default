@@ -1,0 +1,9 @@
+[gdas]
+app_id = santa
+
+[log]
+log_level = INFO
+log_file = /opt/gdas/var/log/santa.log
+
+[wizard]
+required_roles = basic/download,wizard/upload
