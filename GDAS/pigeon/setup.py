@@ -16,7 +16,9 @@ setup(name='GDAS Pigdeon',
               'config.py'
           ]),
           ('/etc/gdas/pigeon', [
-              'pigeon.ini.default'
+              'pigeon.ini.default.hgk',
+              'pigeon.ini.default.unizg',
+              'pigeon.ini.default.usa',
           ])
       ],
       install_requires=[
