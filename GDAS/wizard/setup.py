@@ -17,7 +17,8 @@ setup(name='GDAS Wizard',
               'wizard.ini.default',
               'wizard.conf',
               'wizard.uwsgi.ini.default',
-              'wizard.nginx.ini.default'
+              'wizard.nginx.ini.default',
+              'README.txt'
           ])
       ],
       install_requires=[

@@ -19,6 +19,7 @@ setup(name='GDAS Pigdeon',
               'pigeon.ini.default.hgk',
               'pigeon.ini.default.unizg',
               'pigeon.ini.default.usa',
+              'README.txt'
           ])
       ],
       install_requires=[

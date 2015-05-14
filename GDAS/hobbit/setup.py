@@ -20,6 +20,7 @@ setup(name='GDAS Hobbit',
               'hobbit.ini.default.tvz',
               'hobbit.ini.default.mit',
               'hobbit.ini.default.ucla',
+              'README.txt'
 
           ])
       ],

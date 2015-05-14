@@ -13,7 +13,8 @@ setup(name='GDAS',
           ('/opt/gdas/', [
               'create_user.py',
               'setup_rabbit.py'
-          ])
+          ]),
+          ('/etc/gdas/README.txt')
       ],
       packages=[
           'GDAS',
