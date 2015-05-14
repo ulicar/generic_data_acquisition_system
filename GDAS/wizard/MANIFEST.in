@@ -2,7 +2,6 @@ include wizard.ini.default
 include wizard.uwsgi.ini.default
 include wizard.nginx.ini.default
 include wizard.conf
-include message_collector.py
 include config.py
 include setup.py
 include README.txt
