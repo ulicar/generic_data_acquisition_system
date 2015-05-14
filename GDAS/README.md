@@ -16,3 +16,48 @@ GDAS consists of several subsystems:
     * setup_rabbit  - creates some default queues on Rabbit
     * create_user   - helper script for user creating in Fatty
 * Other: configuration files
+
+
+# Supervisor
+
+  Enable Web interface /etc/supervisor/supervisor.conf
+  [inet_http_server]
+  port = 127.0.0.1:9001
+  username = Supervisor
+  password = StrongPassword
+
+  Starting supervisor: service supervisor start
+  Gdas configuration file: /etc/supervisor/conf.d/gdas.supervisor.ini.default.conf
+
+  Controlling services:
+  GROUPNAMES are wizads, pigeons, workers, hobbits, cores
+  supervisorctl start GROUPNAME:*
+
+  or
+
+  supervisorctl start PROGRAM:PROGRAM_NUMBER
+
+
+
+# MongoDB
+
+  Enable web interface /etc/mongod.conf (Port is set to: 27017 + 1000 = 28017)
+  httpinterface = true
+  rest = true
+
+  use command 'mongo' to start interactive shell
+
+  or use GDAS-MongoDB interface to see saved data
+
+
+# Nginx
+
+  Configuration in /etc/nginx/sites-enabled/gdas.nginx.ini.default
+  Maps hostname and url to our flask apps (to uwsgi socket)
+
+
+# Uwsgi
+
+  Starts flask apps, web interface is disabled on default (see PROGRAM.uwsgi.ini.default to enable)
+
+
