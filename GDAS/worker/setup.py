@@ -16,7 +16,8 @@ setup(name='GDAS Worker',
           ]),
           ('/etc/gdas/worker', [
               'worker.ini.default.hgk',
-              'worker.ini.default.unizg'
+              'worker.ini.default.unizg',
+              'worker.ini.default.usa'
           ])
       ],
       install_requires=[
