@@ -26,16 +26,20 @@ EXCHANGES = ['ePrimary', 'eSecondary']
 
 QUEUES = [
     'qDefault.all',
-    'qPrimary.hgk',
+    'qPrimary.usa',
+    'qPrimary.unizg',
+    'qSecondary.hgk',
+    'qSecondary.usa',
     'qSecondary.unizg',
-    'qSecondary.hgk'
 ]
 
 BINDINGS = {
     'qDefault.all': 'ePrimary',
-    'qPrimary.hgk': 'ePrimary',
+    'qPrimary.usa': 'ePrimary',
+    'qPrimary.unizg': 'ePrimary',
+    'qSecondary.hgk': 'eSecondary',
+    'qSecondary.usa': 'eSecondary',
     'qSecondary.unizg': 'eSecondary',
-    'qSecondary.hgk': 'eSecondary'
 }
 
 username = 'gdas'
