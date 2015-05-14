@@ -64,6 +64,7 @@ def collect_sensor_info():
 
         try:
             schema = crete_post_data_scheme()
+
             data = get_post_data(request.data, schema)
 
             keys = map_keys(schema, data)
