@@ -1,0 +1,7 @@
+include worker.ini.default.hgk
+include worker.ini.default.usa
+include worker.ini.default.unizg
+include worker.py
+include config.py
+include setup.py
+include README.txt

@@ -1,0 +1,13 @@
+[gdas]
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+queue = ePrimary:unizg
+app_id = hobbit_tvz
+
+[log]
+log_level = INFO
+log_file = /opt/gdas/var/log/hobbit.log
+
+[hobbit]
+core_url = http://localhost/api/core/tvz/fetch
+password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
+sleep_time = 1

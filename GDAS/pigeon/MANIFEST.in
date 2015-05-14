@@ -1,0 +1,8 @@
+include pigeon.ini.default.hgk
+include pigeon.ini.default.unizg
+include pigeon.ini.default.usa
+include message_schema.py
+include pigeon.py
+include config.py
+include setup.py
+include README.txt

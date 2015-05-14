@@ -3,9 +3,12 @@ __author__ = 'jdomsic'
 import argparse
 import hashlib
 import sys
-import pymongo
 
-from GDAS.interfaces.contracts import users_pb2
+from GDAS.utils.database.connection import Fatty
+from GDAS.utils.security.auth import UserAuth
+
+COLLECTION = 'gdas-accounts'
+DATABASE = 'localhost:27017'
 
 
 def get_arguments():
@@ -31,7 +34,7 @@ def get_arguments():
 
     parser.add_argument(
         '--user-roles',
-        metavar='ROLES',
+        metavar='ROLE',
         nargs='*',
         default='basic'
     )
@@ -43,60 +46,39 @@ def get_arguments():
     )
 
     parser.add_argument(
-        'admin-password',
+        'admin-pass',
         metavar='ADMINPASS',
         help='Password for admin user'
     )
 
-    parser.add_argument(
-        '--database',
-        metavar='DATABASE',
-        help='Database in form localhost:80',
-        default='localhost:27017'
-    )
-
-    parser.add_argument(
-        '--collection',
-        metavar='COLLECTION',
-        help='DB Collection in form db.collection',
-        default='master.users'
-    )
-
-    return parser.parse_args()
-
-
-def open_db_connection(args):
-    db_url = args['--database']
-    db_name, conn_name = args['--collection'].split('.')
-
-    db_client = pymongo.MongoClient(db_url)
-    db = db_client[db_name]
-    collection = db[conn_name]
-
-    return collection
-
-
-def create_new_user(args, connection):
-    username = args['user_name']
-    password = hashlib.sha1(args['password'])
-    description = args['user-descr']
-    user_roles = set(args['--user-roles'])
-
-    user = users_pb2.user_t()
-    user.username = username
-    user.password = password
-    user.description = description
-    user.user_roles.update(user_roles)
-
-    connection.insert(user)
+    return vars(parser.parse_args())
 
 
 def main():
     args = get_arguments()
 
-    conn = open_db_connection(args)
-    create_new_user(args, conn)
+    username = args['user_name']
+    password = hashlib.sha1(args['password']).hexdigest() +\
+               hashlib.sha1(username).hexdigest()
+    description = args['user-descr']
+    user_roles = set(args['user_roles'])
 
+    auth = UserAuth()
+    if not auth.is_admin(args['admin-username'], args['admin-pass']):
+        raise Exception('Only admin can add users.')
+
+    user = {
+        'username': username,
+        'password': password,
+        'description': description,
+        'roles': list(user_roles)
+    }
+
+    url = DATABASE.split(':')
+    db = Fatty(url)
+    database, collection = COLLECTION.split('-')
+    db.open(database, collection)
+    db.write(user)
 
 if __name__ == '__main__':
     try:

@@ -2,22 +2,23 @@ __author__ = 'jdomsic'
 
 from setuptools import setup
 
-setup(name='GDAS Worker',
+setup(name='GDAS Pigdeon',
       version='1.0',
-      description='GDAS Worker',
+      description='GDAS Pigeon message selector',
       author='Josip Domsic',
       author_email='josip.domsic@gmail.com',
       license='MIT',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
-          ('/opt/gdas/worker', [
-              'worker.py',
+          ('/opt/gdas/pigeon', [
+              'pigeon.py',
+              'message_scheme.py',
               'config.py'
           ]),
-          ('/etc/gdas/worker', [
-              'worker.ini.default.hgk',
-              'worker.ini.default.unizg',
-              'worker.ini.default.usa',
+          ('/etc/gdas/pigeon', [
+              'pigeon.ini.default.hgk',
+              'pigeon.ini.default.unizg',
+              'pigeon.ini.default.usa',
               'README.txt'
           ])
       ],

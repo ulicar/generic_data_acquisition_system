@@ -1,0 +1,172 @@
+; apt-get install supervisor
+; save this file to /etc/supervisor/conf.d/gdas.ini
+[group:cores]
+programs=gdas-simpleActiveCore,gdas-simplePassiveCore
+
+[group:wizards]
+programs=gdas-wizard
+
+[group:pigeons]
+programs=gdas-pigeon-usa,gdas-pigeon-unizg,gdas-pigeon-hgk
+
+[group:workers]
+programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk
+
+[group:hobbits]
+programs=gdas-hobbit-fer,gdas-hobbit-fsb,gdas-hobbit-tvz,gdas-hobbit-mit,gdas-hobbit-ucla
+
+
+[program:gdas-worker-unizg]
+command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.unizg
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-worker-usa]
+command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.usa
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-worker-hgk]
+command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.hgk
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-wizard]
+command=/usr/local/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=4
+exitcodes=0
+
+[program:gdas-pigeon-usa]
+command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default.usa
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-pigeon-unizg]
+command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default.unizg
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-pigeon-hgk]
+command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default.hgk
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-simpleActiveCore]
+command=/usr/bin/python /opt/gdas/test/cores/simpleActiveCore.py /etc/gdas/test/cores/simpleActiveCore.ini.default --push --run-for 1000
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-simplePassiveCore]
+command=/usr/local/bin/uwsgi --ini /etc/gdas/test/cores/simplePassiveCore.uwsgi.ini.default
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=2
+stopsignal=STOP
+exitcodes=0
+
+[program:gdas-hobbit-fer]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.fer
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-fsb]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.fsb
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-tvz]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.tvz
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-ucla]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.ucla
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-hobbit-mit]
+command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.mit
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0

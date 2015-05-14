@@ -1,0 +1,9 @@
+include hobbit.ini.default.fer
+include hobbit.ini.default.tvz
+include hobbit.ini.default.fsb
+include hobbit.ini.default.ucla
+include hobbit.ini.default.mit
+include hobbit.py
+include config.py
+include setup.py
+include README.txt

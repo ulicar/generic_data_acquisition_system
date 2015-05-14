@@ -1,0 +1,5 @@
+include santa.ini.default
+include santa.uwsgi.ini.default
+include santa.nginx.ini.default
+include santa.conf
+include README.txt

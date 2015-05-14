@@ -3,23 +3,26 @@ __author__ = 'jdomsic'
 import ConfigParser
 import logging
 
+from message_scheme import create_core_scheme
+
 
 class Configuration():
     def __init__(self):
-        self.log_level = None
-        self.log_file = None
-
         self.mq_url = None
-        self.database = None
-
-        self.queue = None
-        self.db = None
+        self.log_file = None
+        self.output_exchange = None
+        self.routing_key = None
+        self.input_queue = None
         self.app_id = None
+        self.type = None
         self.cores = None
+        self.log_level = None
+        self.schema = create_core_scheme()
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
         config.read(filename)
+
         self.log_level = {
             'DEBUG': logging.DEBUG,
             'INFO': logging.INFO,
@@ -30,12 +33,11 @@ class Configuration():
         self.log_file = config.get('log', 'log_file')
 
         self.mq_url = config.get('gdas', 'mq_url')
-        self.database = config.get('gdas', 'database').split(':')
-        self.queue = config.get('gdas', 'queue')
-
-        self.db = config.get('worker', 'db')
-        self.app_id = config.get('worker', 'app_id')
-
-        self.cores = config.get('worker', 'cores').strip().split(':')
+        self.input_queue = config.get('gdas', 'input_mq').split(':')[1]
+        self.output_exchange = config.get('gdas', 'output_mq').split(':')[0]
+        self.app_id = config.get('gdas', 'app_id')
+        self.type = config.get('gdas', 'type')
+        self.routing_key = config.get('pigeon', 'routing_key')
+        self.cores = config.get('pigeon', 'cores')
 
         return self

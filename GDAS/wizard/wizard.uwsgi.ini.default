@@ -1,0 +1,18 @@
+# use 'socket' instead of 'http' to communicate with nginx/apache2
+[uwsgi]
+
+#http               = 0.0.0.0:9000
+socket              = /opt/gdas/var/wizard.sock
+chmod-socket        = 666
+chdir               = /opt/gdas/wizard/
+mount               = /api/wizard/=wizard:app
+manage-script-name  = true
+no-default-app      = true
+pyargv              = /etc/gdas/wizard/wizard.ini.default
+#processes           = 4 # control this in supervisor
+listen              = 128
+setuid              = gdas
+setgid              = gdas
+logto               = /opt/gdas/var/log/uwsgi-wizard.log
+
+die-on-term         = true

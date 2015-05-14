@@ -1,0 +1,9 @@
+[gdas]
+app_id = santa
+
+[log]
+log_level = INFO
+log_file = /opt/gdas/var/log/santa.log
+
+[santa]
+required_roles = basic/read

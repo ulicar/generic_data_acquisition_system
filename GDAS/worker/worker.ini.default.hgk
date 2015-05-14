@@ -1,0 +1,13 @@
+[gdas]
+database = localhost:27017
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+queue = qSecondary.hgk
+
+[log]
+log_level = INFO
+log_file = /opt/gdas/var/log/worker.log
+
+[worker]
+db = HGK
+cores = pliva,kras,dukat
+app_id = worker_hgk

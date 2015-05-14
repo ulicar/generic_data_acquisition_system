@@ -1,10 +1,22 @@
+#!/usr/bin/python
+
 __author__ = 'jdomsic'
+
+"""
+    Tests Consumer and Publisher from Communication module.
+    (1) Creates 1 consumer and 1 publisher.
+    (2) Publishes data on RabbitMq
+    (3) Consumes data from RabbitMq
+    (4) Prints 'Test passed'
+
+"""
+
 
 import time
 import sys
 
-from util.communication import publisher
-from util.communication import consumer
+from GDAS.utils.communication import publisher
+from GDAS.utils.communication import consumer
 
 MQ = 'amqp://guest:guest@localhost:5672/%2F'
 MESSAGE = 'string data'
@@ -35,13 +47,13 @@ def create_output():
 
 
 def main():
-    oMQ = create_output()
-    iMQ = create_input()
+    output_mq = create_output()
+    input_mq = create_input()
 
-    oMQ.publish([MESSAGE])
+    output_mq.publish([MESSAGE])
     time.sleep(2)
 
-    iMQ.consume(callback)
+    input_mq.consume(callback)
 
     return
 
@@ -52,4 +64,3 @@ if __name__ == '__main__':
         import traceback
         print >>sys.stderr, str(e)
         traceback.print_exc(file=sys.stderr)
-
