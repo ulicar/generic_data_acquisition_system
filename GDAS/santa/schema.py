@@ -2,6 +2,7 @@ __author__ = 'jdomsic'
 
 from timemodule import utc_to_time_key
 
+
 def crete_post_data_scheme():
     """ Message created by a single Core whose name is in 'core' """
     schema = {
