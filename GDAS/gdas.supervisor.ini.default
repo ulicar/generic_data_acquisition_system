@@ -7,7 +7,7 @@ programs=gdas-simpleActiveCore,gdas-simplePassiveCore
 programs=gdas-wizard
 
 [group:pigeons]
-programs=progname1,progname2
+programs=gdas-pigeon-usa,gdas-pigeon-unizg,gdas-pigeon-hgk
 
 [group:workers]
 programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk
