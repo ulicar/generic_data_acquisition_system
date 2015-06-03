@@ -11,8 +11,10 @@ import sys
 from flask import Flask
 from flask import Response
 from flask import request
+from validictory import validate
 
 from schema import *
+from timemodule import *
 from GDAS.utils.security.auth import UserAuth
 
 
@@ -40,9 +42,6 @@ logging.basicConfig(
 )
 
 
-def get_post_data(data, scheme):
-    pass
-
 @app.route('/fetch', methods=['POST'])
 def collect_sensor_info():
     try:
@@ -67,15 +66,15 @@ def collect_sensor_info():
 
             data = get_post_data(request.data, schema)
 
-            keys = map_keys(schema, data)
+            db, collections, modules, start, end = map_keys(schema, data)
 
-            query = create_query(keys)
+            resolution = time_resolution(start, end, collections, modules)
 
-            results = get_database_info(query)
+            queries = create_query(start, end)
+
+            results = get_database_info(queries)
 
             response = create_response(results, resolution)
-
-            return Response(response, status=httplib.OK)
 
         except ValueError as ve:
             return Response(str(ve), status=httplib.BAD_REQUEST)
@@ -83,12 +82,44 @@ def collect_sensor_info():
         except TypeError as te:
             return Response(str(te), status=httplib.BAD_REQUEST)
 
-        return Response(response='uploaded', status=httplib.OK)
+        return Response(response=response, status=httplib.OK)
 
     except Exception as e:
         logging.error(str(e))
 
     return Response(response='', status=httplib.INTERNAL_SERVER_ERROR)
+
+
+def get_post_data(post_data, scheme):
+    try:
+        data = json.loads(post_data)
+
+    except ValueError:
+        raise ValueError('Post data must be in json')
+
+    if not validate(data=data, schema=scheme):
+        raise ValueError('Wrong post data format')
+
+    return data
+
+
+def create_query(keys):
+    queries = list()
+
+    return queries
+
+
+def get_database_info(queries):
+    results = list()
+    # fatty...
+
+    return results
+
+
+def create_response(results, resolution):
+    response = ''
+
+    return response
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 __author__ = 'jdomsic'
 
-from timemodule import utc_to_time_key
+from timemodule import to_datetime
 
 
 def crete_post_data_scheme():
@@ -63,8 +63,8 @@ def map_keys(schema, post_data):
         raise TypeError('Error in field: time')
 
     try:
-        TIME_START = utc_to_time_key(post_data['time']['from'])
-        TIME_END = utc_to_time_key(post_data['time']['to'])
+        TIME_START = to_datetime(post_data['time']['from'])
+        TIME_END = to_datetime(post_data['time']['to'])
 
     except (ValueError, TypeError):
         raise TypeError('Erorr in filed: time')

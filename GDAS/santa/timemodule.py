@@ -6,11 +6,12 @@ import datetime
 SECONDS_IN_HOUR = 3600
 
 
-def utc_to_time_key(time):
-    date_in = datetime.datetime.strptime(time, '%Y-%M-%DT%H:%m:%s')
-    date_out = date_in.strftime('%Y-%M-%D-%H')
+def to_datetime(time):
+    return datetime.datetime.strptime(time, '%Y-%M-%DT%H:%m:%s')
 
-    return date_out
+
+def to_database_key(date):
+    return date.strftime('%Y-%M-%D-%H')
 
 
 def time_resolution(start, end, cores, modules):
