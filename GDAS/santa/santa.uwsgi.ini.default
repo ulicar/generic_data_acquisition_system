@@ -1,7 +1,5 @@
-# use 'socket' instead of 'http' to communicate with nginx/apache2
 [uwsgi]
-
-#http               = 0.0.0.0:9000
+http                = 0.0.0.0:9030
 socket              = /opt/gdas/var/santa.sock
 chmod-socket        = 666
 chdir               = /opt/gdas/santa/
@@ -9,10 +7,10 @@ mount               = /api/santa/=santa:app
 manage-script-name  = true
 no-default-app      = true
 pyargv              = /etc/gdas/santa/santa.ini.default
-#processes           = 4 # control this in supervisor
+master              = true
+processes           = 4 # control this in supervisor
 listen              = 128
 setuid              = gdas
 setgid              = gdas
 logto               = /opt/gdas/var/log/uwsgi-santa.log
-
 die-on-term         = true
