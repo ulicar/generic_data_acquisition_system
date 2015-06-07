@@ -10,4 +10,4 @@ log_file = /opt/gdas/var/log/apprentice.log
 [apprentice]
 core_url = http://localhost/api/core/tvz/fetch
 password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
-sleep_time = 1
+sleep_time = 0.5
