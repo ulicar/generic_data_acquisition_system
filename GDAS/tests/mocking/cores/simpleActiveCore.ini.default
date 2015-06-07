@@ -1,5 +1,5 @@
 [core]
-apps = pliva,kras,dukat,ericsson
+apps = pliva,kras,dukat,ericsson,siemens
 
 [pliva]
 name = pliva
@@ -27,3 +27,9 @@ humidity = humy01,humy02,hum03,hum03
 name = ericsson
 sensors = temperature
 temperature = termo01,termo021,termo022,termo023,termo024,termo025,termo032,termo042,termo052
+
+[siemens]
+name = siemens
+sensors = temperature,humidity
+temperature = termo01,termo02
+humidity = humy01,humy02,hum03,hum03

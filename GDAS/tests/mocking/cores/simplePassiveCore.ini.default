@@ -1,5 +1,5 @@
 [core]
-apps = fer,tvz,fsb,mit,ucla
+apps = fer,tvz,fsb,mef,ffzg,mit,ucla
 
 [fer]
 name = fer
@@ -10,6 +10,22 @@ cpu = comp01,comp,com02
 light = room01,room02
 
 [tvz]
+name = tvz
+sensors = temperature,humidity,cpu,light
+temperature = termoA,termoB,termoC,termoD
+humidity = humi01
+cpu = comp01
+light = room01,room02,room03,room04,room05
+
+[ffzg]
+name = tvz
+sensors = temperature,humidity,cpu,light
+temperature = termoA,termoB,termoC,termoD
+humidity = humi01
+cpu = comp01
+light = room01,room02,room03,room04,room05
+
+[mef]
 name = tvz
 sensors = temperature,humidity,cpu,light
 temperature = termoA,termoB,termoC,termoD
