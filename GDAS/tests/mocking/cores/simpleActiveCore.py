@@ -51,8 +51,6 @@ def get_data(core):
         else:
             print data
 
-        time.sleep(0.97)
-
 
 def send_request(data):
     auth_token = 'aaaaaAAAAAaaaaa'
