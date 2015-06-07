@@ -1,5 +1,5 @@
 [uwsgi]
-#http               = 0.0.0.0:8000
+http                = 0.0.0.0:9020
 socket              = /opt/gdas/var/simplePassiveCore.sock
 chmod-socket        = 666
 chdir               = /opt/gdas/test/cores/
@@ -9,7 +9,8 @@ mount               = /api/core/=simplePassiveCore:app
 pyargv              = /etc/gdas/test/cores/simplePassiveCore.ini.default
 manage-script-name  = true
 no-default-app      = true
-#processes          = 4 # control this in supervisor
+master              = true
+processes           = 4
 listen              = 16
 #stats              = 127.0.0.1:9080
 uid                 = gdas
