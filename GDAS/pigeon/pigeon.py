@@ -32,6 +32,9 @@ class Pigeon(object):
         self.trigger_cores = cfg.cores
         self.current_core_id = None
 
+        self.remapper_flag = cfg.remapper_flag
+        self.remapping = cfg.remapping
+
     def main(self):
         publisher_settings = publisher.Settings(
             self.app_id,
@@ -52,6 +55,9 @@ class Pigeon(object):
 
             return
 
+        if self.remapper_flag:
+            message = self.remap_message(message)
+
         if not self.validate(message):
             self.consumer.reject_msg()
 
@@ -69,7 +75,6 @@ class Pigeon(object):
             return
 
         data = message['data']
-        # TODO: implement receiving bulk messages (in GDAS/utils/Communication/consumer)
         self.current_core_id = core_id
         self.messages.append(data)
         self.consumer.acknowledge_msg()
@@ -82,6 +87,14 @@ class Pigeon(object):
                 self.publisher.publish([msg])
 
             self.messages = list()
+
+    def remap_message(self, message):
+        """" Raises KEY error """
+        new_message = {}
+        for key, value in self.remapping:
+            new_message[key] = message[value]
+
+        return new_message
 
     def divide_by_module(self):
         msg_by_module = dict()

@@ -18,6 +18,8 @@ class Configuration():
         self.cores = None
         self.log_level = None
         self.schema = create_core_scheme()
+        self.remapper_flag = None
+        self.remapping = {}
 
     def load_from_file(self, filename):
         config = ConfigParser.ConfigParser()
@@ -39,5 +41,12 @@ class Configuration():
         self.type = config.get('gdas', 'type')
         self.routing_key = config.get('pigeon', 'routing_key')
         self.cores = config.get('pigeon', 'cores')
+        self.remapper_flag = config.getboolean('mapping', 'use_mapping')
+        self.remapping = {
+            'id': config.get('mapping', 'id'),
+            'module': config.get('mapping', 'module'),
+            'timestamp': config.get('mapping', 'timestamp'),
+            'value': config.get('mapping', 'value')
+        }
 
         return self

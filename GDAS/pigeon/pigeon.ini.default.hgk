@@ -12,3 +12,12 @@ log_level = INFO
 [pigeon]
 routing_key = hgk
 cores = pliva,unizg,kras
+use_mapping = true
+
+[mapping]
+use_mapping = false
+id = id
+module = module
+timestamp = timestamp  
+value = value
+
