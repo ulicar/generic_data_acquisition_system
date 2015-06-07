@@ -10,7 +10,7 @@ programs=gdas-wizard
 programs=gdas-pigeon-usa,gdas-pigeon-unizg,gdas-pigeon-hgk
 
 [group:apprentices]
-programs=gdas-apprentice-fer,gdas-apprentice-fsb,gdas-apprentice-tvz,gdas-apprentice-mit,gdas-apprentice-ucla
+programs=gdas-apprentice-fer,gdas-apprentice-fsb,gdas-apprentice-tvz,gdas-apprentice-mit,gdas-apprentice-ucla,gdas-apprentice-mef,gdas-apprentice-ffzg
 
 [group:workers]
 programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk
@@ -117,6 +117,28 @@ exitcodes=0
 
 [program:gdas-apprentice-fer]
 command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.fer
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-apprentice-ffzg]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.ffzg
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-apprentice-mef]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.mef
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
