@@ -12,7 +12,7 @@ from GDAS.utils.communication import publisher
 from config import Configuration
 
 
-class Hobbit(object):
+class apprentice(object):
     def __init__(self, cfg):
         self.app_id = cfg.app_id
         self.core_url = cfg.core_url
@@ -73,13 +73,13 @@ if __name__ == '__main__':
             level=cfg.log_level
         )
 
-        hobbit = Hobbit(cfg)
+        apprentice = apprentice(cfg)
         logging.info('Starting hobit %s. Collecting from %s' % (
-            hobbit.app_id,
-            hobbit.core_url
+            apprentice.app_id,
+            apprentice.core_url
         ))
 
-        hobbit.main()
+        apprentice.main()
 
     except Exception, e:
         print >>sys.stderr, str(e)

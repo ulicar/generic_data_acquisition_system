@@ -36,8 +36,8 @@ class Configuration():
         self.output_exchange, self.routing_key = config.get('gdas', 'queue').split(':')
         self.app_id = config.get('gdas', 'app_id')
 
-        self.core_url = config.get('hobbit', 'core_url')
-        self.token = config.get('hobbit', 'password_token')
-        self.sleep_time = config.get('hobbit', 'sleep_time')
+        self.core_url = config.get('apprentice', 'core_url')
+        self.token = config.get('apprentice', 'password_token')
+        self.sleep_time = config.get('apprentice', 'sleep_time')
 
         return self
