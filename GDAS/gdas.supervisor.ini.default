@@ -9,12 +9,11 @@ programs=gdas-wizard
 [group:pigeons]
 programs=gdas-pigeon-usa,gdas-pigeon-unizg,gdas-pigeon-hgk
 
+[group:apprentices]
+programs=gdas-apprentice-fer,gdas-apprentice-fsb,gdas-apprentice-tvz,gdas-apprentice-mit,gdas-apprentice-ucla
+
 [group:workers]
 programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk
-
-[group:hobbits]
-programs=gdas-hobbit-fer,gdas-hobbit-fsb,gdas-hobbit-tvz,gdas-hobbit-mit,gdas-hobbit-ucla
-
 
 [program:gdas-worker-unizg]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.unizg
@@ -57,7 +56,7 @@ autostart=false
 autorestart=true
 redirect_stderr=true
 stdout_logfile=/opt/gdas/var/log/supervisord.log
-numprocs=4
+numprocs=1
 exitcodes=0
 
 [program:gdas-pigeon-usa]
@@ -116,8 +115,8 @@ numprocs=2
 stopsignal=STOP
 exitcodes=0
 
-[program:gdas-hobbit-fer]
-command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.fer
+[program:gdas-apprentice-fer]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.fer
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
@@ -127,8 +126,8 @@ stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
 exitcodes=0
 
-[program:gdas-hobbit-fsb]
-command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.fsb
+[program:gdas-apprentice-fsb]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.fsb
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
@@ -138,8 +137,8 @@ stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
 exitcodes=0
 
-[program:gdas-hobbit-tvz]
-command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.tvz
+[program:gdas-apprentice-tvz]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.tvz
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
@@ -149,8 +148,8 @@ stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
 exitcodes=0
 
-[program:gdas-hobbit-ucla]
-command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.ucla
+[program:gdas-apprentice-ucla]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.ucla
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
@@ -160,8 +159,8 @@ stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
 exitcodes=0
 
-[program:gdas-hobbit-mit]
-command=/usr/bin/python /opt/gdas/hobbit/hobbit.py -i /etc/gdas/hobbit/hobbit.ini.default.mit
+[program:gdas-apprentice-mit]
+command=/usr/bin/python /opt/gdas/apprentice/apprentice.py -i /etc/gdas/apprentice/apprentice.ini.default.mit
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
