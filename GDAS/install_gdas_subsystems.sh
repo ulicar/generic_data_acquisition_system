@@ -8,14 +8,14 @@ fi
 
 # All GDAS subsystems
 TOP=$(pwd)
-HOBBIT=hobbit
+APPRENTICE=apprentice
 PIGEON=pigeon
 WIZARD=wizard
 WORKER=worker
 UTILS=util
 CORES=tests/mocking/cores
 
-declare -a DIRS=($UTILS $HOBBIT $PIGEON $CORES $WIZARD $WORKER)
+declare -a DIRS=($UTILS $APPRENTICE $PIGEON $CORES $WIZARD $WORKER)
 
 for dir in ${DIRS[@]}; do
     if [ -d $dir ]; then

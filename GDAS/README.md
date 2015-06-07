@@ -2,6 +2,7 @@
 
 GDAS consists of several subsystems:
 * Wizard    - microservice for collecting (receiving) data from outside sources called Cores
+* Apprentice- microservice for collecting (asking for) data from outside sources called Cores
 * Pigeon    - microservice used for sorting data by type and Core id
 * Worker    - microservice used for saving data to database called Fatty
 * Fatty     - wrapper library around python-pymongo and MongoDB
@@ -59,5 +60,4 @@ GDAS consists of several subsystems:
 # Uwsgi
 
   Starts flask apps, web interface is disabled on default (see PROGRAM.uwsgi.ini.default to enable)
-
 
