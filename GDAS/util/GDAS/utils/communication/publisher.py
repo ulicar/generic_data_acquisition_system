@@ -106,7 +106,6 @@ class Publisher(object):
             try:
                 self.message = self.message_iterator.next()
                 self.send_msg_to_mq()
-                time.sleep(0.05)
 
             except StopIteration:
                 self.stop()

@@ -1,5 +1,6 @@
 upstream gdas_servers {
-    server victim.no-ip.org:9010;
+    #server victim.no-ip.org:9010;
+    server localhost:9010;
 }
   
 server {

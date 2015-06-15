@@ -2,6 +2,7 @@
 
 __author__ = 'jdomsic'
 
+
 """
     Tests Consumer and Publisher from Communication module.
     (1) Creates 1 consumer and 1 publisher.
