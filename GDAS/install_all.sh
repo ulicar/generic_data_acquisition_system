@@ -20,5 +20,6 @@ echo 'Step 4: Create user.'
 
 echo 'Step 5: Housekeeping.'
 ./post_install.sh                || exit -1
+cp README.md /opt/gdas/
 
 echo 'Step 6: 100% DONE!.'
