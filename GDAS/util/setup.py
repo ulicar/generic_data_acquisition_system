@@ -12,9 +12,9 @@ setup(name='GDAS',
       data_files=[
           ('/opt/gdas/', [
               'create_user.py',
-              'setup_rabbit.py'
+              'setup_rabbit.py',
+              'README.txt'
           ]),
-          ('/etc/gdas/README.txt')
       ],
       packages=[
           'GDAS',
