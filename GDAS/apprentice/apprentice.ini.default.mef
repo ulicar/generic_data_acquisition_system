@@ -5,9 +5,9 @@ app_id = apprentice_mef
 
 [log]
 log_level = INFO
-log_file = /opt/gdas/var/log/hobbit.log
+log_file = /opt/gdas/var/log/apprentice.log
 
-[hobbit]
+[apprentice]
 core_url = http://localhost/api/core/mef/fetch
 password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
-sleep_time = 0.5
+sleep_time = 1

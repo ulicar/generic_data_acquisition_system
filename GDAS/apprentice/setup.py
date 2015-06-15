@@ -18,10 +18,11 @@ setup(name='GDAS apprentice',
               'apprentice.ini.default.fer',
               'apprentice.ini.default.fsb',
               'apprentice.ini.default.tvz',
+              'apprentice.ini.default.mef',
+              'apprentice.ini.default.ffzg',
               'apprentice.ini.default.mit',
               'apprentice.ini.default.ucla',
               'README.txt'
-
           ])
       ],
       install_requires=[

@@ -7,7 +7,7 @@ app_id = apprentice_ffzg
 log_level = INFO
 log_file = /opt/gdas/var/log/apprentice.log
 
-[hobbit]
+[apprentice]
 core_url = http://localhost/api/core/ffzg/fetch
 password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
-sleep_time = 0.5
+sleep_time = 1
