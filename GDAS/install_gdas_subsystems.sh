@@ -22,6 +22,7 @@ for dir in ${DIRS[@]}; do
         cd $dir
         /usr/bin/python setup.py install >/dev/null 2>&1 || exit -1
         echo "Installed $dir"
+        rm -rf *egg* *.pyc *build* *dist*
         cd $TOP
     else
         echo "Missing $dir"
