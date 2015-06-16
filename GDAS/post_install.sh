@@ -10,8 +10,8 @@ fi
 mkdir /opt/gdas/var/log -p
 
 # Change ownership of GDAS
-chown -R gdas:gdas /opt/gdas
-chown -R gdas:gdas /etc/gdas
+chown -R gdas:gdas /opt/gdas/
+chown -R gdas:gdas /etc/gdas/
 echo 'Changing ownership of files.'
 
 # Copy GDAS configuration files
@@ -36,5 +36,17 @@ cp "$SUPER_CONF" /etc/supervisor/conf.d/"$SUPER_CONF".conf
 
 mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old
 cp "$HAPROXY_CONF" /etc/haproxy/haproxy.cfg
+
+# Add web interface for Supervisor
+cat >> /etc/supervisor/supervisor.conf << EOF
+
+[inet_http_server]
+port=9001
+username=gdas
+password=gdas
+
+EOF
+
+#ufw allow from YOUR-IP to any port 9001
 
 echo 'Done.'
