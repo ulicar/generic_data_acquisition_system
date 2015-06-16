@@ -16,8 +16,6 @@ import sys
 import time
 import requests
 
-from multiprocessing import Pool
-
 from coreCreator import create_cores
 
 TOKEN = 'aaaaaAAAAAaaaaa'
@@ -28,28 +26,25 @@ push_flag = True if len(sys.argv) > 2 and '--push' in sys.argv else False
 run_for = int(sys.argv[4]) if len(sys.argv) > 2 and '--run-for' in sys.argv else 1
 START = time.time()
 
-
 def main():
-    p = Pool(len(cores))
-    p.map(get_data, cores)
-
-
-def get_data(core):
     while True:
-        if time.time() >= START + run_for:
-            break
+        for core in cores:
+            if time.time() >= START + run_for:
+                break
 
-        data = [{
-            'core': core.name,
-            'data': core.collect()
-        }]
+            data = [{
+                'core': core.name,
+                'data': core.collect()
+            }]
 
-        if push_flag:
-            send_request(json.dumps(data, indent=4))
-            print 'Data sent to server.'
+            if push_flag:
+                send_request(json.dumps(data, indent=4))
+                print 'Data sent to server.'
 
-        else:
-            print data
+            else:
+                print data
+
+        time.sleep(0.6)
 
 
 def send_request(data):
