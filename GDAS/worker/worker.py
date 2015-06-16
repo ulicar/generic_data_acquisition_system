@@ -65,42 +65,50 @@ class Worker(object):
 
     def save(self):
         data = self.prepare_data()
-        for module, hours in data.items():
-            for hour, measurements in hours.items():
-                db_key = {
-                    'module': module,
-                    'time': hour
-                }
+        for (module, time, measurements) in data:
+            db_key = {
+                'module': module,
+                'time': time
+            }
 
-                self.update_record(db_key, measurements)
+            self.update_record(db_key, measurements)
 
     def prepare_data(self):
         """
-            data = {
-                'module': {
-                    'time': {measurements}
-                    }
-                }
+            all_data = [
+                {
+                    'module': <MODULE>,
+                    'time': <TIME>
+                    'values': {
+                        data.<sec> :<measurement>,
+                        ...,
+                },
+                ...
+            ]
 
         """
-        data = dict()
+        all_data = {}
         for msg in self.messages:
-            module_id = msg['id']
-            if module_id not in data:
-                data[module_id] = {}
+            dt = datetime.datetime.fromtimestamp(int(msg['timestamp']))
+            time_value = dt.strftime('%Y-%m-%d-%H')
 
-            sensor_time_data = datetime.datetime.fromtimestamp(int(msg['timestamp']))
-            sensor_time = sensor_time_data.minute * 60 + sensor_time_data.second
-            sensor_value = msg['value']
-            measurement = {'data.%d' % sensor_time: sensor_value}
+            if msg['id'] not in all_data:
+                hourly_measurement = dict(
+                    {
+                        'module': msg['id'],
+                        'time': time_value,
+                        'values': {}
+                    }
+                )
+                all_data[(msg['id'], time_value)] = hourly_measurement
 
-            time = sensor_time_data.strftime('%Y-%m-%d-%H')
-            if time not in data[module_id]:
-                data[module_id][time] = {}
+            else:
+                hourly_measurement = all_data[(msg['id'], time_value)]
 
-            data[module_id][time].update(measurement)
+            hourly_measurement['values']['%s.%s' % ('data', str(dt.minute * 60 + dt.second))] \
+                = json.dumps(msg['value'])
 
-        return data
+        return all_data
 
     def update_record(self, keys, time_series_data):
         self.distdb.open(self.db, self.current_core_id)
