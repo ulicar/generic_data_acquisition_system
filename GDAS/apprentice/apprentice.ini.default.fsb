@@ -8,6 +8,6 @@ log_level = INFO
 log_file = /opt/gdas/var/log/apprentice.log
 
 [apprentice]
-core_url = http://localhost/api/core/fsb/fetch
+core_url = http://victim.no-ip.org:8080/api/core/fsb/fetch
 password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
 sleep_time = 1
