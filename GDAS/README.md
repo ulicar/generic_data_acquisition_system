@@ -61,3 +61,16 @@ GDAS consists of several subsystems:
 
   Starts flask apps, web interface is disabled on default (see PROGRAM.uwsgi.ini.default to enable)
 
+# Possible errors:
+1) Wizard cannot mount app "cannot load python-eggs"
+   mkdir -p /home/gdas/.python-eggs
+   chown gdas:gdas /home/gdas/.python-eggs
+   mkdir /tmp/python-eggs
+   export PYTHON_EGG_CACHE=/tmp/python-eggs
+   
+2) Wizard permission error on log file
+   sudo chown -r gdas:gdas /opt/gdas/ 
+   
+1-2) If query: http://victim.no-ip.org:8080/api/wizard/upload passes, bugs are fixed.   
+
+   
