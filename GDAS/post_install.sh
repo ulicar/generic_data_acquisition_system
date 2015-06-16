@@ -47,6 +47,11 @@ password=gdas
 
 EOF
 
-#ufw allow from YOUR-IP to any port 9001
+#Add ADMIN account to mongodb (gdas/gdas)
+mongo gdas <<EOF
+db.accounts.insert({'username':'gdas', "password" : "df599e37f28d52c36295cd011325ac28d5c46411df599e37f28d52c36295cd011325ac28d5c46411", "description" : "GDAS admin user account", "roles" : [ "admin/manage" , "admin/read" , "admin/admin" , "admin/upload"]})
+EOF
+
+# ufw allow from YOUR-IP to any port 9001
 
 echo 'Done.'
