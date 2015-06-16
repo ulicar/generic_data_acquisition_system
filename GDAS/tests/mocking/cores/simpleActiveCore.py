@@ -62,7 +62,7 @@ def send_request(data):
             'token': auth_token,
             'Content-Type': 'application/json'
             },
-        url="http://jdomsic:jdomsic@localhost/api/wizard/upload",
+        url="http://jdomsic:jdomsic@victim.no-ip.org/api/wizard/upload",
         data=data
     )
 
