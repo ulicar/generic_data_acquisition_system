@@ -74,6 +74,9 @@ class Pigeon(object):
 
             return
 
+        self.divide_msgs_by_module(core_id, message)
+
+    def divide_msgs_by_module(self, core_id, message):
         data = message['data']
         self.current_core_id = core_id
         self.messages.append(data)
