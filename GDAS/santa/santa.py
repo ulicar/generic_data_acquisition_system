@@ -25,6 +25,7 @@ config.read(sys.argv[1])
 
 APP_ID = config.get('gdas', 'app_id')
 ROLES = config.get('santa', 'required_roles').split(',')
+SCHEMA = create_post_data_scheme()
 
 log_level = {
     'DEBUG': logging.DEBUG,
@@ -62,15 +63,13 @@ def collect_sensor_info():
         logging.info('%s verified' % username)
 
         try:
-            schema = crete_post_data_scheme()
+            data = get_post_data(request.data, SCHEMA)
 
-            data = get_post_data(request.data, schema)
-
-            db, collections, modules, start, end = map_keys(schema, data)
+            db, collections, modules, start, end = map_keys(data)
 
             resolution = time_resolution(start, end, collections, modules)
 
-            queries = create_query(start, end)
+            queries = create_query(db, collections, modules, to_database_key(start), to_database_key(end))
 
             results = get_database_info(queries)
 
@@ -103,8 +102,18 @@ def get_post_data(post_data, scheme):
     return data
 
 
-def create_query(keys):
+def create_query(modules, start_time, end_time):
     queries = list()
+
+    while start_time <= end_time:
+        for m in modules:
+            q = {
+                ''
+            }
+
+            queries.append(q)
+
+        start_time += datetime.timedelta(hours=1)
 
     return queries
 

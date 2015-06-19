@@ -3,7 +3,7 @@ __author__ = 'jdomsic'
 from timemodule import to_datetime
 
 
-def crete_post_data_scheme():
+def create_post_data_scheme():
     """ Message created by a single Core whose name is in 'core' """
     schema = {
         'type': 'object',
@@ -31,42 +31,16 @@ def crete_post_data_scheme():
     return schema
 
 
-def map_keys(schema, post_data):
-    required_flag = False
-    DATABASE = None
-    if 'user' in post_data:
-        required_flag = True
-        DATABASE = post_data['user']
-
-    COLLECTIONS = None
-    if 'cores' in post_data:
-        required_flag = True
-        COLLECTIONS = post_data['cores'][:]
-
-    if not required_flag:
-        raise TypeError('Required one of: user, cores.')
-
-    WHITELISTED_MODULES = None
-    if 'modules' in post_data:
-        if post_data['modules'] == '*':
-            WHITELISTED_MODULES = []
-
-        elif len(post_data['modules']) > 0:
-            WHITELISTED_MODULES = post_data['modules'][:]
-
-        else:
-            raise TypeError('Error in field: modules ')
-
-    TIME_START = None
-    TIME_END = None
-    if 'time' not in post_data:
-        raise TypeError('Error in field: time')
+def map_keys(post_data):
+    database = post_data['user']
+    collections = post_data['cores'][:]
+    modules = post_data['modules'][:]
 
     try:
-        TIME_START = to_datetime(post_data['time']['from'])
-        TIME_END = to_datetime(post_data['time']['to'])
+        time_start = to_datetime(post_data['time']['from'])
+        time_end = to_datetime(post_data['time']['to'])
 
     except (ValueError, TypeError):
-        raise TypeError('Erorr in filed: time')
+        raise TypeError('Error in field: time')
 
-    return DATABASE, COLLECTIONS, WHITELISTED_MODULES, TIME_START, TIME_END
+    return database, collections, modules, time_start, time_end
