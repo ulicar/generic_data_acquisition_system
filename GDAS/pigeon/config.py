@@ -40,7 +40,7 @@ class Configuration():
         self.app_id = config.get('gdas', 'app_id')
         self.type = config.get('gdas', 'type')
         self.routing_key = config.get('pigeon', 'routing_key')
-        self.cores = config.get('pigeon', 'cores')
+        self.cores = config.get('pigeon', 'cores').split(',')
         self.remapper_flag = config.getboolean('mapping', 'use_mapping')
         self.remapping = {
             'id': config.get('mapping', 'id'),
