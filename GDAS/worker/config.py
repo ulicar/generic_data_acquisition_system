@@ -36,6 +36,6 @@ class Configuration():
         self.db = config.get('worker', 'db')
         self.app_id = config.get('worker', 'app_id')
 
-        self.cores = config.get('worker', 'cores').strip().split(':')
+        self.cores = config.get('worker', 'cores').strip().split(',')
 
         return self

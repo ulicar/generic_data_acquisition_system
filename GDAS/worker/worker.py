@@ -65,20 +65,20 @@ class Worker(object):
 
     def save(self):
         data = self.prepare_data()
-        for (module, time, measurements) in data:
+        for (module, time), value in data.items():
             db_key = {
                 'module': module,
                 'time': time
             }
-
+            measurements = value['values']
             self.update_record(db_key, measurements)
 
     def prepare_data(self):
         """
             all_data = [
-                {
-                    'module': <MODULE>,
-                    'time': <TIME>
+                (<module>, <time>) : {
+                    'module': <module>,
+                    'time': <time>
                     'values': {
                         data.<sec> :<measurement>,
                         ...,
@@ -92,7 +92,7 @@ class Worker(object):
             dt = datetime.datetime.fromtimestamp(int(msg['timestamp']))
             time_value = dt.strftime('%Y-%m-%d-%H')
 
-            if msg['id'] not in all_data:
+            if (msg['id'], time_value) not in all_data:
                 hourly_measurement = dict(
                     {
                         'module': msg['id'],
