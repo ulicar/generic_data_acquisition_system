@@ -15,8 +15,9 @@ from validictory import validate
 
 from schema import *
 from timemodule import *
-from GDAS.utils.security.auth import UserAuth
 
+from GDAS.utils.security.auth import UserAuth
+from GDAS.utils.database.connection import Fatty
 
 app = Flask(__name__)
 
@@ -67,11 +68,11 @@ def collect_sensor_info():
 
             db, collections, modules, start, end = map_keys(data)
 
-            resolution = time_resolution(start, end, collections, modules)
+            resolution = time_resolution(start, end, int(collections), int(modules))
 
-            queries = create_query(db, collections, modules, to_database_key(start), to_database_key(end))
+            query = create_query(modules, to_database_key(start), to_database_key(end))
 
-            results = get_database_info(queries)
+            results = get_database_info(db, collections, query)
 
             response = create_response(results, resolution)
 
@@ -104,11 +105,11 @@ def get_post_data(post_data, scheme):
 
 def create_query(modules, start_time, end_time):
     queries = list()
-
     while start_time <= end_time:
         for m in modules:
             q = {
-                ''
+                'module': m,
+                'time': start_time
             }
 
             queries.append(q)
@@ -118,15 +119,17 @@ def create_query(modules, start_time, end_time):
     return queries
 
 
-def get_database_info(queries):
+def get_database_info(db, collection, queries):
+    fatty = Fatty().open(db, collection)
     results = list()
-    # fatty...
+    for q in queries:
+        results.append(fatty.get_record(q))
 
     return results
 
 
-def create_response(results, resolution):
-    response = ''
+def create_response(results, resolution=None):
+    response = json.dumps(results, indent=4)
 
     return response
 
