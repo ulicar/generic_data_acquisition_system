@@ -65,7 +65,7 @@ class Worker(object):
 
     def save(self):
         data = self.prepare_data()
-        for (module, time, measurements) in data:
+        for (module, time), measurements in data.items():
             db_key = {
                 'module': module,
                 'time': time
@@ -76,12 +76,9 @@ class Worker(object):
     def prepare_data(self):
         """
             all_data = [
-                {
-                    'module': <MODULE>,
-                    'time': <TIME>
-                    'values': {
-                        data.<sec> :<measurement>,
-                        ...,
+                (<module>, <time>) : {
+                    data.<sec> :<measurement>,
+                    ...,
                 },
                 ...
             ]
@@ -92,21 +89,19 @@ class Worker(object):
             dt = datetime.datetime.fromtimestamp(int(msg['timestamp']))
             time_value = dt.strftime('%Y-%m-%d-%H')
 
-            if msg['id'] not in all_data:
-                hourly_measurement = dict(
-                    {
-                        'module': msg['id'],
-                        'time': time_value,
-                        'values': {}
-                    }
-                )
+            if (msg['id'], time_value) not in all_data:
+                hourly_measurement = {}
+
                 all_data[(msg['id'], time_value)] = hourly_measurement
 
             else:
                 hourly_measurement = all_data[(msg['id'], time_value)]
 
-            hourly_measurement['values']['%s.%s' % ('data', str(dt.minute * 60 + dt.second))] \
-                = json.dumps(msg['value'])
+            hourly_measurement.update(
+                {
+                    'data.%s' % str(dt.minute * 60 + dt.second):
+                        json.dumps(msg['value'])
+                })
 
         return all_data
 
