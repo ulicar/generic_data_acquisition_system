@@ -6,7 +6,8 @@ app_id = pigeon_defalt_unizg
 type = unizg
 
 [log]
-log_file = /opt/gdas/var/log/pigeon.log
+#log_file = /opt/gdas/var/log/pigeon.log
+log_file = /tmp/pigeon.log
 log_level = INFO
 
 [pigeon]
