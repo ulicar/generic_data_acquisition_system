@@ -52,7 +52,10 @@ def map_keys(post_data):
         time_start = to_datetime(post_data['time']['from'])
         time_end = to_datetime(post_data['time']['to'])
 
+        if time_start - time_end > 10:
+            raise ValueError('Use smaller range!')
+
     except (ValueError, TypeError) as e:
-        raise TypeError('Error in field: time')
+        raise TypeError('Error in field TIME: %s' % str(e))
 
     return database, collections, modules, time_start, time_end
