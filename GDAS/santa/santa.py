@@ -70,9 +70,9 @@ def collect_sensor_info():
 
             #resolution = time_resolution(start, end, int(collections), int(modules))
 
-            query = create_query(modules, to_database_key(start), to_database_key(end))
+            queries = create_query(modules, start_time=start, end_time=end)
 
-            results = get_database_info(db, collections, query)
+            results = get_database_info(db, collections, queries)
 
             response = create_response(results)  # resolution
 
@@ -130,7 +130,7 @@ def create_query(modules, start_time, end_time):
         for m in modules:
             q = {
                 'module': m,
-                'time': start_time
+                'time': to_database_key(start_time)
             }
 
             queries.append(q)
@@ -141,10 +141,18 @@ def create_query(modules, start_time, end_time):
 
 
 def get_database_info(db, collection, queries):
-    fatty = Fatty().open(db, collection)
+    fatty = Fatty()
+    fatty.open(db, collection)
     results = list()
     for q in queries:
-        results.append(fatty.get_record(q))
+        data = fatty.get_record(q)
+
+        if data:
+            results.append({
+                'module': data['module'],
+                'time': data['time'],
+                'measurements': data['data']
+            })
 
     return results
 
