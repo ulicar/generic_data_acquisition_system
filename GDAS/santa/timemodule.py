@@ -7,11 +7,11 @@ SECONDS_IN_HOUR = 3600
 
 
 def to_datetime(time):
-    return datetime.datetime.strptime(time, '%Y-%M-%DT%H:%m:%s')
+    return datetime.datetime.strptime(time, '%Y-%m-%dT%H:%M:%S')
 
 
 def to_database_key(date):
-    return date.strftime('%Y-%M-%D-%H')
+    return date.strftime('%Y-%m-%d-%H')
 
 
 def time_resolution(start, end, cores, modules):
