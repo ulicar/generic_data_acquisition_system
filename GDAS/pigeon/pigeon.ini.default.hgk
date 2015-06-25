@@ -3,7 +3,7 @@ mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
 input_mq = :qPrimary.hgk
 output_mq = eSecondary:
 app_id = pigeon_primary_hgk
-type = all
+type = hgk
 
 [log]
 log_file = /opt/gdas/var/log/pigeon.log
