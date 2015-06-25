@@ -68,13 +68,13 @@ def collect_sensor_info():
 
             db, collections, modules, start, end = map_keys(data)
 
-            resolution = time_resolution(start, end, int(collections), int(modules))
+            #resolution = time_resolution(start, end, int(collections), int(modules))
 
             query = create_query(modules, to_database_key(start), to_database_key(end))
 
             results = get_database_info(db, collections, query)
 
-            response = create_response(results, resolution)
+            response = create_response(results)  # resolution
 
         except ValueError as ve:
             return Response(str(ve), status=httplib.BAD_REQUEST)
