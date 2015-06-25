@@ -44,7 +44,7 @@ logging.basicConfig(
 )
 
 
-@app.route('/fetch', methods=['POST'])
+@app.route('/fetch', methods=['GET', 'POST'])
 def collect_sensor_info():
     try:
         auth = UserAuth()
@@ -64,7 +64,7 @@ def collect_sensor_info():
         logging.info('%s verified' % username)
 
         try:
-            data = get_post_data(request.data, SCHEMA)
+            data = collect_request_data(request, request.method, SCHEMA)
 
             db, collections, modules, start, end = map_keys(data)
 
@@ -90,9 +90,12 @@ def collect_sensor_info():
     return Response(response='', status=httplib.INTERNAL_SERVER_ERROR)
 
 
-def get_post_data(post_data, scheme):
+def collect_request_data(request_data, method, scheme):
     try:
-        data = json.loads(post_data)
+        if method == 'POST':
+            data = collect_post_data(request_data.data)
+        else:
+            data = collect_get_data(request_data.args)
 
     except ValueError:
         raise ValueError('Post data must be in json')
@@ -102,6 +105,23 @@ def get_post_data(post_data, scheme):
 
     return data
 
+
+def collect_post_data(post_data):
+
+    return json.loads(post_data)
+
+
+def collect_get_data(query_args):
+
+    return {
+        'user': query_args('user'),
+        'modules': query_args('modules'),
+        'core': query_args('core'),
+        'time': {
+            'from': query_args('from'),
+            'to': query_args('to')
+        }
+    }
 
 def create_query(modules, start_time, end_time):
     queries = list()
