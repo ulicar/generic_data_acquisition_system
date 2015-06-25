@@ -1,9 +1,9 @@
 [gdas]
 mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
-input_mq = :qDefault.all
+input_mq = :qPrimary.unizg
 output_mq = eSecondary:
 app_id = pigeon_defalt_unizg
-type = all
+type = unizg
 
 [log]
 log_file = /opt/gdas/var/log/pigeon.log
@@ -12,3 +12,10 @@ log_level = INFO
 [pigeon]
 routing_key = unizg
 cores = fer,fsb,tvz
+
+[mapping]
+use_mapping = false
+id = id
+module = module
+timestamp = timestamp
+value = value
