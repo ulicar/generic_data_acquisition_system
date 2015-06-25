@@ -100,8 +100,8 @@ def collect_request_data(request_data, method, scheme):
     except ValueError:
         raise ValueError('Post data must be in json')
 
-    if not validate(data=data, schema=scheme):
-        raise ValueError('Wrong post data format')
+    # Raises Exception on error
+    validate(data=data, schema=scheme)
 
     return data
 
@@ -112,16 +112,17 @@ def collect_post_data(post_data):
 
 
 def collect_get_data(query_args):
-
-    return {
-        'user': query_args('user'),
-        'modules': query_args('modules'),
-        'core': query_args('core'),
+    data = {
+        'user': query_args['user'],
+        'modules': query_args.getlist('modules'),
+        'core': query_args['core'],
         'time': {
-            'from': query_args('from'),
-            'to': query_args('to')
-        }
+            'from': query_args['from'],
+            'to': query_args['to']
+            }
     }
+
+    return data
 
 def create_query(modules, start_time, end_time):
     queries = list()
