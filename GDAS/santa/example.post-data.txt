@@ -1,0 +1,14 @@
+{
+    'user':
+        'UNIZG',
+    'core':
+        'fer',
+    'modules': [
+        'module1',
+        'module2'
+    ],
+    'time': {
+        'from': '10',
+        'to': '12'
+    }
+}
