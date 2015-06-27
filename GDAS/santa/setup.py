@@ -18,6 +18,7 @@ setup(name='GDAS Santa',
               'santa.conf',
               'santa.uwsgi.ini.default',
               'santa.nginx.ini.default',
+              'example.post-data.txt'
               'README.txt'
           ])
       ],

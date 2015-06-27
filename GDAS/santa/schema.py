@@ -1,7 +1,7 @@
 __author__ = 'jdomsic'
 
 from timemodule import to_datetime
-
+from datetime import timedelta
 
 def create_post_data_scheme():
     """ Message created by a single Core whose name is in 'core' """
@@ -52,7 +52,10 @@ def map_keys(post_data):
         time_start = to_datetime(post_data['time']['from'])
         time_end = to_datetime(post_data['time']['to'])
 
-        if time_start - time_end > 10:
+        if time_end < time_start:
+            time_end, time_start = time_start, time_end
+
+        if time_end - time_start > timedelta(days=10):
             raise ValueError('Use smaller range!')
 
     except (ValueError, TypeError) as e:
