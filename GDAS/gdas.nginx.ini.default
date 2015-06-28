@@ -1,18 +1,18 @@
 upstream wizard_servers {
-    server victim.no-ip.org:9010;
+    server localhost:9010;
 }
 
 upstream core_servers {
-    server victim.no-ip.org:9020;
+    server localhost:9020;
 }
 
 upstream santa_servers {
-    server victim.no-ip.org:9030;
+    server localhost:9030;
 }
 
 server {
     listen      8080;
-    server_name victim victim.no-ip.org;
+    server_name victim localhost;
     charset     utf-8;
     client_max_body_size 75M;
 
