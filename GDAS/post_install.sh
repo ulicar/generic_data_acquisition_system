@@ -61,4 +61,13 @@ ufw allow 9010  # mocking cores uwsgi
 ufw allow 8080  # nginx
 ufw allow 80    # HAproxy
 
+#Reaload services
+supervisorctl reload
+service supervisor start
+supervisorctl start cores:*
+
+rm /etc/nginx/sites-enabled/default
+service ngnix reload
+service haproxy reload
+
 echo 'Done.'
