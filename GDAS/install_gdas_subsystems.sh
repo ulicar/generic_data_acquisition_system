@@ -38,6 +38,11 @@ service rabbitmq-server restart
 
 echo 'Rabbit set up.'
 
+#Add ADMIN account to mongodb (gdas/gdas)
 echo 'Setting up Mongodb'
+
+mongo gdas <<EOF
+db.accounts.insert({'username':'gdas', "password" : "df599e37f28d52c36295cd011325ac28d5c46411df599e37f28d52c36295cd011325ac28d5c46411", "description" : "GDAS admin user account", "roles" : [ "admin/manage" , "admin/read" , "admin/admin" , "admin/upload"]})
+EOF
 
 
