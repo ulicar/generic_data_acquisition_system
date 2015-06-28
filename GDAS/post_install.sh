@@ -38,7 +38,7 @@ mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.old
 cp "$HAPROXY_CONF" /etc/haproxy/haproxy.cfg
 
 # Add web interface for Supervisor
-cat >> /etc/supervisor/supervisor.conf << EOF
+cat >> /etc/supervisor/supervisord.conf << EOF
 
 [inet_http_server]
 port=9001
@@ -70,7 +70,7 @@ supervisorctl start cores:gdas-simplePassiveCore
 rm /etc/nginx/sites-enabled/default
 service nginx reload
 
-sed -i 's/ENABLED=0/ENABLED=1' /etc/default/haproxy
+sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 service haproxy reload
 
 echo 'Done.'
