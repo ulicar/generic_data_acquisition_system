@@ -47,11 +47,18 @@ password=gdas
 
 EOF
 
-#Add ADMIN account to mongodb (gdas/gdas)
-mongo gdas <<EOF
-db.accounts.insert({'username':'gdas', "password" : "df599e37f28d52c36295cd011325ac28d5c46411df599e37f28d52c36295cd011325ac28d5c46411", "description" : "GDAS admin user account", "roles" : [ "admin/manage" , "admin/read" , "admin/admin" , "admin/upload"]})
-EOF
+# Open ports
+echo 'Open ports for GDAS'
 
-# ufw allow from YOUR-IP to any port 9001
+ufw allow 5672  # rabbitMq ampq
+ufw allow 15672 # rabbitMq web interface
+ufw allow 27018 # mongo port
+uwf allow 28014 # mongo web interface
+ufw allow 9001  # supervisor
+ufw allow 9030  # Santa uwsgi
+ufw allow 9020  # Wizard uwsgi
+ufw allow 9010  # mocking cores uwsgi
+ufw allow 8080  # nginx
+ufw allow 80    # HAproxy
 
 echo 'Done.'
