@@ -49,7 +49,7 @@ numprocs=1
 exitcodes=0
 
 [program:gdas-wizard]
-command=/usr/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
+command=/usr/local/bin/uwsgi --ini /etc/gdas/wizard/wizard.uwsgi.ini.default
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
@@ -104,7 +104,7 @@ numprocs=1
 exitcodes=0
 
 [program:gdas-simplePassiveCore]
-command=/usr/bin/uwsgi --ini /etc/gdas/test/cores/simplePassiveCore.uwsgi.ini.default
+command=/usr/local/bin/uwsgi --ini /etc/gdas/test/cores/simplePassiveCore.uwsgi.ini.default
 user=gdas
 autostart=false
 autorestart=true
