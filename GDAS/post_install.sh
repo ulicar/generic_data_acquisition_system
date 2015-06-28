@@ -66,11 +66,15 @@ supervisorctl reload
 service supervisor restart
 supervisorctl start cores:gdas-simplePassiveCore
 
-# 
+# Nginx 
 rm /etc/nginx/sites-enabled/default
 service nginx reload
 
+# Haproxy
 sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 service haproxy reload
+
+# Create TEST user
+python create_user.py josip josip 'JosipD account' gdas GgdasS
 
 echo 'Done.'
