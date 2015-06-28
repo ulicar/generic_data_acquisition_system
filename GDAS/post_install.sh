@@ -64,10 +64,13 @@ ufw allow 80    # HAproxy
 #Reaload services
 supervisorctl reload
 service supervisor start
-supervisorctl start cores:*
+supervisorctl start cores:gdas-simplePassiveCore
 
+# 
 rm /etc/nginx/sites-enabled/default
-service ngnix reload
+service nginx reload
+
+sed -i 's/ENABLED=0/ENABLED=1' /etc/default/haproxy
 service haproxy reload
 
 echo 'Done.'

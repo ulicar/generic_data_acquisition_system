@@ -105,7 +105,6 @@ exitcodes=0
 
 [program:gdas-simplePassiveCore]
 command=/usr/bin/uwsgi --ini /etc/gdas/test/cores/simplePassiveCore.uwsgi.ini.default
-process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
 autorestart=true
