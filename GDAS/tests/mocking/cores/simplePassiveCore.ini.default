@@ -47,4 +47,4 @@ temperature = tempMit
 [ucla]
 name = ucla
 sensors = humidity
-humidity = humy01,humy02,hum03,hum03
+humidity = humy01,humy02,hum03,hum031

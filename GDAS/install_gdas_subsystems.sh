@@ -44,8 +44,8 @@ echo 'Rabbit set up.'
 echo 'Setting up Mongodb'
 
 mongo gdas <<EOF
-db.accounts.insert({'username':'gdas', "password" : "1e6887a950fd3d6910c8230156e6536d58377a611e6887a950fd3d6910c8230156e6536d58377a61", "description" : "GDAS admin user account", "roles" : [ "admin/manage" , "admin/read" , "admin/admin" , "admin/upload"]})
-db.accounts.insert({'username':'jdomsic', "password" : "3fd23c5146f6e075b7cb06cd0766a5b7de8eb49b3fd23c5146f6e075b7cb06cd0766a5b7de8eb49b", "description" : "jdomsic user account", "roles" : [ "basic/upload" , "wizard/upload" , "basic/read" , ""]})
+db.accounts.insert({'username':'gdas', "password" : "df599e37f28d52c36295cd011325ac28d5c46411df599e37f28d52c36295cd011325ac28d5c46411", "description" : "GDAS admin user account", "roles" : [ "admin/manage" , "admin/read" , "admin/admin" , "admin/upload"]})
+db.accounts.insert({'username':'jdomsic', "password" : "5ab26449d4ec9dd4dcd07841268ed1fe5c0b33845ab26449d4ec9dd4dcd07841268ed1fe5c0b3384", "description" : "jdomsic user account", "roles" : [ "basic/upload" , "wizard/upload" , "basic/read" , ""]})
 EOF
 
 

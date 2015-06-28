@@ -1,6 +1,6 @@
 [gdas]
 mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
-input_mq = :qPrimary.hgk
+input_mq = :qDefault.all
 output_mq = eSecondary:
 app_id = pigeon_primary_hgk
 type = hgk
@@ -13,7 +13,6 @@ log_level = INFO
 [pigeon]
 routing_key = hgk
 cores = pliva,unizg,kras
-use_mapping = true
 
 [mapping]
 use_mapping = false

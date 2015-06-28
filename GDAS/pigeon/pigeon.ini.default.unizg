@@ -12,7 +12,7 @@ log_level = INFO
 
 [pigeon]
 routing_key = unizg
-cores = fer,fsb,tvz
+cores = fer,fsb,tvz,ffzg,mef
 
 [mapping]
 use_mapping = false
