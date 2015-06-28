@@ -74,7 +74,4 @@ service nginx reload
 sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 service haproxy reload
 
-# Create TEST user
-python create_user.py josip josip 'JosipD account' gdas GgdasS
-
 echo 'Done.'
