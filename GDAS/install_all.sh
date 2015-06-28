@@ -6,6 +6,9 @@ if [ ! $USER == 'root' ]; then
     echo 'Must be superuser' && exit -1
 fi
 
+ufw allow ssh
+ufw enable
+
 echo 'Step 1: Install support.'
 ./install_support_programs.sh    || exit -1
 
