@@ -16,5 +16,5 @@ listen              = 16
 uid                 = gdas
 gid                 = gdas
 logto               = /opt/gdas/var/log/uwsgi-simplePassiveCore.log
-
+plugins             = python
 die-on-term         = true
