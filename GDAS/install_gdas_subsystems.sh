@@ -32,8 +32,10 @@ done
 echo 'Setting up Rabbit queues' && cd $UTILS
 rabbitmqctl add_user gdas GgdasS
 rabbitmqctl set_user_tags administrator
+rabbitmqctl set_permissions -p / gdas ".*" ".*" ".*"
 rabbitmq-plugins enable rabbitmq_management
 /usr/bin/python setup_rabbit.py
+
 service rabbitmq-server restart
 
 echo 'Rabbit set up.'
