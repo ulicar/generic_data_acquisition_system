@@ -53,7 +53,7 @@ echo 'Open ports for GDAS'
 ufw allow 5672  # rabbitMq ampq
 ufw allow 15672 # rabbitMq web interface
 ufw allow 27018 # mongo port
-uwf allow 28014 # mongo web interface
+ufw allow 28014 # mongo web interface
 ufw allow 9001  # supervisor
 ufw allow 9030  # Santa uwsgi
 ufw allow 9020  # Wizard uwsgi
