@@ -63,7 +63,7 @@ ufw allow 80    # HAproxy
 
 #Reaload services
 supervisorctl reload
-service supervisor start
+service supervisor restart
 supervisorctl start cores:gdas-simplePassiveCore
 
 # 
