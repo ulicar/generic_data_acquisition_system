@@ -15,6 +15,10 @@ programs=gdas-apprentice-fer,gdas-apprentice-fsb,gdas-apprentice-tvz,gdas-appren
 [group:workers]
 programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk
 
+[group:santas]
+programs=gdas-santa
+
+
 [program:gdas-worker-unizg]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.unizg
 process_name=%(program_name)s_%(process_num)02d
@@ -190,3 +194,15 @@ redirect_stderr=true
 stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
 exitcodes=0
+
+[program:gdas-santa]
+command=/usr/local/bin/uwsgi --ini /etc/gdas/santa/santa.uwsgi.ini.default
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+

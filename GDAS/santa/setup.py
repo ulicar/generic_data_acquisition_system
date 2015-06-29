@@ -11,14 +11,15 @@ setup(name='GDAS Santa',
       url='https://github.com/ulicar/generic_data_acquisition_system',
       data_files=[
           ('/opt/gdas/santa', [
-              'santa.py'
+              'santa.py',
+              'timemodule.py',
+              'schema.py'
           ]),
-          ('/etc/gdas/wizard', [
+          ('/etc/gdas/santa', [
               'santa.ini.default',
-              'santa.conf',
               'santa.uwsgi.ini.default',
               'santa.nginx.ini.default',
-              'example.post-data.txt'
+              'example.post-data.txt',
               'README.txt'
           ])
       ],

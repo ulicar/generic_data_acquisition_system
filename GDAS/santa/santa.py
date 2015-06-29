@@ -53,41 +53,41 @@ def collect_sensor_info():
 
         logging.info('Received upload from: %s' % username)
 
-        if not auth.authentificate(username, password):
-            return Response(response='Wrong username/password',
-                            status=httplib.UNAUTHORIZED)
-
-        if not auth.authorize(ROLES):
-            return Response(response='Not allowed for this user',
-                            status=httplib.FORBIDDEN)
-
-        logging.info('%s verified' % username)
-
-        try:
-            data = collect_request_data(request, request.method, SCHEMA)
-
-            db, collections, modules, start, end = map_keys(data)
-
-            #resolution = time_resolution(start, end, int(collections), int(modules))
-
-            queries = create_query(modules, start_time=start, end_time=end)
-
-            results = get_database_info(db, collections, queries)
-
-            response = create_response(results)  # resolution
-
-        except ValueError as ve:
-            return Response(str(ve), status=httplib.BAD_REQUEST)
-
-        except TypeError as te:
-            return Response(str(te), status=httplib.BAD_REQUEST)
-
-        return Response(response=response, status=httplib.OK)
-
     except Exception as e:
-        logging.error(str(e))
+        return Response(response='',
+                        status=httplib.,
+                        headers='{Basic}')
 
-    return Response(response='', status=httplib.INTERNAL_SERVER_ERROR)
+    if not auth.authentificate(username, password):
+        return Response(response='Wrong username/password',
+                        status=httplib.UNAUTHORIZED)
+
+    if not auth.authorize(ROLES):
+        return Response(response='Not allowed for this user',
+                        status=httplib.FORBIDDEN)
+
+    logging.info('%s verified' % username)
+
+    try:
+        data = collect_request_data(request, request.method, SCHEMA)
+
+        db, collections, modules, start, end = map_keys(data)
+
+        #resolution = time_resolution(start, end, int(collections), int(modules))
+
+        queries = create_query(modules, start_time=start, end_time=end)
+
+        results = get_database_info(db, collections, queries)
+
+        response = create_response(results)  # resolution
+
+    except ValueError as ve:
+        return Response(str(ve), status=httplib.BAD_REQUEST)
+
+    except TypeError as te:
+        return Response(str(te), status=httplib.BAD_REQUEST)
+
+    return Response(response=response, status=httplib.OK)
 
 
 def collect_request_data(request_data, method, scheme):

@@ -13,9 +13,10 @@ PIGEON=pigeon
 WIZARD=wizard
 WORKER=worker
 UTILS=util
+SANTA=santa
 CORES=tests/mocking/cores
 
-declare -a DIRS=($UTILS $APPRENTICE $PIGEON $CORES $WIZARD $WORKER)
+declare -a DIRS=($UTILS $APPRENTICE $PIGEON $CORES $WIZARD $SANTA $WORKER)
 
 for dir in ${DIRS[@]}; do
     if [ -d $dir ]; then

@@ -72,6 +72,6 @@ service nginx reload
 
 # Haproxy
 sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
-service haproxy reload
+service haproxy restart
 
 echo 'Done.'
