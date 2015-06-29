@@ -11,7 +11,7 @@ log_level = INFO
 
 [pigeon]
 routing_key = usa
-cores = mit,ucla
+cores = mit,ucla,
 
 [mapping]
 use_mapping = false

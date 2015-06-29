@@ -12,7 +12,7 @@ log_level = INFO
 
 [pigeon]
 routing_key = hgk
-cores = pliva,unizg,kras
+cores = pliva,kras,dukat,
 
 [mapping]
 use_mapping = false

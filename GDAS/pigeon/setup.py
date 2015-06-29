@@ -17,7 +17,8 @@ setup(name='GDAS Pigdeon',
           ]),
           ('/etc/gdas/pigeon', [
               'pigeon.ini.default.hgk',
-              'pigeon.ini.default.unizg',
+              'pigeon.ini.default.unizg-1',
+              'pigeon.ini.default.unizg-2',
               'pigeon.ini.default.usa',
               'README.txt'
           ])
