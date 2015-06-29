@@ -10,5 +10,5 @@ log_file = /tmp/worker.log
 
 [worker]
 db = UNIZG
-cores = fer,tvz,fsb
+cores = fer,tvz,ffzg,fsb
 app_id = worker_unizg

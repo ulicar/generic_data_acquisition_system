@@ -9,5 +9,5 @@ log_file = /opt/gdas/var/log/worker.log
 
 [worker]
 db = HGK
-cores = pliva,kras,dukat
+cores = pliva,kras
 app_id = worker_hgk

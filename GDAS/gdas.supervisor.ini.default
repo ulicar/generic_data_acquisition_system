@@ -7,13 +7,13 @@ programs=gdas-simpleActiveCore,gdas-simplePassiveCore
 programs=gdas-wizard
 
 [group:pigeons]
-programs=gdas-pigeon-usa,gdas-pigeon-unizg,gdas-pigeon-hgk
+programs=gdas-pigeon-usa,gdas-pigeon-unizg-1,gdas-pigeon-unizg-2,gdas-pigeon-hgk
 
 [group:apprentices]
 programs=gdas-apprentice-fer,gdas-apprentice-fsb,gdas-apprentice-tvz,gdas-apprentice-mit,gdas-apprentice-ucla,gdas-apprentice-mef,gdas-apprentice-ffzg
 
 [group:workers]
-programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk
+programs=gdas-worker-unizg,gdas-worker-usa,gdas-worker-hgk,gdas-worker-dukat
 
 [group:santas]
 programs=gdas-santa
@@ -21,6 +21,17 @@ programs=gdas-santa
 
 [program:gdas-worker-unizg]
 command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.unizg
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-worker-dukat]
+command=/usr/bin/python /opt/gdas/worker/worker.py -i /etc/gdas/worker/worker.ini.default.dukat
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
@@ -74,8 +85,19 @@ stdout_logfile=/opt/gdas/var/log/supervisord.log
 numprocs=1
 exitcodes=0
 
-[program:gdas-pigeon-unizg]
-command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default.unizg
+[program:gdas-pigeon-unizg-1]
+command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default.unizg-1
+process_name=%(program_name)s_%(process_num)02d
+user=gdas
+autostart=false
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/opt/gdas/var/log/supervisord.log
+numprocs=1
+exitcodes=0
+
+[program:gdas-pigeon-unizg-2]
+command=/usr/bin/python /opt/gdas/pigeon/pigeon.py -i /etc/gdas/pigeon/pigeon.ini.default.unizg-2
 process_name=%(program_name)s_%(process_num)02d
 user=gdas
 autostart=false
