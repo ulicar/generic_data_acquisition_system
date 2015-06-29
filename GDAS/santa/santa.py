@@ -55,8 +55,8 @@ def collect_sensor_info():
 
     except Exception as e:
         return Response(response='',
-                        status=httplib.,
-                        headers='{Basic}')
+                        status=httplib.UNAUTHORIZED,
+                        header={'WWW-Authenticate':'Basic realm="%s"' % 'GDAS Santa API'})
 
     if not auth.authentificate(username, password):
         return Response(response='Wrong username/password',
