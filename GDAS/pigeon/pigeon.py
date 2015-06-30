@@ -81,7 +81,7 @@ class Pigeon(object):
         self.current_core_id = core_id
         self.messages.append(data)
         self.consumer.acknowledge_msg()
-        if len(self.messages) >= 10:
+        if len(self.messages) >= 1:
             module_messages = self.divide_by_module()
 
             for module_type, msgs in module_messages.items():
