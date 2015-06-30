@@ -82,6 +82,7 @@ class Consumer(object):
     def _start_consuming(self):
         self.channel.add_on_cancel_callback(self._on_consumer_cancelled)
 
+        self.channel.basic_qos(prefetch_count=10)
         self.consumer_tag = \
             self.channel.basic_consume(self._on_message_received, self.queue_name)
 
