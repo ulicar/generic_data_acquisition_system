@@ -149,7 +149,7 @@ def get_database_info(db, collection, queries):
     for q in queries:
         data = fatty.get_record(q)
         
-        if len(data) > 0:
+        if data:
             results.append({
                 'module': data['module'],
                 'time': data['time'],

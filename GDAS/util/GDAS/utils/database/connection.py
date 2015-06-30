@@ -15,6 +15,7 @@ class Fatty(object):
         self.collection = None
 
     def read(self, query):
+        assert isinstance(query, dict), 'must be a key - value object'
         data = self.collection.find(query)
 
         return data
