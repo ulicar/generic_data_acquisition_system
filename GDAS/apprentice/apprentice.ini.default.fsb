@@ -1,0 +1,13 @@
+[gdas]
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+queue = ePrimary:unizg
+app_id = apprentice_fsb
+
+[log]
+log_level = INFO
+log_file = /opt/gdas/var/log/apprentice.log
+
+[apprentice]
+core_url = http://localhost:8080/api/core/fsb/fetch
+password_token = 'AAAAAcccccAAAAAcccccAAAAAccccc'
+sleep_time = 1

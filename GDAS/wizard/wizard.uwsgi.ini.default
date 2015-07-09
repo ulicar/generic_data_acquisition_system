@@ -1,0 +1,17 @@
+[uwsgi]
+
+socket              = 0.0.0.0:9010
+protocol            = http
+chdir               = /opt/gdas/wizard/
+mount               = /api/wizard/=wizard:app
+manage-script-name  = true
+no-default-app      = true
+pyargv              = /etc/gdas/wizard/wizard.ini.default
+processes           = 4 
+listen              = 128
+master              = true
+setuid              = gdas
+setgid              = gdas
+logto               = /opt/gdas/var/log/uwsgi-wizard.log
+
+die-on-term         = true

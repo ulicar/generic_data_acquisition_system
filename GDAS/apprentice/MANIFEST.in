@@ -1,0 +1,9 @@
+include apprentice.ini.default.fer
+include apprentice.ini.default.tvz
+include apprentice.ini.default.fsb
+include apprentice.ini.default.ucla
+include apprentice.ini.default.mit
+include apprentice.py
+include config.py
+include setup.py
+include README.txt

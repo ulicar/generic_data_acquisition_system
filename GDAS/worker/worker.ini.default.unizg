@@ -1,0 +1,14 @@
+[gdas]
+database = localhost:27017
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+queue = qSecondary.unizg
+
+[log]
+log_level = INFO
+#log_file = /opt/gdas/var/log/worker.log
+log_file = /tmp/worker.log
+
+[worker]
+db = UNIZG
+cores = fer,tvz,ffzg,fsb
+app_id = worker_unizg

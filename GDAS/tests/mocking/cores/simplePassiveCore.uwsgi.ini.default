@@ -1,0 +1,20 @@
+[uwsgi]
+http                = 0.0.0.0:9020
+socket              = /opt/gdas/var/simplePassiveCore.sock
+chmod-socket        = 666
+chdir               = /opt/gdas/test/cores/
+mount               = /api/core/=simplePassiveCore:app
+#wsgi-file          = simplePassiveCore.py
+#callable           = app
+pyargv              = /etc/gdas/test/cores/simplePassiveCore.ini.default
+manage-script-name  = true
+no-default-app      = true
+master              = true
+processes           = 6
+listen              = 16
+#stats              = 127.0.0.1:9080
+uid                 = gdas
+gid                 = gdas
+logto               = /opt/gdas/var/log/uwsgi-simplePassiveCore.log
+
+die-on-term         = true

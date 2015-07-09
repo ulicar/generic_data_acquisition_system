@@ -1,0 +1,22 @@
+[gdas]
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+input_mq = :qPrimary.unizg
+output_mq = eSecondary:
+app_id = pigeon_default_unizg
+type = unizg
+
+[log]
+#log_file = /opt/gdas/var/log/pigeon2.log
+log_file = /tmp/pigeon2.log
+log_level = INFO
+
+[pigeon]
+routing_key = unizg
+cores = tvz,ffzg,mef
+
+[mapping]
+use_mapping = false
+id = id
+module = module
+timestamp = timestamp
+value = value

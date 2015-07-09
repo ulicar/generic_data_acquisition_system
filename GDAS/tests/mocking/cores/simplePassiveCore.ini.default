@@ -1,0 +1,50 @@
+[core]
+apps = fer,tvz,fsb,mef,ffzg,mit,ucla
+
+[fer]
+name = fer
+sensors = temperature,humidity,cpu,light
+temperature = termo01,termo02
+humidity = humy01,humy02,hum03
+cpu = comp01,comp,com02
+light = room01,room02
+
+[tvz]
+name = tvz
+sensors = temperature,humidity,cpu,light
+temperature = termoA,termoB,termoC,termoD
+humidity = humi01
+cpu = comp01
+light = room01,room02,room03,room04,room05
+
+[ffzg]
+name = tvz
+sensors = temperature,humidity,cpu,light
+temperature = termoA,termoB,termoC,termoD
+humidity = humi01
+cpu = comp01
+light = room01,room02,room03,room04,room05
+
+[mef]
+name = tvz
+sensors = temperature,humidity,cpu,light
+temperature = termoA,termoB,termoC,termoD
+humidity = humi01
+cpu = comp01
+light = room01,room02,room03,room04,room05
+
+[fsb]
+name = fsb
+sensors = temperature,humidity
+temperature = termo01,termo02
+humidity = humy01,humy02,hum03,hum03
+
+[mit]
+name = mit
+sensors = temperature
+temperature = tempMit
+
+[ucla]
+name = ucla
+sensors = humidity
+humidity = humy01,humy02,hum03,hum031

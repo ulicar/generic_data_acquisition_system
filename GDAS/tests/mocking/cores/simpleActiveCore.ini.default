@@ -1,0 +1,35 @@
+[core]
+apps = pliva,kras,dukat,ericsson,siemens
+
+[pliva]
+name = pliva
+sensors = temperature,humidity,cpu,light
+temperature = ptem1,ptem1
+humidity = phum1,phum2,phum3
+cpu = pcom1,pcom2,pcom4,pcom8,pcom16,pcom32,pcom64,pcom128,pcom256
+light = room01,room02
+
+[kras]
+name = kras
+sensors = temperature,humidity,cpu,light
+temperature = termoA,termoB,termoC,termoD
+humidity = humi01
+cpu = comp01
+light = room01,room02,room03,room04,room05
+
+[dukat]
+name = dukat
+sensors = temperature,humidity
+temperature = termo01,termo02
+humidity = humy01,humy02,hum03,hum03
+
+[ericsson]
+name = ericsson
+sensors = temperature
+temperature = termo01,termo021,termo022,termo023,termo024,termo025,termo032,termo042,termo052
+
+[siemens]
+name = siemens
+sensors = temperature,humidity
+temperature = termo01,termo02
+humidity = humy01,humy02,hum03,hum03

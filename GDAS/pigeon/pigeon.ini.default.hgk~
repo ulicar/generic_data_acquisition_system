@@ -1,0 +1,23 @@
+[gdas]
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+input_mq = :qDefault.all
+output_mq = eSecondary:
+app_id = pigeon_primary_hgk
+type = hgk
+
+[log]
+#log_file = /opt/gdas/var/log/pigeon.log
+log_file = /tmp/pigeon.log
+log_level = INFO
+
+[pigeon]
+routing_key = hgk
+cores = pliva,unizg,kras,dukat,
+
+[mapping]
+use_mapping = false
+id = id
+module = module
+timestamp = timestamp  
+value = value
+

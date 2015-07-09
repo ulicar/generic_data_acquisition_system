@@ -1,0 +1,11 @@
+[gdas]
+mq_url = amqp://gdas:GgdasS@localhost:5672/%2F
+queue = ePrimary:qDefault.all
+name = wizard
+
+[log]
+log_level = INFO
+log_file = /opt/gdas/var/log/wizard.log
+
+[wizard]
+required_roles = basic/upload,wizard/upload
